@@ -1,20 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'slick-carousel/slick/slick.css';
+import './sass/index.scss';
 
-const STRICT_MODE = import.meta.env.VITE_REACT_APP_ENABLE_STRICT_MODE;
-
-const rootComponent = STRICT_MODE === "true" ? (
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>
-) : (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  </React.StrictMode>,
 );
-
-ReactDOM.createRoot(document.getElementById("root")).render(rootComponent);
