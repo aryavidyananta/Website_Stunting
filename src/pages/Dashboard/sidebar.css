@@ -1,0 +1,10 @@
+/* sidebar.css */
+.sidebar-item:hover {
+    background-color: #374151; /* Slightly lighter gray on hover */
+  }
+  
+  .sidebar-item.active {
+    background-color: #1f2937; /* Dark gray for active menu */
+    font-weight: bold;
+  }
+  

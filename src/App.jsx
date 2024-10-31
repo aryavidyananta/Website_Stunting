@@ -13,6 +13,9 @@ import Gallery from './components/Pages/Gallery';
 import Contact from './components/Pages/Contact';
 import { useEffect } from 'react';
 import ErrorPage from './components/Pages/ErrorPage';
+import LoginPage from './pages/Login/Login';
+import Dashboard from './pages/Dashboard/dashboard';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   const { pathname } = useLocation();
@@ -37,7 +40,16 @@ function App() {
         />
         <Route path="gallery" element={<Gallery />} />
         <Route path="contact" element={<Contact />} />
+
       </Route>
+      <Route path='/LoginPage' element={<LoginPage/>}></Route>
+      <Route path="/dashboard" element={<Dashboard />}>
+        {/* Rute nested di dalam Dashboard */}
+  
+        <Route path="profile" element={<Profile />} />
+   
+      </Route>
+      
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

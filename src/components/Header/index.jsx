@@ -95,6 +95,9 @@ export default function Header({ logoSrc, variant }) {
                     <li>
                       <Link to="/contact">Contact</Link>
                     </li>
+                    <li>
+                      <Link to="/LoginPage">Login</Link>
+                    </li>
                   </ul>
                   <span
                     className={
