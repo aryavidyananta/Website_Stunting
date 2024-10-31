@@ -282,7 +282,7 @@ const Galeri = () => {
                     </Col>
                 </Row>
             </div>
-        </Section>
+        </Section> //tes
     );
 };
 

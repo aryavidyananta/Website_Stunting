@@ -104,8 +104,8 @@ export const sendDataPrivate = async (url, data) => {
 
 export const updateData = async (url, data) => {
   return fetch(REACT_APP_API_URL + url, {
-    method: "POST", // Using POST as required by the API
-    body: data, // Pass FormData directly
+    method: "POST",
+    body: data,
   })
     .then((response) =>
       response.status >= 200 &&
