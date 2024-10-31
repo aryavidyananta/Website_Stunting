@@ -192,13 +192,22 @@ export default function HomeStyle4() {
   return (
     <>
       <HeroStyle4
-        title="Your Path to Health and Wellness Begins Here"
-        subTitle="Your Trusted Partner in Comprehensive Healthcare, Where Your Well-being is Our Priority, Providing Quality Care and Support for All Your Health Needs."
-        bgUrl="/images/home_4/hero_bg.jpeg"
-        imgUrl="/images/home_4/hero_img_1.png"
-        imgUrl2="/images/home_4/hero_img_2.png"
-        imgUrl3="/images/home_4/hero_img_3.png"
-      />
+            title={
+              <span style={{ color: '#1c435e' }}>
+                Your Path to Health and Wellness Begins Here
+              </span>
+            }
+            subTitle={
+              <span style={{ color: '#1c435e' }}>
+                Your Trusted Partner in Comprehensive Healthcare, Where Your Well-being is Our Priority, Providing Quality Care and Support for All Your Health Needs.
+              </span>
+            }
+            bgUrl="/images/home_4/hero_bg.jpg"
+            imgUrl="/images/home_4/hero_img_1.png"
+            imgUrl2="/images/home_4/hero_img_2.png"
+            imgUrl3="/images/home_4/hero_img_3.png"
+          />
+
       <Section topMd={190} topLg={150} topXl={105} id="departments">
         <DepartmentSectionStyle6
           sectionTitle="Find Your Right Department"
@@ -208,7 +217,7 @@ export default function HomeStyle4() {
       </Section>
       <Section topMd={170} topLg={120} topXl={100}>
         <AboutSectionStyle5
-          imgUrl="/images/home_4/about_img.jpeg"
+          imgUrl="/images/home_4/about_img.jpg"
           titleUp="ABOUT US"
           title="ProHealth is a team of experienced medical professionals"
           subTitle="Dedicated to providing top-quality healthcare services. We believe in a holistic approach to healthcare that focuses on treating the whole person, not just the illness or symptoms."
