@@ -6,7 +6,7 @@ import Newsletter from '../Widget/Newsletter';
 import IconBoxStyle11 from '../IconBox/IconBoxStyle11';
 import Spacing from '../Spacing';
 
-export default function Header({ logoSrc, variant }) {
+export default function Header({ logoSrc, variant }) {  //baru
   const [isSticky, setIsSticky] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   const [sideNav, setSideNav] = useState(false);

@@ -7,7 +7,7 @@ import { ellipsGenerator } from "../../utils/ui";
 
 const { Title, Text } = Typography;
 
-const PlaylistPage = () => {
+const PlaylistPage = () => {    //baru
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -77,7 +77,7 @@ const PlaylistPage = () => {
       <Menu.Item key="Song">Song</Menu.Item>
       <Menu.Item key="Movie">Movie</Menu.Item>
       <Menu.Item key="Education">Education</Menu.Item>
-      <Menu.Item key="Others">Otherss</Menu.Item>
+      <Menu.Item key="Others">Others</Menu.Item>
     </Menu>
   );
 

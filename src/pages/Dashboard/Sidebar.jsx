@@ -10,7 +10,7 @@ import './dashboard.css';
 
 const { Sider } = Layout;
 
-const Sidebar = () => {
+const Sidebar = () => { //baru
   return (
     <Sider width={200} className="site-layout-background">
       <Menu

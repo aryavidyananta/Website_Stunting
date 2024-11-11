@@ -47,9 +47,8 @@ function App() {
       </Route>
       <Route path='/LoginPage' element={<LoginPage/>}></Route>
       <Route path="/dashboard" element={<Dashboard />}>
-        {/* Rute nested di dalam Dashboard */}
-  
-        <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />
+        {/* Baru */}
+        <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />  
         <Route path="profile" element={<Profile />} />
    
       </Route>
