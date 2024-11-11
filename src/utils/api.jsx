@@ -102,22 +102,6 @@ export const sendDataPrivate = async (url, data) => {
     .catch((err) => console.log(err));
 };
 
-export const updateData = async (url, data) => {
-  return fetch(REACT_APP_API_URL + url, {
-    method: "POST",
-    body: data,
-  })
-    .then((response) =>
-      response.status >= 200 &&
-      response.status <= 299 &&
-      response.status !== 204
-        ? response.json()
-        : response,
-    )
-    .then((data) => data)
-    .catch((err) => console.log(err));
-}; // UPDATE BLACKHEX GALLERY
-
 export const deleteData = async (url, data) => {
   return fetch(REACT_APP_API_URL + url, {
     method: "DELETE",

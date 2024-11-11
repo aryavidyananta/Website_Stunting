@@ -1,3 +1,4 @@
+import { Descriptions, Tooltip } from "antd";
 import { degreeLabelFull } from "./constant";
 
 export const formatDateIndonesia = (inputDate) => {
@@ -346,4 +347,13 @@ export const showThumbnailGDrive = (fileID, size = "w100") => {
   // how to use <img src = { showImageGDrive("1SdbSvTB1YzVkx7EGORB3cIP2H86_jlDJ") }/>
   let url = `https://drive.google.com/thumbnail?id=${fileID}&sz=${size}`;
   return url;
+};
+
+export const ellipsGenerator = (description) => {
+  return {
+    row: 2,
+    expandable: true,
+    Symbol: "more",
+    tooltip: description,
+  };
 };

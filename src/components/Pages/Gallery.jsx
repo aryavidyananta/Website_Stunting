@@ -1,289 +1,274 @@
-import { Col, Row, Typography, Card, List, Divider, Skeleton, FloatButton, message, notification, Drawer, Form, Input, Button, Modal } from "antd";
-import { EditOutlined, DeleteOutlined, PlusCircleOutlined, ExclamationCircleOutlined, SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
-import { useState, useEffect } from "react";
-import { getData, sendData, deleteData, updateData } from "../../utils/api";
-import Section from '../Section';
+import React, { useEffect, useState } from "react";
+import {
+  Col,
+  Row,
+  Typography,
+  Card,
+  List,
+  Skeleton,
+  Divider,
+  Input,
+  FloatButton,
+  Drawer,
+  Form,
+  Button,
+  notification,
+  Popconfirm,
+  Tooltip,
+} from "antd";
+import {
+  EditOutlined,
+  SearchOutlined,
+  PlusCircleOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { getData, sendData, deleteData } from "../../utils/api";
+import Section from "../Section";
+import { ellipsGenerator } from "../../utils/ui";
 
 const { Title, Text } = Typography;
-const { confirm } = Modal;
 
 const Galeri = () => {
-    const [form] = Form.useForm();
-    const [api, contextHolder] = notification.useNotification();
-    const [dataSource, setDataSource] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isDrawer, setIsDrawer] = useState(false);
-    const [isEditMode, setIsEditMode] = useState(false);
-    const [editItemId, setEditItemId] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [isAscending, setIsAscending] = useState(false); // Default sorting order set to descending
+  const [form] = Form.useForm();
+  const [api, contextHolder] = notification.useNotification();
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [dataGalleryFiltered, setDataGalleryFiltered] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [isDrawer, setIsDrawer] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [idSelected, setIdSelected] = useState(null);
 
-    // Load data when component mounts
-    useEffect(() => {
-        getDataGaleri();
-    }, []);
+  useEffect(() => {
+    getDataGallery();
+  }, []);
 
-    // Update filtered data based on search term
-    useEffect(() => {
-        if (searchTerm) {
-            const filtered = dataSource.filter(item =>
-                (item.name_natures && item.name_natures.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()))
-            );
-            setFilteredData(filtered);
-        } else {
-            setFilteredData(dataSource);
+  const getDataGallery = () => {
+    setLoading(true);
+    let url = "/api/natures";
+    getData(url)
+      .then((resp) => {
+        if (resp) {
+          setData(resp);
+          setDataGalleryFiltered(resp);
         }
-    }, [searchTerm, dataSource]);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
 
-    // Fetch data from API and sort by id in descending order initially
-    const getDataGaleri = () => {
-        setIsLoading(true);
-        getData("/api/natures")
-            .then(resp => {
-                setIsLoading(false);
-                if (resp) {
-                    const sortedData = resp.sort((a, b) => b.id - a.id); // Sort by descending initially
-                    setDataSource(sortedData);
-                    setFilteredData(sortedData);
-                }
-            })
-            .catch(err => {
-                setIsLoading(false);
-                console.log(err);
-            });
-    };
+  const handleDrawer = () => {
+    setIsDrawer(true);
+  };
 
-    // Toggle sort order between ascending and descending
-    const toggleSortOrder = () => {
-        const sortedData = [...dataSource].sort((a, b) =>
-            isAscending ? b.id - a.id : a.id - b.id
-        );
-        setIsAscending(!isAscending);
-        setDataSource(sortedData);
-        setFilteredData(sortedData);
-    };
+  const onCloseDrawer = () => {
+    if (isEdit) {
+      form.resetFields();
+      setIsEdit(false);
+      setIdSelected(null);
+    }
+    setIsDrawer(false);
+  };
 
-    // Delete function to remove item by id
-    const handleDelete = (id) => {
-        deleteData(`/api/natures/${id}`)
-            .then((resp) => {
-                if (resp) {
-                    message.success("Data successfully deleted");
-                    setDataSource(dataSource.filter(item => item.id !== id)); // Remove item from state
-                    setFilteredData(filteredData.filter(item => item.id !== id)); // Update filtered data
-                } else {
-                    message.error("Failed to delete data");
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                message.error("Failed to delete data");
-            });
-    };
+  const handleSubmit = () => {
+    form
+      .validateFields()
+      .then(() => {
+        let nameNatures = form.getFieldValue("name_natures");
+        let description = form.getFieldValue("description");
 
-    // Show delete confirmation modal
-    const showDeleteConfirm = (id) => {
-        confirm({
-            title: "Are you sure you want to delete this item?",
-            icon: <ExclamationCircleOutlined />,
-            content: "This action cannot be undone",
-            onOk() {
-                handleDelete(id);
-            },
-            onCancel() {
-                console.log("Cancel");
-            },
-        });
-    };
+        let formData = new FormData();
+        formData.append("name_natures", nameNatures);
+        formData.append("description", description);
 
-    const handleDrawer = () => {
-        setIsDrawer(true);
-    };
+        let url = isEdit ? `/api/natures/${idSelected}` : "/api/natures";
+        let request = sendData(url, formData);
 
-    const onCloseDrawer = () => {
-        setIsDrawer(false);
-        setIsEditMode(false);
-        setEditItemId(null);
-        form.resetFields();
-    };
+        request
+          .then((resp) => {
+            if (resp?.datas) {
+              showAlert("success", "Success", "Success to send data");
+              form.resetFields();
+              getDataGallery();
+              onCloseDrawer();
+            } else {
+              showAlert("error", "Failed", "Failed to send data");
+            }
+          })
+          .catch((err) => {
+            showAlert("error", "Failed", "Failed to send data");
+          });
+      })
+      .catch((error) => {
+        showAlert("error", "Validation Error", "Please fill in all required fields.");
+      });
+  };
 
-    const handleSubmit = () => {
-        form.validateFields() // Ensures form is validated before submission
-            .then(() => {
-                const nameNatures = form.getFieldValue("name_natures");
-                const description = form.getFieldValue("description");
+  const showAlert = (status, title, description) => {
+    api[status]({
+      message: title,
+      description: description,
+    });
+  };
 
-                const formData = new FormData();
-                formData.append("name_natures", nameNatures);
-                formData.append("description", description);
-
-                if (isEditMode && editItemId) {
-                    // Update existing item
-                    updateData(`/api/natures/${editItemId}`, formData)
-                        .then((resp) => {
-                            if (resp) {
-                                message.success("Data successfully updated");
-                                getDataGaleri(); // Refresh data
-                                onCloseDrawer();
-                            } else {
-                                message.error("Failed to update data");
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            message.error("Failed to update data");
-                        });
-                } else {
-                    // Add new item
-                    sendData("/api/natures", formData)
-                        .then((resp) => {
-                            if (resp) {
-                                message.success("Data successfully submitted");
-                                getDataGaleri();
-                                onCloseDrawer();
-                            } else {
-                                message.error("Failed to submit data");
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            message.error("Failed to submit data");
-                        });
-                }
-            })
-            .catch((errorInfo) => {
-                console.log("Validation Failed:", errorInfo);
-            });
-    };
-
-    const handleEdit = (item) => {
-        setIsEditMode(true);
-        setEditItemId(item.id);
-        form.setFieldsValue({
-            name_natures: item.name_natures,
-            description: item.description,
-        });
-        setIsDrawer(true);
-    };
-
-    const renderDrawer = () => {
-        return (
-            <Drawer 
-                title={isEditMode ? "Edit Galeri" : "Tambah Galeri"} 
-                onClose={onCloseDrawer} 
-                open={isDrawer}
-                extra={
-                    <Button htmlType="submit" type="primary" onClick={() => handleSubmit()}>
-                        {isEditMode ? "Update" : "Submit"}
-                    </Button>
-                }
-            >
-                <Form form={form} layout="vertical">
-                    <Form.Item
-                        name="name_natures"
-                        label="Name of Natures"
-                        rules={[{ required: true, message: 'Please enter the name of the nature' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="description"
-                        label="Description"
-                        rules={[{ required: true, message: 'Please enter a description' }]}
-                    >
-                        <Input.TextArea rows={3} />
-                    </Form.Item>
-                </Form>
-            </Drawer>
-        );
-    };
-
+  const renderDrawer = () => {
     return (
-        <Section
-            topMd={200}
-            topLg={150}
-            topXl={110}
-            bottomMd={200}
-            bottomLg={150}
-            bottomXl={110}
-        >
-            <div className="layout-content">
-                {contextHolder}
-                <Row gutter={[24, 0]}>
-                    <Col xs={22} className="mb-24">
-                        <Card bordered={false} className="criclebox h-full w-full">
-                            <Title>Galeri BlackHex</Title>
-                            <Text style={{ fontSize: "12pt" }}>Add content here</Text>
-                            <Divider />
-                            <Row gutter={[16, 16]} align="middle" style={{ marginBottom: 20 }}>
-                                <Col flex="auto">
-                                    <Input
-                                        placeholder="Search by name or description..."
-                                        style={{ width: '100%' }}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                    />
-                                </Col>
-                                <Col>
-                                    <Button
-                                        icon={isAscending ? <SortAscendingOutlined /> : <SortDescendingOutlined />}
-                                        onClick={toggleSortOrder}
-                                    >
-                                        Sort by ID
-                                    </Button>
-                                </Col>
-                            </Row>
-                            <FloatButton
-                                shape="circle"
-                                type="primary"
-                                tooltip={<div>Add Galeri</div>}
-                                icon={<PlusCircleOutlined />}
-                                onClick={() => handleDrawer()}
-                            />
-
-                            {renderDrawer()}
-
-                            {filteredData.length > 0 && !isLoading ? (
-                                <List
-                                    grid={{
-                                        gutter: 16,
-                                        column: 4,
-                                        xs: 4,
-                                        xl: 4,
-                                        lg: 4,
-                                    }}
-                                    dataSource={filteredData}
-                                    renderItem={(item) => (
-                                        <List.Item>
-                                            <Card
-                                                hoverable
-                                                style={{ width: 300 }}
-                                                cover={<img alt="example" src={item?.url_photo} />}
-                                                actions={[
-                                                    <EditOutlined key="edit" onClick={() => handleEdit(item)} />,
-                                                    <DeleteOutlined key="delete" onClick={() => showDeleteConfirm(item.id)} />
-                                                ]}
-                                            >
-                                                <Card.Meta 
-                                                    title={item?.name_natures} 
-                                                    description={<Text ellipsis>{item?.description}</Text>} 
-                                                />
-                                            </Card>
-                                        </List.Item>
-                                    )}
-                                />
-                            ) : isLoading ? (
-                                <Skeleton active />
-                            ) : (
-                                "No Data"
-                            )}
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
-        </Section> //tes
+      <Drawer
+        title="Basic Drawer"
+        onClose={onCloseDrawer}
+        open={isDrawer}
+        extra={
+          <Button type="primary" onClick={() => handleSubmit()}>
+            Submit
+          </Button>
+        }
+      >
+        <Form layout="vertical" form={form}>
+          <Form.Item
+            name="name_natures"
+            label="Name Natures"
+            rules={[{ required: true, message: "Please enter a title" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="description"
+            label="Description"
+            rules={[{ required: true, message: "Please enter a description" }]}
+          >
+            <Input.TextArea rows={3} />
+          </Form.Item>
+        </Form>
+      </Drawer>
     );
+  };
+
+  const handleDrawerEdit = (record) => {
+    setIsDrawer(true);
+    setIsEdit(true);
+    setIdSelected(record?.id);
+    form.setFieldsValue({
+      name_natures: record?.name_natures,
+      description: record?.description,
+    });
+  };
+
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
+
+  let dataSourceFiltered = data.filter((item) => {
+    return(
+      item?.name_natures.toLowerCase().includes(searchText) ||
+      item?.description.toLowerCase().includes(searchText)
+    );
+  });
+
+  const confirmDelete = (record_id) => {
+    let url = `/api/natures/${record_id}`;
+    let params = new URLSearchParams();
+    params.append("id", record_id);
+    deleteData(url, params)
+      .then((resp) => {
+        if (resp?.status === 200) {
+          showAlert("success", "Data deleted", "Data berhasil terhapus");
+          getDataGallery();
+          form.resetFields();
+          onCloseDrawer();
+        } else {
+          showAlert("error", "Failed", "Data gagal terhapus");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        showAlert("error", "Failed", "Data gagal terhapus");
+      });
+  };
+
+  return (
+    <Section topMd={100} topLg={80} topXl={60}>
+      <div className="layout-content">
+        {contextHolder}
+        <Row gutter={[24, 0]}>
+          <Col xs={24} lg={24} className="mb-24">
+            <Card bordered={false} className="criclebox h-full w-full">
+              <FloatButton
+                type="primary"
+                icon={<PlusCircleOutlined />}
+                onClick={() => handleDrawer()}
+                tooltip="Add gallery"
+              />
+              {renderDrawer()}
+
+              <Title>BlackHex Gallery</Title>
+              <Divider />
+
+              <Input
+                placeholder="Search here..."
+                prefix={<SearchOutlined />}
+                className="header-search"
+                allowClear
+                size={"large"}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+
+              <Divider />
+
+              <Title level={4}>Gallery from API</Title>
+              {isLoading ? (
+                <Skeleton active />
+              ) : dataGalleryFiltered.length > 0 ? (
+                <List
+                  grid={{ gutter: 24, xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}
+                  dataSource={(dataSourceFiltered ??= [])}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <Card
+                        hoverable
+                        cover={<img alt="example" src={item?.url_photo} />}
+                        actions={[
+                          <EditOutlined
+                            key="edit"
+                            onClick={() => handleDrawerEdit(item)}
+                          />,
+                          <Popconfirm
+                            key="delete"
+                            title="Delete the task"
+                            description="Are you sure to delete this task?"
+                            onConfirm={() => confirmDelete(item?.id)}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <DeleteOutlined />
+                          </Popconfirm>,
+                        ]}
+                      >
+                        <Card.Meta
+                          title={
+                            <Text type={searchText?.length > 0 && "danger"}>
+                            {item?.name_natures}
+                          </Text>
+                          }
+                          description={
+                              <Text ellipsis={ellipsGenerator(item?.description)}>{item?.description}</Text>
+                          }
+                        />
+                      </Card>
+                    </List.Item>
+                  )}
+                />
+              ) : (
+                "No data"
+              )}
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </Section>
+  );
 };
 
 export default Galeri;
