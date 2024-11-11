@@ -1,4 +1,4 @@
-import React from 'react';
+
 import HeroStyle4 from '../Hero/HeroStyle4';
 import Section from '../Section';
 import DepartmentSectionStyle6 from '../Section/DepartmentSection/DepartmentSectionStyle6';

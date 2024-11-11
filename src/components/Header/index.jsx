@@ -87,6 +87,9 @@ export default function Header({ logoSrc, variant }) {
                             <Link to="/gallery">Gallery</Link>
                           </li>
                           <li>
+                            <Link to="/PlaylistPage">Playlist</Link>
+                          </li>
+                          <li>
                             <Link to="/timetable">Timetable</Link>
                           </li>
                         </ul>
@@ -94,6 +97,9 @@ export default function Header({ logoSrc, variant }) {
                     </li>
                     <li>
                       <Link to="/contact">Contact</Link>
+                    </li>
+                    <li>
+                      <Link to="/LoginPage">Login</Link>
                     </li>
                   </ul>
                   <span

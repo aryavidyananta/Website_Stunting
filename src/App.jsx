@@ -10,9 +10,14 @@ import DepartmentDetails from './components/Pages/DepartmentDetails';
 import BlogDetails from './components/Pages/BlogDetails';
 import DoctorDetails from './components/Pages/DoctorDetails';
 import Gallery from './components/Pages/Gallery';
+import PlaylistPage from './components/Pages/PlaylistPage';
 import Contact from './components/Pages/Contact';
 import { useEffect } from 'react';
 import ErrorPage from './components/Pages/ErrorPage';
+import LoginPage from './pages/Login/Login';
+import Dashboard from './pages/Dashboard/dashboard';
+import Profile from './pages/Profile/Profile';
+import AdminPlaylistPost from './pages/Admin/Admin';
 
 function App() {
   const { pathname } = useLocation();
@@ -36,8 +41,19 @@ function App() {
           element={<DepartmentDetails />}
         />
         <Route path="gallery" element={<Gallery />} />
+        <Route path="PlaylistPage" element={<PlaylistPage />} />
         <Route path="contact" element={<Contact />} />
+
       </Route>
+      <Route path='/LoginPage' element={<LoginPage/>}></Route>
+      <Route path="/dashboard" element={<Dashboard />}>
+        {/* Rute nested di dalam Dashboard */}
+  
+        <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />
+        <Route path="profile" element={<Profile />} />
+   
+      </Route>
+      
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

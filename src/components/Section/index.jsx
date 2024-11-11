@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Spacing from '../Spacing';
 
 export default function Section({
