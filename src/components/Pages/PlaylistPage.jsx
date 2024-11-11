@@ -19,6 +19,7 @@ const PlaylistPage = () => {
     getPlaylistData();
   }, []);
 
+
   const getPlaylistData = () => {
     setLoading(true);
     let url = "/api/playlist/12";
@@ -76,7 +77,7 @@ const PlaylistPage = () => {
       <Menu.Item key="Song">Song</Menu.Item>
       <Menu.Item key="Movie">Movie</Menu.Item>
       <Menu.Item key="Education">Education</Menu.Item>
-      <Menu.Item key="Others">Others</Menu.Item>
+      <Menu.Item key="Others">Otherss</Menu.Item>
     </Menu>
   );
 
