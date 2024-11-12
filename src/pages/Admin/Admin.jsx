@@ -13,9 +13,11 @@ import {
   Button,
   notification,
   Popconfirm,
+  FloatButton,
+  Select,
 } from "antd";
 import { PlusCircleOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { getData, sendData, deleteData } from "../../utils/api"; // Import deleteData
+import { getData, sendData, deleteData } from "../../utils/api";
 import Section from "../../components/Section";
 
 const { Title, Text } = Typography;
@@ -142,18 +144,6 @@ const AdminPlaylistPost = () => {
         <Row gutter={[24, 0]}>
           <Col xs={24} lg={24} className="mb-24">
             <Card bordered={false} className="criclebox h-full w-full">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  setIsDrawerVisible(true);
-                  setIsEditing(false);
-                  form.resetFields();
-                }}
-              >
-                Add Playlist
-              </Button>
-
               <Drawer
                 title={isEditing ? "Edit Playlist Item" : "Add Playlist Item"}
                 onClose={() => setIsDrawerVisible(false)}
@@ -187,7 +177,13 @@ const AdminPlaylistPost = () => {
                     label="Play Genre"
                     rules={[{ required: true, message: "Please select a genre" }]}
                   >
-                    <Input placeholder="Enter genre (e.g., Music, Movie)" />
+                    <Select placeholder="Select genre">
+                      <Select.Option value="Music">Music</Select.Option>
+                      <Select.Option value="Song">Song</Select.Option>
+                      <Select.Option value="Movie">Movie</Select.Option>
+                      <Select.Option value="Education">Education</Select.Option>
+                      <Select.Option value="Others">Others</Select.Option>
+                    </Select>
                   </Form.Item>
                   <Form.Item
                     name="play_description"
@@ -238,10 +234,7 @@ const AdminPlaylistPost = () => {
                           />
                         }
                         actions={[
-                          <EditOutlined
-                            key="edit"
-                            onClick={() => handleEdit(item)}
-                          />,
+                          <EditOutlined key="edit" onClick={() => handleEdit(item)} />,
                           <Popconfirm
                             key="delete"
                             title="Are you sure to delete this playlist item?"
@@ -273,9 +266,25 @@ const AdminPlaylistPost = () => {
             </Card>
           </Col>
         </Row>
+
+        <FloatButton
+          type="primary"
+          icon={<PlusCircleOutlined />}
+          onClick={() => {
+            setIsDrawerVisible(true);
+            setIsEditing(false);
+            form.resetFields();
+          }}
+          style={{
+            position: "fixed",
+            bottom: 30,
+            right: 30,
+            zIndex: 1000,
+          }}
+        />
       </div>
     </Section>
   );
 };
 
-export default AdminPlaylistPost;   //baru
+export default AdminPlaylistPost;

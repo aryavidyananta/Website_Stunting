@@ -1,7 +1,7 @@
 // Sidebar.js
 import { Layout, Menu } from 'antd';
 import {
-  UserOutlined,
+  PlayCircleOutlined,
   LaptopOutlined,
   NotificationOutlined
 } from '@ant-design/icons';
@@ -10,7 +10,7 @@ import './dashboard.css';
 
 const { Sider } = Layout;
 
-const Sidebar = () => { //baru
+const Sidebar = () => {
   return (
     <Sider width={200} className="site-layout-background">
       <Menu
@@ -18,8 +18,8 @@ const Sidebar = () => { //baru
         defaultSelectedKeys={['1']}
         style={{ height: '100%', borderRight: 0 }}
       >
-        <Menu.Item key="1" icon={<UserOutlined />}>
-          <Link to="/dashboard/AdminPlaylistPost">Admin</Link>
+        <Menu.Item key="1" icon={<PlayCircleOutlined />}>
+          <Link to="/dashboard/AdminPlaylistPost">Playlist</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<LaptopOutlined />}>
           <Link to="/dashboard/profile">Projects</Link>
