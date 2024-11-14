@@ -41,4 +41,12 @@
     font-size: 48px;
     color: rgba(255, 255, 255, 0.9);
   }
+
+  .card-description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
   

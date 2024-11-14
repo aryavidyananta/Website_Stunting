@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Col, Row, Typography, Card, List, Skeleton, Divider, Input, Menu, Dropdown, Button, Modal, notification } from "antd";
-import { SearchOutlined, DownOutlined, PlayCircleOutlined, CloseOutlined } from "@ant-design/icons";
+import React, { useEffect, useState, useRef } from "react";
+import { Col, Row, Typography, Card, List, Skeleton, Input, Menu, Dropdown, Button, Modal, notification } from "antd";
+import { SearchOutlined, DownOutlined, CloseOutlined } from "@ant-design/icons";
 import { getData } from "../../utils/api";
 import Section from "../Section";
-import { ellipsGenerator } from "../../utils/ui";
-import './PlaylistPage.css'; // Import the CSS file for additional styling
+import BannerSectionStyle3 from "../Section/BannerSection/BannerSectionStyle3"; // Import the BannerSectionStyle3 component
+import ReactPlayer from "react-player/youtube";
+import './PlaylistPage.css';
 
 const { Title, Text } = Typography;
 
@@ -17,6 +18,7 @@ const PlaylistPage = () => {
   const [api, contextHolder] = notification.useNotification();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     getPlaylistData();
@@ -81,6 +83,17 @@ const PlaylistPage = () => {
     setSelectedItem(null);
   };
 
+  const handlePlay = () => {
+    if (videoRef.current) {
+      const playerElement = videoRef.current.getInternalPlayer();
+      if (playerElement && playerElement.requestFullscreen) {
+        playerElement.requestFullscreen();
+      } else if (videoRef.current.wrapper && videoRef.current.wrapper.requestFullscreen) {
+        videoRef.current.wrapper.requestFullscreen();
+      }
+    }
+  };
+
   const genreMenu = (
     <Menu onClick={(e) => handleGenreChange(e.key)}>
       <Menu.Item key="All">All</Menu.Item>
@@ -93,16 +106,19 @@ const PlaylistPage = () => {
   );
 
   return (
-    <Section topMd={100} topLg={80} topXl={60}>
+    <Section topMd={0} topLg={0} topXl={0}>
       <div className="layout-content">
         {contextHolder}
+        <BannerSectionStyle3
+          bgUrl="/images/about/banner_bg.svg"
+          imgUrl="/images/about/banner_img.svg"
+          title="Welcome to <br>PlayList Video"
+          subTitle="Pelajari cara mencegah dan mengatasi stunting untuk masa depan anak-anak yang lebih baik."
+        />
 
-        <Row gutter={[24, 0]}>
+        <Row gutter={[24, 0]} style={{ marginTop: "20px" }}>
           <Col xs={24} lg={24} className="mb-24">
             <Card bordered={false} className="criclebox h-full w-full">
-              <Title>Playlist</Title>
-              <Divider />
-
               <Row gutter={[24, 0]} align="middle" style={{ marginBottom: 16 }}>
                 <Col flex="auto">
                   <Input
@@ -132,7 +148,7 @@ const PlaylistPage = () => {
                   dataSource={filteredData}
                   renderItem={(item) => (
                     <List.Item>
-                      <div className="hover-card"> {/* Wrap in a div for hover effect */}
+                      <div className="hover-card">
                         <Card
                           hoverable
                           cover={
@@ -142,20 +158,13 @@ const PlaylistPage = () => {
                                 src={item.play_thumbnail}
                                 className="card-image"
                               />
-                              <div className="overlay-icon">
-                                <PlayCircleOutlined className="play-icon" />
-                              </div>
                             </div>
                           }
                           onClick={() => showModal(item)}
                         >
                           <Card.Meta
                             title={<Text>{item.play_name}</Text>}
-                            description={
-                              <Text ellipsis={ellipsGenerator(item.play_description)}>
-                                {item.play_description}
-                              </Text>
-                            }
+                            description={<Text className="card-description">{item.play_description}</Text>}
                           />
                         </Card>
                       </div>
@@ -175,58 +184,29 @@ const PlaylistPage = () => {
             onCancel={handleCloseModal}
             footer={null}
             centered
-            width={800}
+            width={900}
             closeIcon={
               <CloseOutlined
                 style={{
                   fontSize: '20px',
                   color: 'white',
-                  backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent black background
+                  backgroundColor: 'rgba(0, 0, 0, 0.6)',
                   borderRadius: '50%',
                   padding: '5px',
                 }}
               />
-            } // Custom close icon style
+            }
           >
-            <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img
-                src={selectedItem.play_thumbnail}
-                alt={selectedItem.play_name}
-                style={{ width: "100%", height: "auto" }}
-                onClick={() => window.open(selectedItem.play_url, "_blank")}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <ReactPlayer
+                ref={videoRef}
+                url={selectedItem.play_url}
+                controls
+                width="100%"
+                height="500px"
+                style={{ maxHeight: '500px', maxWidth: '100%' }}
+                onPlay={handlePlay}
               />
-              <div
-                style={{
-                  position: "absolute",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  cursor: "pointer",
-                }}
-                onClick={() => window.open(selectedItem.play_url, "_blank")}
-              >
-                <PlayCircleOutlined
-                  style={{
-                    fontSize: "72px",
-                    color: "rgba(255, 255, 255, 0.9)",
-                    marginBottom: "8px",
-                  }}
-                />
-                <div
-                  style={{
-                    fontSize: "16px",
-                    color: "rgba(255, 255, 255, 0.9)",
-                  }}
-                >
-                  Watch Now
-                </div>
-              </div>
             </div>
             <Title level={3} style={{ marginTop: 16, textAlign: "center" }}>
               {selectedItem.play_name}
