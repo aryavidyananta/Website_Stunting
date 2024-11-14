@@ -18,6 +18,7 @@ import LoginPage from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/dashboard';
 import Profile from './pages/Profile/Profile';
 import AdminPlaylistPost from './pages/Admin/Admin';
+import Testing from './pages/Testing/testing';
 
 function App() {
   const { pathname } = useLocation();
@@ -50,6 +51,8 @@ function App() {
         {/* Baru */}
         <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />  
         <Route path="profile" element={<Profile />} />
+        <Route path="Testing" element={<Testing />} />
+        
    
       </Route>
       
