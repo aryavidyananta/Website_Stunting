@@ -7,7 +7,9 @@ export default function Layout() {
   return (
     <>
       <Header logoSrc="/images/logo.svg" variant="cs_heading_color" />
-      <Outlet />
+      <div style={{ paddingTop: '85px' }}> {/* Adjust padding as needed */}
+        <Outlet />
+      </div>
       <Footer />
     </>
   );
