@@ -74,7 +74,7 @@ export default function Footer() {
           <div className="cs_footer_bottom_in">
             <SocialWidget />
             <div className="cs_copyright">
-              Copyright © 2024 Pro Health. All rights reserved.
+              
             </div>
           </div>
         </div>
