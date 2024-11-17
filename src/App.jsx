@@ -19,6 +19,8 @@ import Dashboard from './pages/Dashboard/dashboard';
 import Profile from './pages/Profile/Profile';
 import AdminPlaylistPost from './pages/Admin/Admin';
 import Testing from './pages/Testing/testing';
+import Bidan from './pages/User/User';
+import DataAnak from './pages/Anak/Anak';
 
 function App() {
   const { pathname } = useLocation();
@@ -52,6 +54,9 @@ function App() {
         <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />  
         <Route path="profile" element={<Profile />} />
         <Route path="Testing" element={<Testing />} />
+        <Route path="Bidan" element={<Bidan />} />
+        <Route path="DataAnak" element={<DataAnak />} />
+
         
    
       </Route>
