@@ -40,7 +40,7 @@ export default function AppointmentFormStyle2() {
           <img src="/images/icons/arrow_white.svg" alt="Icon" />
         </i>
       </button>
-      <a href="#departments" className="cs_down_btn cs_center rounded-circle">
+      <a href="#value" className="cs_down_btn cs_center rounded-circle">
         <svg
           width={23}
           height={15}

@@ -823,11 +823,3 @@
     }
   }
 }
-
-.cs_site_header.cs_style1 {
-  background-color: #fff; // Solid white background color
-  position: fixed;
-  width: calc(100% - 17px); // Berikan sedikit ruang agar tidak menutupi scroll bar
-  left: 0;
-  z-index: 1000;
-}

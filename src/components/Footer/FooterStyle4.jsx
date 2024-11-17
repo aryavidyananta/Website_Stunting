@@ -62,7 +62,7 @@ export default function FooterStyle4() {
       <div className="cs_footer_bottom">
         <div className="container">
           <div className="cs_copyright">
-            Copyright © 2023 Pro Health. All rights reserved.
+            Copyright © BlackHex SiFors5A 2024
           </div>
         </div>
       </div>

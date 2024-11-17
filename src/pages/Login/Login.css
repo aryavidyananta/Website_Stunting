@@ -1,76 +1,218 @@
-/* Mengatur layout dasar */
-html, body {
-  height: 100%;
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  background-color: #f6f5f7;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f5f5f5;
+  padding: 0;
 }
 
-/* Layout utama */
-.layout-default {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  position: relative;
-}
-
-/* Kontainer form login */
-.login-container {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
+.bodysignin {
+  background: #f6f5f7;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding-bottom: 20px;
 }
 
-/* Kotak login di tengah */
-.login-box {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
+.containersignin {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  max-width: 1024px;
+  min-height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-containersignin {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+  width: 50%;
+}
+
+.signInContainersignin {
+  left: 0;
+  z-index: 2;
+}
+
+.signUpContainersignin {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.containersignin.right-panel-active .signUpContainersignin {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+}
+
+.containersignin.right-panel-active .signInContainersignin {
+  transform: translateX(100%);
+  opacity: 0;
+  z-index: 1;
+}
+
+.formsignin {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
   text-align: center;
-  z-index: 10;
 }
 
-/* Judul besar di tengah */
-.login-title {
-  font-size: 32px;
+.signinTitlesignin {
   font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
-/* Subtitle di bawah judul */
-.subtitle {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 30px;
-}
-
-/* Tombol login */
-.login-button {
-  width: 100%;
-  background-color: #4caf50;
+.inputsignin {
+  background-color: #eee;
   border: none;
-  padding: 10px 0;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
 }
 
-.login-button:hover {
-  background-color: #66bb6a;
+.buttonsignin {
+  border-radius: 20px;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Teks 'Forgot password?' */
-.forgot-password {
-  margin-top: 15px;
+.buttonsignin:active {
+  transform: scale(0.95);
+}
+
+.buttonsignin:focus {
+  outline: none;
+}
+
+.buttonsignin:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.ghostButtonsignin {
+  background-color: transparent;
+  border-color: #ffffff;
+}
+
+.anchorsignin {
+  color: #333;
   font-size: 14px;
-  color: #888;
+  text-decoration: none;
+  margin: 15px 0;
 }
 
+.overlayContainersignin {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+.containersignin.right-panel-active .overlayContainersignin {
+  transform: translateX(-100%);
+}
+
+.overlaysignin {
+  background: #00aaff;
+  background: -webkit-linear-gradient(to right, #007bff, #00aaff);
+  background: linear-gradient(to right, #007bff, #00aaff);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: #ffffff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.containersignin.right-panel-active .overlaysignin {
+  transform: translateX(50%);
+}
+
+.overlayPanelsignin {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.leftOverlayPanelsignin {
+  transform: translateX(-20%);
+}
+
+.containersignin.right-panel-active .leftOverlayPanelsignin {
+  transform: translateX(0);
+}
+
+.rightOverlayPanelsignin {
+  right: 0;
+  transform: translateX(0);
+}
+
+.containersignin.right-panel-active .rightOverlayPanelsignin {
+  transform: translateX(20%);
+}
+
+.paragraphsignin {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .containersignin {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+  }
+}

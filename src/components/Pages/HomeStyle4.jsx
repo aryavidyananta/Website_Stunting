@@ -57,76 +57,69 @@ const departmentData = [
 const featureListData = [
   {
     iconUrl: '/images/home_4/compassion.svg',
-    title: 'Compassion',
+    title: 'Kepedulian',
     subTitle:
-      'We understand that seeking medical care can be a stressful and emotional experience, and we strive to create a welcoming and supportive environment that puts our patients at ease.',
+      'Kami memiliki komitmen yang mendalam untuk memahami tantangan yang dihadapi oleh keluarga yang terdampak stunting. Pendekatan kami berakar pada empati, dan kami berupaya menyediakan lingkungan yang mendukung kebutuhan fisik maupun emosional anak dan keluarganya.',
   },
   {
     iconUrl: '/images/home_4/excellence.svg',
-    title: 'Excellence',
+    title: 'Pendidikan',
     subTitle:
-      'We are committed to providing excellent medical care and services to our patients. We believe in continuously improving our skills, and resources to ensure that we deliver the highest quality care possible.',
+      'Kami percaya bahwa pengetahuan adalah alat yang kuat dalam mengatasi stunting. Dengan menyediakan informasi yang jelas dan mudah diakses tentang nutrisi, kesehatan, dan pertumbuhan, kami memberdayakan keluarga dan komunitas untuk membuat keputusan yang mendukung perkembangan anak-anak mereka.',
   },
   {
     iconUrl: '/images/home_4/integrity.svg',
-    title: 'Integrity',
-    subTitle: `We believe in practicing medicine with integrity and honesty. We are transparent in our communication and decision-making processes, and we always put our patient's interests first.`,
+    title: 'Integritas',
+    subTitle: `Transparansi dan kepercayaan adalah hal yang penting bagi misi kami. Kami berdedikasi untuk komunikasi yang jujur, penggunaan sumber daya yang bertanggung jawab, dan pengambilan keputusan yang memprioritaskan kesejahteraan anak-anak dan keluarga yang kami layani.`,
   },
   {
     iconUrl: '/images/home_4/respect.svg',
-    title: 'Respect',
+    title: 'Rasa Hormat',
     subTitle:
-      'We treat all individuals with respect and dignity, regardless of their background, beliefs, or circumstances. We believe that every person deserves to be treated with compassion and kindness.',
+      'Setiap anak dan keluarga berhak mendapatkan rasa hormat, tanpa memandang latar belakang atau keadaan mereka. Kami menghargai martabat setiap individu dan berupaya menciptakan lingkungan yang ramah dan inklusif yang menghormati nilai dan praktik budaya.',
   },
   {
     iconUrl: '/images/home_4/teamwork.svg',
-    title: 'Teamwork',
+    title: 'Dukungan Komunitas',
     subTitle:
-      'We believe in working collaboratively with our team members and other healthcare professionals to provide comprehensive and effective care to our patients.',
+      'Mengatasi stunting memerlukan usaha bersama. Kami bekerja sama dengan pemimpin komunitas, tenaga kesehatan, dan keluarga untuk membangun sistem dukungan yang kuat, memastikan setiap anak mendapatkan akses ke sumber daya yang dibutuhkan untuk tumbuh sehat.',
   },
 ];
 const testimonialData = [
   {
-    text: '"I recently had to bring my child to ProHealth for a minor injury, and I was so impressed with the care he received. The pediatrician was great with him and made him feel at ease.”',
+    text: '"Saya sangat berterima kasih atas informasi yang diberikan oleh website ini. Anak saya yang berusia 2 tahun didiagnosis mengalami stunting, dan sekarang kami mendapatkan panduan gizi yang sangat membantu perkembangan anak kami."',
+    ratingNumber: '5',
+    avatarImgUrl: '/images/home_4/avatar_1.png',
+    avatarName: 'Clara Jasmine',
+    avatarDesignation: 'Jakarta, Indonesia',
+  },
+  {
+    text: '"Konsultasi online yang disediakan sangat membantu kami dalam memahami kondisi anak kami. Para dokter sangat ramah dan profesional. Terima kasih telah memberikan edukasi tentang pentingnya 1000 hari pertama kehidupan."',
     ratingNumber: '5',
     avatarImgUrl: '/images/home_4/avatar_2.png',
-    avatarName: 'Sophia Torres',
-    avatarDesignation: 'New York, USA',
+    avatarName: 'Luna Amelia',
+    avatarDesignation: 'Surabaya, Indonesia',
   },
   {
-    text: '"ProHealth has been a game-changer for me. The doctors are caring and highly skilled, and the staff is always friendly and accommodating. We hope for the best wishes.”',
+    text: '"Website ini menyediakan informasi yang sangat bermanfaat tentang stunting. Saya belajar cara memberikan pola makan sehat untuk anak dan menghindari risiko stunting."',
     ratingNumber: '5',
     avatarImgUrl: '/images/home_4/avatar_3.png',
-    avatarName: 'John Dupont',
-    avatarDesignation: 'Manhattan, USA',
+    avatarName: 'Isabella Sophia',
+    avatarDesignation: 'Bandung, Indonesia',
   },
   {
-    text: '“I had a great experience with ProHealth. The staff were friendly and professional, and the doctor took the time to answer all my questions and address my concerns.”',
+    text: '"Saya sangat merekomendasikan website ini untuk orang tua yang membutuhkan edukasi tentang stunting. Artikel-artikel yang tersedia sangat informatif dan mudah dipahami."',
     ratingNumber: '5',
     avatarImgUrl: '/images/home_4/avatar_4.png',
-    avatarName: 'Allen Duarte',
-    avatarDesignation: 'California, USA',
+    avatarName: 'Aurelia Grace',
+    avatarDesignation: 'Yogyakarta, Indonesia',
   },
   {
-    text: '"I recently had to bring my child to ProHealth for a minor injury, and I was so impressed with the care he received. The pediatrician was great with him and made him feel at ease.”',
+    text: '"Program intervensi gizi yang kami ikuti melalui website ini membantu anak kami tumbuh lebih optimal. Terima kasih telah mendukung keluarga kami dalam melawan stunting."',
     ratingNumber: '5',
-    avatarImgUrl: '/images/home_4/avatar_2.png',
-    avatarName: 'Sophia Torres',
-    avatarDesignation: 'New York, USA',
-  },
-  {
-    text: '"ProHealth has been a game-changer for me. The doctors are caring and highly skilled, and the staff is always friendly and accommodating. We hope for the best wishes.”',
-    ratingNumber: '5',
-    avatarImgUrl: '/images/home_4/avatar_3.png',
-    avatarName: 'John Dupont',
-    avatarDesignation: 'Manhattan, USA',
-  },
-  {
-    text: '“I had a great experience with ProHealth. The staff were friendly and professional, and the doctor took the time to answer all my questions and address my concerns.”',
-    ratingNumber: '5',
-    avatarImgUrl: '/images/home_4/avatar_4.png',
-    avatarName: 'Allen Duarte',
-    avatarDesignation: 'California, USA',
+    avatarImgUrl: '/images/home_4/avatar_5.png',
+    avatarName: 'Elena Rose',
+    avatarDesignation: 'Medan, Indonesia',
   },
 ];
 const brandData = [
@@ -138,29 +131,29 @@ const brandData = [
 ];
 const faqData = [
   {
-    title: 'What services does ProHealth offer?',
+    title: 'Apa itu stunting?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'Stunting adalah kondisi di mana pertumbuhan anak terganggu, membuat anak lebih pendek dari rata-rata anak seusianya. Stunting disebabkan oleh kekurangan gizi kronis, terutama pada 1.000 hari pertama kehidupan, yaitu sejak masa kehamilan hingga anak berusia dua tahun. Kondisi ini juga mempengaruhi perkembangan otak dan tubuh anak secara keseluruhan, yang dapat berdampak jangka panjang.',
   },
   {
-    title: 'How do I schedule an appointment with ProHealth?',
+    title: 'Apa penyebab utama stunting?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'Stunting disebabkan oleh kombinasi faktor, seperti kurangnya asupan gizi yang cukup selama masa kehamilan dan balita, pola makan yang tidak seimbang, infeksi berulang, sanitasi yang buruk, serta rendahnya kesadaran akan pentingnya kesehatan dan gizi.',
   },
   {
-    title: 'Do you accept insurance?',
+    title: 'Apa dampak stunting pada anak?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'Anak yang mengalami stunting berisiko memiliki kemampuan kognitif yang lebih rendah, daya tahan tubuh yang lemah, dan peluang lebih besar terkena penyakit kronis seperti diabetes atau hipertensi di masa dewasa. Stunting juga dapat menurunkan produktivitas anak ketika dewasa.',
   },
   {
-    title: 'What should I bring to my appointment?',
+    title: 'Bagaimana cara mencegah stunting?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'Pencegahan stunting dilakukan dengan memberi ASI eksklusif selama 6 bulan pertama, memberikan makanan pendamping ASI yang bergizi, serta memastikan ibu hamil mendapat nutrisi yang cukup dan pemeriksaan kesehatan rutin. Selain itu, menjaga kebersihan lingkungan dan edukasi mengenai gizi juga sangat penting.',
   },
   {
-    title: 'How do I request a prescription refill?',
+    title: 'Apakah stunting bisa diatasi?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'Stunting sulit diatasi setelah anak berusia lebih dari 2 tahun karena dampaknya biasanya bersifat permanen. Namun, pemberian gizi yang cukup dan stimulasi fisik maupun mental tetap bisa membantu meningkatkan kualitas hidup anak.',
   },
 ];
 const blogData = [
@@ -192,39 +185,22 @@ export default function HomeStyle4() {
   return (
     <>
       <HeroStyle4
-            title={
-              <span style={{ color: '#1c435e' }}>
-                Your Path to Health and Wellness Begins Here
-              </span>
-            }
-            subTitle={
-              <span style={{ color: '#1c435e' }}>
-                Your Trusted Partner in Comprehensive Healthcare, Where Your Well-being is Our Priority, Providing Quality Care and Support for All Your Health Needs.
-              </span>
-            }
-            bgUrl="/images/home_4/hero_bg.jpg"
-            imgUrl="/images/home_4/hero_img_1.png"
-            imgUrl2="/images/home_4/hero_img_2.png"
-            imgUrl3="/images/home_4/hero_img_3.png"
-          />
+        title={
+          <span style={{ color: '#1c435e' }}>
+            Langkah Awal Menuju Generasi Bebas Stunting
+          </span>
+        }
+        subTitle={
+          <span style={{ color: '#1c435e' }}>
+            Pendamping Terpercaya Anda dalam Mencegah dan Mengatasi Stunting, Karena Kesehatan dan Masa Depan Anak Adalah Prioritas Kami. Mari Wujudkan Generasi yang Sehat dan Berkualitas!
+          </span>
+        }
+        bgUrl="/images/home_4/hero_bg.png"
+        imgUrl="/images/home_4/hero_img_10.png"
+        imgUrl2="/images/home_4/hero_img_2.png"
+        imgUrl3="/images/home_4/hero_img_3.png"
+      />
 
-      <Section topMd={190} topLg={150} topXl={105} id="departments">
-        <DepartmentSectionStyle6
-          sectionTitle="Find Your Right Department"
-          sectionTitleUp="DEPARTMENTS"
-          data={departmentData}
-        />
-      </Section>
-      <Section topMd={170} topLg={120} topXl={100}>
-        <AboutSectionStyle5
-          imgUrl="/images/home_4/about_img.jpg"
-          titleUp="ABOUT US"
-          title="ProHealth is a team of experienced medical professionals"
-          subTitle="Dedicated to providing top-quality healthcare services. We believe in a holistic approach to healthcare that focuses on treating the whole person, not just the illness or symptoms."
-          supportTitle="24/7 Support"
-          supportSubTitle="We are available when you want"
-        />
-      </Section>
       <Section
         topMd={185}
         topLg={140}
@@ -233,12 +209,33 @@ export default function HomeStyle4() {
         bottomLg={150}
         bottomXl={100}
         className="cs_gray_bg_1"
+        id="value"
       >
         <FeaturesSectionStyle5
           sectionTitle="Our Values"
           data={featureListData}
         />
       </Section>
+
+      <Section topMd={170} topLg={120} topXl={100} id="about">
+        <AboutSectionStyle5
+          imgUrl="/images/home_4/about_img.jpg"
+          titleUp="ABOUT US"
+          title="Tim Profesional yang Berdedikasi untuk Masa Depan Anak yang Lebih Sehat"
+          subTitle="Kami adalah tim profesional kesehatan yang berdedikasi untuk melawan stunting dan mendukung pertumbuhan sehat anak-anak di seluruh Indonesia. Dengan komitmen penuh untuk menyediakan layanan berkualitas dan informasi yang dapat diakses, kami percaya bahwa setiap anak memiliki hak untuk tumbuh sehat dan berkembang sesuai potensinya."
+          supportTitle="24/7 Support"
+          supportSubTitle="We are available when you want"
+        />
+      </Section>
+
+      <Section topMd={190} topLg={150} topXl={105} id="departments">
+        <DepartmentSectionStyle6
+          sectionTitle="Find Your Right Department"
+          sectionTitleUp="DEPARTMENTS"
+          data={departmentData}
+        />
+      </Section>
+
       <Section
         topMd={190}
         topLg={150}
@@ -248,8 +245,8 @@ export default function HomeStyle4() {
         bottomXl={110}
       >
         <TestimonialSectionStyle4
-          sectionTitle="Discover the Stories of Health and Healing"
-          sectionTitleUp="WHAT OUR PATIENTS SAY"
+          sectionTitle="Cerita inspiratif perjuangan orang tua."
+          sectionTitleUp="Perjuangan Melawan Stunting"
           avatarListTitle="150+ patients are reviews about ProHealth"
           avatarList={[
             { imgUrl: '/images/home_4/avatar_1.png' },
@@ -261,36 +258,30 @@ export default function HomeStyle4() {
           data={testimonialData}
         />
       </Section>
+
       <Section>
         <Cta
-          title="Ready to Prioritize Your Health?"
-          subTitle="Contact us now to schedule your appointment and take the first step towards a healthier, happier you."
-          bgUrl="/images/home_4/cta_bg.jpeg"
+          title="Siap Prioritaskan Kesehatan Anak Anda?"
+          subTitle="Hubungi kami sekarang untuk jadwalkan konsultasi dan ambil langkah pertama menuju masa depan yang lebih sehat dan bebas stunting!"
+          bgUrl="/images/home_4/cta_bg.jpg"
           btnUrl="/appointments"
           btnText="Booking Now"
         />
       </Section>
-      <Section
-        topMd={185}
-        topLg={140}
-        topXl={100}
-        bottomMd={200}
-        bottomLg={150}
-        bottomXl={110}
-        className="cs_gray_bg_1"
-      >
-      </Section>
+
       <Section>
         <BrandsSectionStyle3 data={brandData} />
       </Section>
+
       <Section topMd={185} topLg={145} topXl={105}>
         <FaqSectionStyle4
-          sectionTitle="Frequently Asked <br />Questions"
+          sectionTitle="Informasi Penting <br />tentang Stunting"
           data={faqData}
-          faqImgUrl="/images/home_4/faq_img.jpeg"
+          faqImgUrl="/images/home_4/faq_img.png"
           spiningImgUrl="/images/home_1/about_mini.svg"
         />
       </Section>
+
       <Section
         topMd={185}
         topLg={145}
