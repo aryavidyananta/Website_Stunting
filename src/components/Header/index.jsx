@@ -49,54 +49,16 @@ export default function Header({ logoSrc, variant }) {  //baru
                       <Link to="/">Home</Link>
                     </li>
                     <li>
-                      <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                      <Link to="/doctors">Find Doctor</Link>
+                      <Link to="/doctors">Medis</Link>
                     </li>
                     <li>
                       <Link to="/blog">Blog</Link>
                     </li>
-                    <li className="menu-item-has-children">
-                      <Link to="/">Pages</Link>
-                      <DropDown>
-                        <ul>
-                          <li>
-                            <Link to="/appointments">Appointments</Link>
-                          </li>
-                          <li>
-                            <Link to="/departments">Departments</Link>
-                          </li>
-                          <li>
-                            <Link to="/departments/department-details">
-                              Department Details
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/doctors">Doctors</Link>
-                          </li>
-                          <li>
-                            <Link to="doctors/doctor-details">
-                              Doctor Details
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/pricing-plan">Pricing Plan</Link>
-                          </li>
-                          <li>
-                            <Link to="/gallery">Gallery</Link>
-                          </li>
-                          <li>
-                            <Link to="/PlaylistPage">Playlist</Link>
-                          </li>
-                          <li>
-                            <Link to="/timetable">Timetable</Link>
-                          </li>
-                        </ul>
-                      </DropDown>
+                    <li>
+                      <Link to="/PlaylistPage">Playlist</Link>
                     </li>
                     <li>
-                      <Link to="/contact">Contact</Link>
+                      <Link to="/Kalkulator">Kalkulator</Link>
                     </li>
                     <li>
                       <Link to="/LoginPage">Login</Link>
@@ -183,7 +145,7 @@ export default function Header({ logoSrc, variant }) {  //baru
             <img src="/images/logo.svg" alt="Logo" />
             <div className="cs_height_15" />
             <h3 className="cs_fs_24 cs_semibold mb-0">
-              Your Partner in Health and Wellness
+            Pendamping Cegah Stunting
             </h3>
           </div>
           <Spacing md="35" lg="35" xl="35" />
@@ -191,19 +153,19 @@ export default function Header({ logoSrc, variant }) {  //baru
           <Spacing md="35" lg="50" xl="35" />
           <IconBoxStyle11
             title="Phone"
-            subTitle="123-456-7890"
+            subTitle="08xxxxxxxxxx"
             iconSrc="/images/contact/icon_1.svg"
           />
           <Spacing md="30" lg="30" xl="30" />
           <IconBoxStyle11
             title="Email"
-            subTitle="hellocallcenter@gmail.com"
+            subTitle="BlackHex@gmail.com"
             iconSrc="/images/contact/icon_2.svg"
           />
           <Spacing md="30" lg="30" xl="30" />
           <IconBoxStyle11
             title="Location"
-            subTitle="123 Anywhere St., Any City, 12345"
+            subTitle="Indonesia"
             iconSrc="/images/contact/icon_3.svg"
           />
           <Spacing md="60" lg="60" xl="60" />

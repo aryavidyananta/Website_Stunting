@@ -2,21 +2,42 @@ import React, { useState } from 'react';
 import Spacing from '../../Spacing';
 import TeamStyle2 from '../../Team/TeamStyle2';
 import Pagination from '../../Pagination';
+import './SearchStyle.css';
 
 export default function TeamSectionStyle2({ data }) {
   const [view, setView] = useState('grid');
   const [active, setActive] = useState('all');
   const [filteredData, setFilteredData] = useState(data);
-  // Extracting unique categories from teamData
-  const uniqueCategories = [...new Set(data.map(doctor => doctor.category))];
-  const handleFilter = category => {
-    if (category === 'all') {
-      setFilteredData(data);
-    } else {
-      const filtered = data.filter(doctor => doctor.category === category);
-      setFilteredData(filtered);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleFilter = (category) => {
+    let updatedData = data;
+    if (category === 'bidan') {
+      updatedData = data.filter((doctor) => doctor.category === 'bidan');
+    } else if (category === 'dokter_spesialis_anak') {
+      updatedData = data.filter((doctor) => doctor.category === 'pediatric');
     }
+    setFilteredData(
+      updatedData.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
     setActive(category);
+  };
+
+  const handleSearch = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+    const filteredBySearch = data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(term.toLowerCase()) ||
+        item.category.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredData(
+      active === 'all'
+        ? filteredBySearch
+        : filteredBySearch.filter((doctor) => doctor.category === active)
+    );
   };
 
   return (
@@ -28,12 +49,43 @@ export default function TeamSectionStyle2({ data }) {
             <li className={active === 'all' ? 'active' : ''}>
               <span onClick={() => handleFilter('all')}>All</span>
             </li>
-            {uniqueCategories?.map(item => (
-              <li className={active === item ? 'active' : ''} key={item}>
-                <span onClick={() => handleFilter(item)}>{item}</span>
-              </li>
-            ))}
+            <li className={active === 'bidan' ? 'active' : ''}>
+              <span onClick={() => handleFilter('bidan')}>Bidan</span>
+            </li>
+            <li className={active === 'dokter_spesialis_anak' ? 'active' : ''}>
+              <span onClick={() => handleFilter('dokter_spesialis_anak')}>
+                Dokter Spesialis Anak
+              </span>
+            </li>
           </ul>
+        </div>
+        <div className="cs_search_box">
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search Doctors"
+              className="search-input"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            <span className="search-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-search"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+          </div>
         </div>
         <div className="cs_view_box">
           <span>Showing {filteredData.length} items</span>

@@ -216,3 +216,21 @@ body, html {
     align-items: center;
   }
 }
+
+.bodysignin {
+  background-image: url('/images/Login/hero_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containersignin {
+  background-color: rgba(255, 255, 255, 0.9); /* Optional: Tambahkan transparansi */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+

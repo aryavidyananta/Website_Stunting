@@ -3,7 +3,7 @@ import { Col, Row, Typography, Card, List, Skeleton, Input, Menu, Dropdown, Butt
 import { SearchOutlined, DownOutlined, CloseOutlined } from "@ant-design/icons";
 import { getData } from "../../utils/api";
 import Section from "../Section";
-import BannerSectionStyle3 from "../Section/BannerSection/BannerSectionStyle3"; // Import the BannerSectionStyle3 component
+import BannerSectionStyle3 from "../Section/BannerSection/BannerSectionStyle3";
 import ReactPlayer from "react-player/youtube";
 import './PlaylistPage.css';
 
@@ -110,8 +110,7 @@ const PlaylistPage = () => {
       <div className="layout-content">
         {contextHolder}
         <BannerSectionStyle3
-          bgUrl="/images/about/banner_bg.svg"
-          imgUrl="/images/about/banner_img.svg"
+          bgUrl="/images/playlist/banner_bg.svg"
           title="Welcome to <br>PlayList Video"
           subTitle="Pelajari cara mencegah dan mengatasi stunting untuk masa depan anak-anak yang lebih baik."
         />

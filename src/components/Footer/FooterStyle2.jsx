@@ -6,7 +6,7 @@ import SocialWidget from '../Widget/SocialWidget';
 import NewsletterStyle2 from '../Widget/NewsletterStyle2';
 const menuDataOne = [
   { title: 'About Us', href: '/about' },
-  { title: 'Departments', href: '/departments' },
+  { title: 'Departments', href: '/Kalklator' },
   { title: 'Doctors', href: '/doctors' },
   { title: 'Timetable', href: '/timetable' },
   { title: 'Appointment', href: '/appointments' },
@@ -36,7 +36,7 @@ export default function FooterStyle2() {
             <div className="cs_footer_item">
               <TextWidget
                 logoUrl="/images/footer_logo_white.svg"
-                text="ProHealth Medical & Healthcare Center"
+                text="POS - Pusat Pelayanan Optimal Stunting"
               />
               <ContactInfoWidget />
             </div>

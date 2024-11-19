@@ -242,7 +242,7 @@ const AdminPlaylistPost = () => {
                             okText="Yes"
                             cancelText="No"
                           >
-                            <DeleteOutlined />
+                            <DeleteOutlined style={{ color: "red" }} />
                           </Popconfirm>,
                         ]}
                       >

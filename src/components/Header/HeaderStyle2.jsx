@@ -81,7 +81,7 @@ export default function HeaderStyle2({ logoSrc, variant, btnText, btnUrl }) {
                             <Link to="/appointments">Appointments</Link>
                           </li>
                           <li>
-                            <Link to="/departments">Departments</Link>
+                            <Link to="/Kalklator">Kalkulator</Link>
                           </li>
                           <li>
                             <Link to="/departments/department-details">

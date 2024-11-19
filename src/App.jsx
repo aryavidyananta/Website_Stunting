@@ -5,7 +5,7 @@ import About from './components/Pages/About';
 import Doctors from './components/Pages/Doctors';
 import Blog from './components/Pages/Blog';
 import Appointments from './components/Pages/Appointments';
-import Departments from './components/Pages/Departments';
+import Departments from './components/Pages/Kalkulator';
 import DepartmentDetails from './components/Pages/DepartmentDetails';
 import BlogDetails from './components/Pages/BlogDetails';
 import DoctorDetails from './components/Pages/DoctorDetails';
@@ -19,6 +19,7 @@ import Dashboard from './pages/Dashboard/dashboard';
 import Profile from './pages/Profile/Profile';
 import AdminPlaylistPost from './pages/Admin/Admin';
 import Testing from './pages/Testing/testing';
+import Kalkulator from './components/Pages/Kalkulator';
 
 function App() {
   const { pathname } = useLocation();
@@ -36,11 +37,11 @@ function App() {
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:blogId" element={<BlogDetails />} />
         <Route path="appointments" element={<Appointments />} />
-        <Route path="departments" element={<Departments />} />
         <Route
           path="departments/:departmentId"
           element={<DepartmentDetails />}
         />
+        <Route path="Kalkulator" element={<Kalkulator />} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="PlaylistPage" element={<PlaylistPage />} />
         <Route path="contact" element={<Contact />} />

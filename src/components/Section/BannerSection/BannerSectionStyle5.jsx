@@ -13,7 +13,6 @@ export default function BannerSectionStyle5({
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
       <div className="cs_banner_img">
-        <img src={imgUrl} alt="Banner" />
       </div>
       <div className="container">
         <div className="cs_banner_text">

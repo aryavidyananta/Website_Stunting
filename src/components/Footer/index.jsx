@@ -5,19 +5,8 @@ import SocialWidget from '../Widget/SocialWidget';
 import Newsletter from '../Widget/Newsletter';
 import TextWidget from '../Widget/TextWidget';
 const menuDataOne = [
-  { title: 'About Us', href: '/about' },
-  { title: 'Departments', href: '/departments' },
-  { title: 'Doctors', href: '/doctors' },
-  { title: 'Timetable', href: '/timetable' },
-  { title: 'Appointment', href: '/appointments' },
-  { title: 'Testimonials', href: '/' },
 ];
 const menuDataTwo = [
-  { title: 'Blog', href: '/blog' },
-  { title: 'Contact Us', href: '/contact' },
-  { title: 'FAQs', href: '/' },
-  { title: 'Privacy Policy', href: '/' },
-  { title: 'Terms and Conditions', href: '/' },
 ];
 
 export default function Footer() {
@@ -36,7 +25,7 @@ export default function Footer() {
             alt="Logo Icon"
             className="cs_footer_brand_icon"
           />
-          <h2 className="cs_footer_brand_text">ProHealth</h2>
+          <h2 className="cs_footer_brand_text">POS</h2>
         </div>
       </div>
       <div className="cs_footer_main">
@@ -44,7 +33,7 @@ export default function Footer() {
           <div className="row">
             <div className="col-lg-4">
               <div className="cs_footer_item">
-                <TextWidget text="ProHealth Medical & <br />Healthcare Center" />
+                <TextWidget text="POS<br /> Pusat Pelayanan Optimal Stunting" />
                 <ContactInfoWidget />
               </div>
             </div>

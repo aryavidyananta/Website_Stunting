@@ -16,13 +16,19 @@ export default function BannerSectionStyle3({
       className="cs_banner cs_style_3 cs_bg_filed"
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
-      <div className="cs_banner_img">
-        <img src={imgUrl} alt="Banner" className="cs_main_banner_img" />
-      </div>
+      <div className="cs_banner_img"></div>
       <div className="container">
         <div className="cs_banner_text">
-          <h2 className="cs_banner_title cs_fs_72">{parse(title)}</h2>
-          <p className="cs_banner_subtitle cs_fs_20 mb-0 cs_heading_color">
+          <h2
+            className="cs_banner_title cs_fs_72"
+            style={{ color: 'white' }}
+          >
+            {parse(title)}
+          </h2>
+          <p
+            className="cs_banner_subtitle cs_fs_20 mb-0 cs_heading_color"
+            style={{ color: 'white' }}
+          >
             {parse(subTitle)}
           </p>
           {btnText && (

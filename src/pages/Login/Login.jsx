@@ -204,7 +204,7 @@ const LoginPage = () => {
             </div>
 
             <div className="overlayPanelsignin rightOverlayPanelsignin">
-              <h1 className="signinTitlesignin">Hello, Friend!</h1>
+              <h1 className="signinTitlesignin">Hello, Moms!</h1>
               <p className="paragraphsignin">
                 Enter your personal details and start journey with us
               </p>

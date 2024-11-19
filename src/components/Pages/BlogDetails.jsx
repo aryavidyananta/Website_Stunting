@@ -21,7 +21,7 @@ const tags = [
 const relatedBlog = [
   {
     title:
-      'The Importance of Mental Health: Understanding and Managing Anxiety Disorders',
+      'Lorem ipsum Blog Stunting',
     thumbUrl: '/images/blog/post_1.jpeg',
     date: 'March 12',
     btnText: 'Learn More',
@@ -48,7 +48,7 @@ export default function BlogDetails() {
   return (
     <>
       <Section topMd={170} bottomMd={54} bottomLg={54}>
-        <Breadcrumb title="The Importance of Mental Health: Understanding and Managing Anxiety Disorders" />
+        <Breadcrumb title="Lorem ipsum Blog Stunting" />
       </Section>
       <div className="container">
         <div className="cs_blog_details_info">

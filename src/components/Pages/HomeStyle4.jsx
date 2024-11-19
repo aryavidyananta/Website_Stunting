@@ -1,5 +1,5 @@
 
-import HeroStyle4 from '../Hero/HeroStyle4';
+import HeroStyle2 from '../Hero/HeroStyle2';
 import Section from '../Section';
 import DepartmentSectionStyle6 from '../Section/DepartmentSection/DepartmentSectionStyle6';
 import AboutSectionStyle5 from '../Section/AboutSection/AboutSectionStyle5';
@@ -8,50 +8,37 @@ import Cta from '../Cta';
 import TestimonialSectionStyle4 from '../Section/TestimonialSection/TestimonialSectionStyle4';
 import BrandsSectionStyle3 from '../Section/BrandsSection/BrandsSectionStyle3';
 import FaqSectionStyle4 from '../Section/FaqSection/FaqSectionStyle4';
+import TeamSectionStyle4 from '../Section/TeamSection/TeamSectionStyle4';
 import BlogSectionStyle5 from '../Section/BlogSection/BlogSectionStyle5';
 import { pageTitle } from '../../helpers/PageTitle';
 const departmentData = [
   {
-    title: 'Emergency Department',
+    title: 'Medis',
     subTitle:
-      'Connecting you with the best healthcare professionals in Emergency Department',
+      'Konsultasi langsung dengan tenaga kesehatan terpercaya untuk solusi stunting anak.',
     iconUrl: '/images/home_2/department_icon_1.svg',
-    href: '/departments/department-details',
+    href: '/doctors',
   },
   {
-    title: 'Pediatric Departement',
+    title: 'Blog Stunting',
     subTitle:
-      'Connecting you with the best healthcare professionals in Emergency Department',
+      'Artikel informatif seputar stunting dari para ahli.',
     iconUrl: '/images/home_2/department_icon_2.svg',
-    href: '/departments/department-details',
+    href: '/blog',
   },
   {
-    title: 'Gynecology Department',
+    title: 'Playlist Stunting',
     subTitle:
-      'Connecting you with the best healthcare professionals in Emergency Department',
+      'Video edukasi praktis tentang pencegahan dan penanganan stunting.',
     iconUrl: '/images/home_2/department_icon_3.svg',
-    href: '/departments/department-details',
+    href: '/PlaylistPage',
   },
   {
-    title: 'Cardiology Department',
+    title: 'Kalkulator Stunting',
     subTitle:
-      'Connecting you with the best healthcare professionals in Emergency Department',
+      'Cek risiko stunting anak dengan kalkulator interaktif.',
     iconUrl: '/images/home_2/department_icon_4.svg',
-    href: '/departments/department-details',
-  },
-  {
-    title: 'Neurology Department',
-    subTitle:
-      'Connecting you with the best healthcare professionals in Emergency Department',
-    iconUrl: '/images/home_2/department_icon_5.svg',
-    href: '/departments/department-details',
-  },
-  {
-    title: 'Psychiatry Department',
-    subTitle:
-      'Connecting you with the best healthcare professionals in Emergency Department',
-    iconUrl: '/images/home_2/department_icon_6.svg',
-    href: '/departments/department-details',
+    href: '/Kalkulator',
   },
 ];
 const featureListData = [
@@ -180,25 +167,63 @@ const blogData = [
     href: '/blog/blog-details',
   },
 ];
+const teamData = [
+  {
+    imgUrl: '/images/home_3/doctor_1.png',
+    name: 'Bidan Novelita Damanik',
+    designation: '',
+    description:
+      'Bidan Novel, inovator metode persalinan tiup-tiup, beliau aktif mengedukasi pentingnya nutrisi ibu hamil untuk mendukung tumbuh kembang optimal bayi.',
+    social: [
+      { icon: 'fa6-brands:facebook-f', href: '/home-v3' },
+      { icon: 'fa6-brands:linkedin-in', href: '/home-v3' },
+      { icon: 'fa6-brands:twitter', href: '/home-v3' },
+    ],
+  },
+  {
+    imgUrl: '/images/home_3/doctor_2.png',
+    name: 'Bidan Yesie Aprillia',
+    designation: '',
+    description:
+      'Ahli di bidang gentle birth dengan layanan seperti prenatal gentle yoga, hypnotherapy, dan hypnobirthing untuk mendukung persalinan yang nyaman dan alami.',
+    social: [
+      { icon: 'fa6-brands:facebook-f', href: '/home-v3' },
+      { icon: 'fa6-brands:linkedin-in', href: '/home-v3' },
+      { icon: 'fa6-brands:twitter', href: '/home-v3' },
+    ],
+  },
+  {
+    imgUrl: '/images/home_3/doctor_3.png',
+    name: 'Bidan Ony',
+    designation: '',
+    description:
+      'menyampaikan edukasi kesehatan ibu dan anak dengan gaya santai dan humoris. Pendekatannya mempermudah pemahaman pentingnya nutrisi untuk mencegah stunting.',
+    social: [
+      { icon: 'fa6-brands:facebook-f', href: '/home-v3' },
+      { icon: 'fa6-brands:linkedin-in', href: '/home-v3' },
+      { icon: 'fa6-brands:twitter', href: '/home-v3' },
+    ],
+  },
+];
 export default function HomeStyle4() {
-  pageTitle('Home V4');
+  pageTitle('Home');
   return (
     <>
-      <HeroStyle4
-        title={
-          <span style={{ color: '#1c435e' }}>
-            Langkah Awal Menuju Generasi Bebas Stunting
-          </span>
-        }
-        subTitle={
-          <span style={{ color: '#1c435e' }}>
-            Pendamping Terpercaya Anda dalam Mencegah dan Mengatasi Stunting, Karena Kesehatan dan Masa Depan Anak Adalah Prioritas Kami. Mari Wujudkan Generasi yang Sehat dan Berkualitas!
-          </span>
-        }
-        bgUrl="/images/home_4/hero_bg.png"
-        imgUrl="/images/home_4/hero_img_10.png"
-        imgUrl2="/images/home_4/hero_img_2.png"
-        imgUrl3="/images/home_4/hero_img_3.png"
+      <HeroStyle2
+        title="Langkah Awal Menuju Generasi Bebas Stunting"
+        subTitle="Pendamping Terpercaya Anda dalam Mencegah dan Mengatasi Stunting, Karena Kesehatan dan Masa Depan Anak Adalah Prioritas Kami. Mari Wujudkan Generasi yang Sehat dan Berkualitas!"
+        bgUrl="/images/home_2/hero_bg.png"
+        imgUrl="/images/home_2/patents.svg"
+        videoBtnText="Cara Deteksi Stunting"
+        videoUrl="https://www.youtube.com/embed/ic0tQZUZRA4?si=0oSygANmK_3XyF4h"
+        btnText="POS"
+        btnUrl="/"
+        funfactList={[
+          { number: '21,6%', title: 'Prevalensi Stunting' },
+          { number: '2,8%', title: 'Penurunan Prevalensi' },
+          { number: '5.3 jt', title: 'Jumlah Balita Terdampak' },
+          { number: '60%', title: 'Ibu dengan Pendidikan Rendah' },
+        ]}
       />
 
       <Section
@@ -230,7 +255,7 @@ export default function HomeStyle4() {
 
       <Section topMd={190} topLg={150} topXl={105} id="departments">
         <DepartmentSectionStyle6
-          sectionTitle="Find Your Right Department"
+          sectionTitle="Pelayanan Terbaik Untuk Kebutuhan Anda"
           sectionTitleUp="DEPARTMENTS"
           data={departmentData}
         />
@@ -247,7 +272,7 @@ export default function HomeStyle4() {
         <TestimonialSectionStyle4
           sectionTitle="Cerita inspiratif perjuangan orang tua."
           sectionTitleUp="Perjuangan Melawan Stunting"
-          avatarListTitle="150+ patients are reviews about ProHealth"
+          avatarListTitle="150+ patients are reviews about POS"
           avatarList={[
             { imgUrl: '/images/home_4/avatar_1.png' },
             { imgUrl: '/images/home_4/avatar_2.png' },
@@ -290,13 +315,19 @@ export default function HomeStyle4() {
         bottomLg={110}
         bottomXl={80}
       >
+        <TeamSectionStyle4
+          sectionTitle="Kenali Tim Bidan Kami"
+          sectionTitleUp="Bidan Favorit Ibu"
+          data={teamData}
+        />
+        {/*
         <BlogSectionStyle5
           sectionTitle="Our Latest Blog"
           sectionTitleUp=""
           sectionTitleDown=""
           sectionSubTitle=""
           data={blogData}
-        />
+        /> */}
       </Section>
     </>
   );

@@ -37,7 +37,7 @@ export default function FooterStyle3() {
             <div className="cs_footer_item">
               <TextWidget
                 logoUrl="/images/footer_logo_white.svg"
-                text="ProHealth Medical & Healthcare Center"
+                text="POS - Pusat Pelayanan Optimal Stunting"
               />
               <ContactInfoWidget />
             </div>

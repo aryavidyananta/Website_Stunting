@@ -7,41 +7,86 @@ import { pageTitle } from '../../helpers/PageTitle';
 const teamData = [
   {
     imgUrl: '/images/doctors/doctor_1.png',
-    department: 'Emergency Department',
-    name: 'Dr. Lisa Chen, MD',
-    designation: 'Emergency Medicine Specialist',
+    department: 'Bidan',
+    name: 'Novelita Damanik',
+    designation: 'Pediatrician',
     description:
-      'Dr. Chen has over 10 years of experience in emergency medicine and is board certified in emergency medicine. She has a special interest in critical care and trauma management.',
+      'Bidan Novel, inovator metode persalinan tiup-tiup, beliau aktif mengedukasi pentingnya nutrisi ibu hamil untuk mendukung tumbuh kembang optimal bayi.',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
       { icon: 'fa6-brands:twitter', href: '/about' },
     ],
-    category: 'cardiology',
+    category: 'bidan',
     href: '/doctors/doctor-details',
   },
   {
     imgUrl: '/images/doctors/doctor_2.png',
-    department: 'Emergency Department',
-    name: 'Dr. Michael Johnson, MD',
-    designation: 'Emergency Medicine Specialist',
+    department: 'Bidan',
+    name: 'Yesie Aprillia',
+    designation: 'Pediatrician',
     description:
-      'Dr. Johnson is a highly experienced emergency medicine physician with over 15 years of experience. He is board-certified in emergency medicine and has a special interest in disaster management.',
+      'Ahli di bidang gentle birth dengan layanan seperti prenatal gentle yoga, hypnotherapy, dan hypnobirthing untuk mendukung persalinan yang nyaman dan alami.',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
       { icon: 'fa6-brands:twitter', href: '/about' },
     ],
-    category: 'emergency',
+    category: 'bidan',
     href: '/doctors/doctor-details',
   },
   {
     imgUrl: '/images/doctors/doctor_3.png',
-    department: 'Emergency Department',
-    name: 'Dr. Karen Lee, MD',
-    designation: 'Emergency Medicine Specialist',
+    department: 'Bidan',
+    name: 'Ony',
+    designation: 'Pediatrician',
     description:
-      'Dr. Lee is a skilled emergency medicine physician with expertise in the treatment of acute medical conditions. She is board-certified in emergency medicine and has a special interest in cardiac.',
+      'menyampaikan edukasi kesehatan ibu dan anak dengan gaya santai dan humoris. Pendekatannya mempermudah pemahaman pentingnya nutrisi untuk mencegah stunting.',
+    social: [
+      { icon: 'fa6-brands:facebook-f', href: '/about' },
+      { icon: 'fa6-brands:linkedin-in', href: '/about' },
+      { icon: 'fa6-brands:twitter', href: '/about' },
+    ],
+    category: 'bidan',
+    href: '/doctors/doctor-details',
+  },
+  {
+    imgUrl: '/images/doctors/doctor_4.png',
+    department: 'Bidan',
+    name: 'Jamilatus Sa’diyah',
+    designation: 'Pediatrician',
+    description:
+      'Bidan Jamilatus Sadiyah berkomitmen mencegah stunting dengan edukasi gizi dan perawatan bayi untuk tumbuh kembang optimal.',
+    social: [
+      { icon: 'fa6-brands:facebook-f', href: '/about' },
+      { icon: 'fa6-brands:linkedin-in', href: '/about' },
+      { icon: 'fa6-brands:twitter', href: '/about' },
+    ],
+    category: 'bidan',
+    href: '/doctors/doctor-details',
+  },
+  {
+    imgUrl: '/images/doctors/doctor_5.png',
+    department: 'Bidan',
+    name: 'Tantri',
+    designation: 'Pediatrician',
+    description:
+      'Bidan Tantri, ahli kebidanan berpengalaman, fokus pada pencegahan stunting melalui edukasi gizi ibu dan perkembangan anak.',
+    social: [
+      { icon: 'fa6-brands:facebook-f', href: '/about' },
+      { icon: 'fa6-brands:linkedin-in', href: '/about' },
+      { icon: 'fa6-brands:twitter', href: '/about' },
+    ],
+    category: 'bidan',
+    href: '/doctors/doctor-details',
+  },
+  {
+    imgUrl: '/images/doctors/doctor_6.png',
+    department: 'Dokter Spesialis Anak',
+    name: 'Dr. Erlin Sp.A.',
+    designation: 'Pediatrician',
+    description:
+      'Dengan bekal pengalaman sebagai dokter anak selama 19 tahun, dr. Erlin Sp.A. mampu memberikan layanan konsultasi di POS terkait stunting.',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
@@ -51,132 +96,57 @@ const teamData = [
     href: '/doctors/doctor-details',
   },
   {
-    imgUrl: '/images/doctors/doctor_4.png',
-    department: 'Pediatric Department',
-    name: 'Dr. Sarah Patel, MD',
-    designation: 'Pediatrician',
-    description:
-      'Dr. Patel is a compassionate pediatrician with over 15 years of experience. She is board-certified in pediatrics and has a special interest in preventive care and childhood development.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'others',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_5.png',
-    department: 'Pediatric Department',
-    name: 'Dr. David Nguyen, MD',
-    designation: 'Pediatrician',
-    description:
-      'Dr. Nguyen is a highly skilled pediatrician with expertise in the treatment of common childhood illnesses and conditions. She is board-certified in pediatrics',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'cardiology',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_6.png',
-    department: 'Pediatric Department',
-    name: 'Dr. Susan Bones, MD',
-    designation: 'Pediatrician',
-    description:
-      'Dr. Bones is a dedicated pediatrician with a focus on providing comprehensive care to children of all ages. He is board-certified in pediatrics and has a special interest in childhood obesity',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'psychiatry',
-    href: '/doctors/doctor-details',
-  },
-  {
     imgUrl: '/images/doctors/doctor_7.png',
-    department: 'Emergency Department',
-    name: 'Dr. Lisa Chen, MD',
-    designation: 'Cardiologist',
+    department: 'Dokter Spesialis Anak',
+    name: 'Dr. Dandung Bawono Sp.A, M.Sc',
+    designation: 'Pediatrician',
     description:
-      'Dr. Lee is a skilled cardiologist with expertise in the diagnosis and treatment of cardiovascular disease. He is board-certified in cardiology and has a special interest in preventive cardiology.',
+      'Dokter Dandung Bawono Sp.A, M.Sc juga bisa memberikan konsultasi terkait DBD dan penyakit tropis, pencernaan anak, alergi dan imunitas anak serta perkembangan anak.',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
       { icon: 'fa6-brands:twitter', href: '/about' },
     ],
-    category: 'emergency',
+    category: 'pediatric',
     href: '/doctors/doctor-details',
   },
   {
     imgUrl: '/images/doctors/doctor_8.png',
-    department: 'Emergency Department',
-    name: 'Dr. Michelle Kim, MD',
-    designation: 'Cardiologist',
+    department: 'Dokter Spesialis Anak',
+    name: 'Dr. Gracia Deswita Natalya Fau Sp.A.',
+    designation: 'Pediatrician',
     description:
-      'Dr. Kim is a renowned cardiologist with over 20 years of experience. She is board-certified in cardiology and has a special interest in the treatment of heart failure and arrhythmias.',
+      'Dengan pengalaman selama 13 tahun, dr. Gracia Deswita Natalya Fau Sp.A. bisa memberikan layanan konsultasi di POS terkait stunting. ',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
       { icon: 'fa6-brands:twitter', href: '/about' },
     ],
-    category: 'others',
+    category: 'pediatric',
     href: '/doctors/doctor-details',
   },
   {
     imgUrl: '/images/doctors/doctor_9.png',
-    department: 'Emergency Department',
-    name: 'Dr. John Smith, MD',
-    designation: 'Cardiologist',
+    department: 'Dokter Spesialis Anak',
+    name: 'Dr. Bayu Kurniawan Sp.A, M.Biomed',
+    designation: 'Pediatrician',
     description:
-      'Dr. Smith is a board-certified cardiologist with extensive experience in the management of complex cardiac conditions. He has a special interest in interventional cardiology',
+      'Dengan pengalaman selama 17 tahun, dr. Bayu Kurniawan Sp.A, M.Biomed memberikan layanan konsultasi di POS terkait stunting.',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
       { icon: 'fa6-brands:twitter', href: '/about' },
     ],
-    category: 'psychiatry',
+    category: 'pediatric',
     href: '/doctors/doctor-details',
   },
   {
     imgUrl: '/images/doctors/doctor_10.png',
-    department: 'Psychiatry Department',
-    name: 'Dr. Sarah Lee, MD',
-    designation: 'Psychiatrist',
+    department: 'Dokter Spesialis Anak',
+    name: 'dr. Dwi Lestari Avianti Sp.A, M.Ked.Klin',
+    designation: 'Pediatrician',
     description:
-      'With more than 15 years of experience learning human psychology and behavior, Dr. Jones is an expert in managing mood disorders and anxiety disorders',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'others',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_11.png',
-    department: 'Psychiatry Department',
-    name: 'Dr. David Park, MD',
-    designation: 'Psychiatrist',
-    description:
-      'Dr. Park is a board-certified psychiatrist with over 10 years of experience. He has a special interest in addiction psychiatry and the treatment of substance use disorders.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'emergency',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_12.png',
-    department: 'Psychiatry Department',
-    name: 'Dr. Maria Rodriguez, MD',
-    designation: 'Psychiatrist',
-    description:
-      'Dr. Chen is a skilled psychiatrist with expertise in the treatment of mood disorders and psychotic disorders. She is board-certified in psychiatry and has a special interest in the management.',
+      'Dengan pengalaman selama 16 tahun, dr. Dwi Lestari Avianti Sp.A, M.Ked.Klin memberikan layanan konsultasi di POS seputar stunting.',
     social: [
       { icon: 'fa6-brands:facebook-f', href: '/about' },
       { icon: 'fa6-brands:linkedin-in', href: '/about' },
@@ -193,19 +163,11 @@ export default function Doctors() {
     <>
       <BannerSectionStyle5
         bgUrl="/images/doctors/banner_bg.svg"
-        imgUrl="/images/doctors/banner_img.png"
-        title="Introduce You to <br />Our Experts"
-        subTitle="The list of certified doctors with years of <br />professional experiences"
+        title="Perkenalkan Para <br />Ahli Kami"
+        subTitle="Daftar dokter spesialis anak dan bidan bersertifikat dengan tahun pengalaman profesional"
       />
       <Section topMd={65} bottomMd={200} bottomLg={150} bottomXl={110}>
         <TeamSectionStyle2 data={teamData} />
-      </Section>
-      <Section className="cs_footer_margin_0">
-        <BannerSectionStyle4
-          bgUrl="images/doctors/banner_bg_2.jpeg"
-          title="Don’t Let Your Health <br />Take a Backseat!"
-          subTitle="Schedule an appointment with one of our experienced <br />medical professionals today!"
-        />
       </Section>
     </>
   );

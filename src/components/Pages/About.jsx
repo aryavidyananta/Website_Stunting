@@ -151,7 +151,7 @@ export default function About() {
       <BannerSectionStyle3
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/banner_img.png"
-        title="Welcome to <br />ProHealth Medical & Healthcare Center"
+        title="Welcome to <br />POS - Pusat Pelayanan Optimal Stunting"
         subTitle="Your Partner in Health and Wellness"
       />
       <Section topMd={200} topLg={150} topXl={110}>
