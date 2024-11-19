@@ -12,6 +12,7 @@ const { Title, Text } = Typography;
 const Dashboard = () => {
   const location = useLocation();
   const [visible, setVisible] = useState(false);
+  const [collapsed, setCollapsed] = useState(false); // Collapsed state for sidebar
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // Data for the bar chart
@@ -42,10 +43,14 @@ const Dashboard = () => {
   }, []);
 
   const toggleSidebar = () => {
-    setVisible(!visible);
+    if (isMobile) {
+      setVisible(!visible);
+    } else {
+      setCollapsed(!collapsed); // Toggle collapsed state
+    }
   };
 
-  const pathSnippets = location.pathname.split('/').filter(i => i);
+  const pathSnippets = location.pathname.split('/').filter((i) => i);
   const breadcrumbItems = pathSnippets.map((snippet, index) => {
     const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
     return (
@@ -60,7 +65,7 @@ const Dashboard = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <AppHeader onMenuClick={toggleSidebar} />
-      <Layout style={{ marginLeft: isMobile ? 0 : 220 }}>
+      <Layout style={{ marginLeft: isMobile ? 0 : collapsed ? 80 : 220 }}>
         {isMobile ? (
           <Drawer
             title="Navigation"
@@ -69,12 +74,17 @@ const Dashboard = () => {
             visible={visible}
             bodyStyle={{ padding: 0 }}
           >
-            <Sidebar />
+            <Sidebar collapsed={collapsed} toggleSidebar={toggleSidebar} />
           </Drawer>
         ) : (
-          <Sidebar />
+          <Sidebar collapsed={collapsed} toggleSidebar={toggleSidebar} />
         )}
-        <Layout style={{ padding: '0 24px 24px' }}>
+        <Layout
+          style={{
+            padding: '0 24px 24px',
+            transition: 'margin-left 0.3s',
+          }}
+        >
           <Breadcrumb style={{ margin: '16px 0' }}>{breadcrumbItems}</Breadcrumb>
           <Content
             className="site-layout-background"
@@ -88,15 +98,15 @@ const Dashboard = () => {
           >
             {isDashboardHome && (
               <>
-                {/* Statistic Cards */}
-                <Row gutter={16} style={{ marginBottom: 24 }}>
+               {/* Statistic Cards */}
+               <Row gutter={16} style={{ marginBottom: 24 }}>
                   {/* Total Balita */}
                   <Col xs={24} md={6}>
                     <Card style={{ backgroundColor: '#ff4d4f', color: 'white', borderRadius: '8px' }}>
                       <Row align="middle">
                         <Col span={16}>
-                          <Title level={3} style={{ color: 'white' }}>8,652</Title>
-                          <Text>TOTAL BALITA</Text>
+                          <Title level={3} style={{ color: 'white' }}>21,6%</Title>
+                          <Text>Pravelensi Stunting</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
@@ -110,8 +120,8 @@ const Dashboard = () => {
                     <Card style={{ backgroundColor: '#9254de', color: 'white', borderRadius: '8px' }}>
                       <Row align="middle">
                         <Col span={16}>
-                          <Title level={3} style={{ color: 'white' }}>4,126</Title>
-                          <Text>PEREMPUAN</Text>
+                          <Title level={3} style={{ color: 'white' }}>2,8%</Title>
+                          <Text>Penurunan Prevalensi</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <WomanOutlined style={{ fontSize: '40px', color: 'white' }} />
@@ -125,8 +135,8 @@ const Dashboard = () => {
                     <Card style={{ backgroundColor: '#40a9ff', color: 'white', borderRadius: '8px' }}>
                       <Row align="middle">
                         <Col span={16}>
-                          <Title level={3} style={{ color: 'white' }}>4,526</Title>
-                          <Text>LAKI-LAKI</Text>
+                          <Title level={3} style={{ color: 'white' }}>5,3 Juta</Title>
+                          <Text>Jumlah Terdampak</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <ManOutlined style={{ fontSize: '40px', color: 'white' }} />
@@ -140,8 +150,8 @@ const Dashboard = () => {
                     <Card style={{ backgroundColor: '#36cfc9', color: 'white', borderRadius: '8px' }}>
                       <Row align="middle">
                         <Col span={16}>
-                          <Title level={3} style={{ color: 'white' }}>63,154</Title>
-                          <Text>KASUS STUNTING</Text>
+                          <Title level={3} style={{ color: 'white' }}>60%</Title>
+                          <Text>Pendidikan Rendah</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <AlertOutlined style={{ fontSize: '40px', color: 'white' }} />
@@ -150,10 +160,11 @@ const Dashboard = () => {
                     </Card>
                   </Col>
                 </Row>
-
-                {/* Main Charts */}
+                {/* Statistic Cards */}
+                <Row gutter={16} style={{ marginBottom: 24 }}>
+                  {/* Your Card components */}
+                </Row>
                 <Row gutter={16}>
-                  {/* Bar Chart Card */}
                   <Col xs={24} md={16}>
                     <Card title="Prevalensi Balita Stunting Indonesia (2013-2024*)" style={{ backgroundColor: '#f0f2f5', borderRadius: '8px' }}>
                       <div style={{ width: '100%', height: 400 }}>
@@ -169,23 +180,12 @@ const Dashboard = () => {
                       </div>
                     </Card>
                   </Col>
-
-                  {/* Circular Chart Card */}
                   <Col xs={24} md={8}>
                     <Card title="Riwayat Cek Stunting" style={{ backgroundColor: '#f0f2f5', borderRadius: '8px' }}>
                       <div style={{ width: '100%', height: 250 }}>
                         <ResponsiveContainer>
                           <PieChart>
-                            <Pie
-                              data={circularData}
-                              dataKey="value"
-                              nameKey="name"
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={60}
-                              outerRadius={80}
-                              paddingAngle={5}
-                            >
+                            <Pie data={circularData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5}>
                               {circularData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                               ))}
@@ -194,10 +194,6 @@ const Dashboard = () => {
                             <Legend layout="vertical" align="right" verticalAlign="middle" />
                           </PieChart>
                         </ResponsiveContainer>
-                        <div style={{ textAlign: 'center', marginTop: -40 }}>
-                          <Title level={2}>Total</Title>
-                          <Title level={3}>30</Title>
-                        </div>
                       </div>
                     </Card>
                   </Col>

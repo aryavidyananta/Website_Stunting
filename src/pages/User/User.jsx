@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Table, Button, Tag, Upload, message } from 'antd';
 import { EditOutlined, DeleteOutlined, UploadOutlined, DownloadOutlined } from '@ant-design/icons';
 import Papa from 'papaparse';
@@ -6,10 +6,10 @@ import Papa from 'papaparse';
 const Bidan = () => {
   const [data, setData] = useState([
     { key: '1', no: '1', nama: 'Super Admin', email: 'admin2023@gmail.com', role: 'Admin' },
-    { key: '2', no: '2', nama: 'Arya Vidyananta', email: 'Aryavidyananta@gmail.com', role: 'Petugas' },
-    { key: '3', no: '3', nama: 'Yudha', email: 'Yudha@gmail.com', role: 'Petugas' },
-    { key: '4', no: '4', nama: 'Devandra', email: 'Devandra@gmail.com', role: 'Petugas' },
-    { key: '5', no: '5', nama: 'Gandi Taruna', email: 'GandiTaruna@gmail.com', role: 'Petugas' },
+    { key: '2', no: '2', nama: 'Arya Vidyananta', email: 'Aryavidyananta@gmail.com', role: 'Admin' },
+    { key: '3', no: '3', nama: 'Yudha', email: 'Yudha@gmail.com', role: 'Admin' },
+    { key: '4', no: '4', nama: 'Devandra', email: 'Devandra@gmail.com', role: 'Admin' },
+    { key: '5', no: '5', nama: 'Gandi Taruna', email: 'GandiTaruna@gmail.com', role: 'Admin' },
   ]);
 
   // Define table columns

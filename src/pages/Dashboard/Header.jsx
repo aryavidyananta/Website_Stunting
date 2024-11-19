@@ -1,77 +1,88 @@
-import { Layout, Button, Input, Dropdown, Menu, Badge } from 'antd';
-import { LogoutOutlined, BellOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Input, Badge, Avatar, Dropdown, Menu as AntMenu } from 'antd';
+import { BellOutlined, UserOutlined, SearchOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 
-const AppHeader = () => {
+const AppHeader = ({ collapsed, toggleSidebar }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    console.log("Logged out");
-    navigate('/');
+    navigate('/'); // Navigasi ke halaman login
   };
 
   const userMenu = (
-    <Menu>
-      <Menu.Item key="1">
-        <a href="/profile">Profile</a>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <a href="/settings">Settings</a>
-      </Menu.Item>
-      <Menu.Item key="3" onClick={handleLogout}>
+    <AntMenu>
+      <AntMenu.Item key="1">Profile</AntMenu.Item>
+      <AntMenu.Item key="2">Settings</AntMenu.Item>
+      <AntMenu.Divider />
+      <AntMenu.Item key="3" icon={<LogoutOutlined />} onClick={handleLogout}>
         Logout
-      </Menu.Item>
-    </Menu>
+      </AntMenu.Item>
+    </AntMenu>
   );
 
   return (
     <Header
       style={{
+        padding: '0 16px',
+        paddingLeft: collapsed ? 80 : 220,
+        backgroundColor: '#ffffff',
+        color: '#048ab3',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 24px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
-        height: '64px',
-        width: '100%',
-        maxWidth: '100vw', // Ensure it fits within the viewport
+        transition: 'padding-left 0.3s',
+        // Updated boxShadow to match the style in the provided image
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+        borderRadius: '8px', // Optional: Rounded corners
       }}
     >
-      {/* Logo Section */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src="/logo.png" alt="Logo" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
-        <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#1890ff' }}>Velonic</span>
-      </div>
-
-      {/* Search Input */}
-      <div style={{ flexGrow: 1, marginLeft: '16px', maxWidth: '300px', display: 'block' }}>
+      {/* Centered Search Input */}
+      <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
         <Input
           placeholder="Search..."
-          prefix={<i className="fas fa-search"></i>}
+          prefix={<SearchOutlined style={{ color: '#048ab3' }} />}
           style={{
-            width: '100%',
-            borderRadius: '20px',
-            paddingLeft: '30px',
+            width: 320,
+            borderRadius: 25,
+            padding: '8px 16px',
+            border: '1px solid #d9d9d9',
+            outline: 'none',
+            boxShadow: 'none', // No shadow for search
+            transition: 'all 0.3s ease-in-out',
           }}
+          onFocus={(e) => e.target.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)'}
+          onBlur={(e) => e.target.style.boxShadow = 'none'}
         />
       </div>
 
-      {/* User Profile and Actions */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-      
+      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+        <Badge count={5} offset={[-2, 10]}>
+          <BellOutlined
+            style={{
+              fontSize: 24,
+              color: '#048ab3',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease',
+            }}
+            onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'}
+            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+          />
+        </Badge>
+
         <Dropdown overlay={userMenu} trigger={['click']}>
-          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-            <UserOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
-            <span style={{ fontSize: '16px', marginLeft: '10px' }}>Arya</span>
-          </div>
+          <Avatar
+            style={{
+              backgroundColor: '#f0f2f5',
+              cursor: 'pointer',
+              border: '2px solid #048ab3',
+              transition: 'transform 0.3s ease',
+            }}
+            icon={<UserOutlined />}
+            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+          />
         </Dropdown>
       </div>
     </Header>
