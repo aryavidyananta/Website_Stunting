@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const { Option } = Select;
 
-const Blog = () => {
+const ArticleManagement = () => {
   const [articles, setArticles] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingArticle, setEditingArticle] = useState(null);
@@ -130,9 +130,9 @@ const Blog = () => {
 
   return (
     <div>
-    
+      <h2>Manajemen Artikel dan Edukasi</h2>
       <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
-        Tambah Blog
+        Tambah Artikel
       </Button>
       <Table dataSource={articles} columns={columns} rowKey="id" />
       <Modal
@@ -159,13 +159,15 @@ const Blog = () => {
           <Form.Item
             name="title"
             label="Judul Artikel"
-            rules={[{ required: true, message: 'Judul harus diisi!' }]}>
+            rules={[{ required: true, message: 'Judul harus diisi!' }]}
+          >
             <Input placeholder="Masukkan judul artikel" />
           </Form.Item>
           <Form.Item
             name="category"
             label="Kategori"
-            rules={[{ required: true, message: 'Kategori harus diisi!' }]}>
+            rules={[{ required: true, message: 'Kategori harus diisi!' }]}
+          >
             <Select placeholder="Pilih kategori">
               <Option value="Kesehatan">Kesehatan</Option>
               <Option value="Pendidikan">Pendidikan</Option>
@@ -175,14 +177,16 @@ const Blog = () => {
           <Form.Item
             name="publishDate"
             label="Tanggal Publikasi"
-            rules={[{ required: true, message: 'Tanggal harus diisi!' }]}>
+            rules={[{ required: true, message: 'Tanggal harus diisi!' }]}
+          >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
             name="photo"
             label="Foto Artikel"
             valuePropName="fileList"
-            getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}>
+            getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}
+          >
             <Upload
               listType="picture"
               beforeUpload={() => false} // Disable auto upload
@@ -193,7 +197,8 @@ const Blog = () => {
           <Form.Item
             name="status"
             label="Status"
-            rules={[{ required: true, message: 'Status harus diisi!' }]}>
+            rules={[{ required: true, message: 'Status harus diisi!' }]}
+          >
             <Select placeholder="Pilih status">
               <Option value="Uploaded">Uploaded</Option>
               <Option value="Draft">Draft</Option>
@@ -213,4 +218,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default ArticleManagement;
