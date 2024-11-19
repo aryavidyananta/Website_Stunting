@@ -19,8 +19,10 @@ import Dashboard from './pages/Dashboard/dashboard';
 import Profile from './pages/Profile/Profile';
 import AdminPlaylistPost from './pages/Admin/Admin';
 import Testing from './pages/Testing/testing';
-import DataAnak from './pages/Anak/Anak'
-import Bidan from './pages/User/User'
+import Bidan from './pages/User/User';
+import DataAnak from './pages/Anak/Anak';
+import ArticleManagement from './pages/Artikel/Artikel'
+import Medis from './pages/Medis/Medis'
 
 function App() {
   const { pathname } = useLocation();
@@ -49,13 +51,15 @@ function App() {
 
       </Route>
       <Route path='/LoginPage' element={<LoginPage/>}></Route>
-      <Route path="/dashboard" element={<Dashboard />}>
-        {/* Baru */}
-        <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />  
-        <Route path="profile" element={<Profile />} />
-        <Route path="Testing" element={<Testing />} />
-        <Route path="Bidan" element={<Bidan />} />
-        <Route path="DataAnak" element={<DataAnak />} />
+      <Route path="dashboard" element={<Dashboard />}>
+          <Route index element={<div>Dashboard Overview</div>} /> {/* Tampilan default Dashboard */}
+          <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />
+          <Route path="Blog" element={<Profile />} />
+          <Route path="Testing" element={<Testing />} />
+          <Route path="Bidan" element={<Bidan />} />
+          <Route path="DataAnak" element={<DataAnak />} />
+          <Route path="Artikel" element={<ArticleManagement />} />
+          <Route path="Medis" element={<Medis/>} />
 
         
    
