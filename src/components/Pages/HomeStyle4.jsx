@@ -256,7 +256,7 @@ export default function HomeStyle4() {
       <Section topMd={190} topLg={150} topXl={105} id="departments">
         <DepartmentSectionStyle6
           sectionTitle="Pelayanan Terbaik Untuk Kebutuhan Anda"
-          sectionTitleUp="DEPARTMENTS"
+          sectionTitleUp="Fitur Kami"
           data={departmentData}
         />
       </Section>

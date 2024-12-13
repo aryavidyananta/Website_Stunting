@@ -106,7 +106,7 @@ const Dashboard = () => {
                       <Row align="middle">
                         <Col span={16}>
                           <Title level={3} style={{ color: 'white' }}>21,6%</Title>
-                          <Text>Pravelensi Stunting</Text>
+                          <Text>Prevelensi Stunting</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
@@ -124,7 +124,7 @@ const Dashboard = () => {
                           <Text>Penurunan Prevalensi</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                          <WomanOutlined style={{ fontSize: '40px', color: 'white' }} />
+                           <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
                         </Col>
                       </Row>
                     </Card>
@@ -139,7 +139,7 @@ const Dashboard = () => {
                           <Text>Jumlah Terdampak</Text>
                         </Col>
                         <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                          <ManOutlined style={{ fontSize: '40px', color: 'white' }} />
+                           <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
                         </Col>
                       </Row>
                     </Card>
