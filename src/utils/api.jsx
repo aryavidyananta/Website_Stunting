@@ -33,6 +33,7 @@ export const getData = async (url) => {
 
 export const getDataPrivate = async (url) => {
   let token = await jwtStorage.retrieveToken();
+  console.log("ini token", token)
   return fetch(REACT_APP_API_URL + url, {
     headers: {
       Authorization: `Bearer ${token}`,

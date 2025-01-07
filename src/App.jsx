@@ -23,6 +23,9 @@ import Bidan from './pages/User/User';
 import DataAnak from './pages/Anak/Anak';
 import ArticleManagement from './pages/Artikel/Artikel'
 import Medis from './pages/Medis/Medis'
+import AuthProvider from './providers/AuthProviders';
+import PrivateRoute from './pages/Dashboard/PrivateRoute';
+
 
 function App() {
   const { pathname } = useLocation();
@@ -31,6 +34,7 @@ function App() {
     window.scrollTo(0, 0);
   }, [pathname]);
   return (
+    <AuthProvider>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomeStyle4 />} />
@@ -51,22 +55,20 @@ function App() {
 
       </Route>
       <Route path='/LoginPage' element={<LoginPage/>}></Route>
-      <Route path="dashboard" element={<Dashboard />}>
-          <Route index element={<div>Dashboard Overview</div>} /> {/* Tampilan default Dashboard */}
-          <Route path="AdminPlaylistPost" element={<AdminPlaylistPost />} />
-          <Route path="Blog" element={<Profile />} />
-          <Route path="Testing" element={<Testing />} />
-          <Route path="Bidan" element={<Bidan />} />
-          <Route path="DataAnak" element={<DataAnak />} />
-          <Route path="Artikel" element={<ArticleManagement />} />
-          <Route path="Medis" element={<Medis/>} />
-
-        
-   
+      {/* <Route index element={<div>Dashboard Overview</div>} /> Tampilan default Dashboard */}
+          <Route path="AdminPlaylistPost" element={<PrivateRoute component={<AdminPlaylistPost/>}/>}/>
+          <Route path="Blog" element={< PrivateRoute component={<Blog/>}/>} />
+          <Route path="Testing" element={<PrivateRoute component={<Testing/>}/>} />
+          <Route path="Bidan" element={<PrivateRoute component={<Bidan/>}/>} />
+          <Route path="DataAnak" element={<PrivateRoute component={<DataAnak/>}/>}/>
+          <Route path="Artikel" element={<PrivateRoute component={<ArticleManagement/>}/>}/>
+          <Route path="Medis" element={<PrivateRoute component={<Medis/>}/>}/>
+          <Route path="dashboard" element={<PrivateRoute component={<Dashboard />}/>}>
       </Route>
       
       <Route path="*" element={<ErrorPage />} />
     </Routes>
+    </AuthProvider>
   );
 }
 
