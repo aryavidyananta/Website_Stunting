@@ -234,3 +234,23 @@ body, html {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+@keyframes spinAnimaiton {
+  0% {
+    transform: rotateX(-20deg) rotateY(0deg);
+  }
+  75% {
+    transform: rotateX(-20deg) rotateY(360deg);
+  }
+  100% {
+    transform: rotateX(-20deg) rotateY(360deg);
+  }
+}
+
+.logoIcon {
+  width: 200px; /* Ukuran logo */
+  height: 200px;
+  margin-bottom: 1px; /* Jarak antara logo dan teks */
+  animation: spinAnimaiton 6s linear infinite; /* Animasi berputar */
+  transform-style: preserve-3d; /* Agar animasi terlihat lebih seperti 3D */
+}
+

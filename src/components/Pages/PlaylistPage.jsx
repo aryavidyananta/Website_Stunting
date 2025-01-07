@@ -26,7 +26,7 @@ const PlaylistPage = () => {
 
   const getPlaylistData = () => {
     setLoading(true);
-    let url = "/api/playlist/12";
+    let url = "/api/v1/playlist/read";
     getData(url)
       .then((resp) => {
         if (resp?.datas) {

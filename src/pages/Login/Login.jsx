@@ -64,7 +64,7 @@ const LoginPage = () => {
   return (
     <div className="bodysignin">
       <div className={`containersignin ${signIn ? "" : "right-panel-active"}`}>
-        
+
         {/* Sign Up Form */}
         <div className="form-containersignin signUpContainersignin">
           <form className="formsignin" onSubmit={(e) => handleAuth(e, "register")}>
@@ -98,11 +98,15 @@ const LoginPage = () => {
         <div className="overlayContainersignin">
           <div className="overlaysignin">
             <div className="overlayPanelsignin leftOverlayPanelsignin">
+              {/* Add logo above Welcome Back! */}
+              <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
               <h1 className="signinTitlesignin">Welcome Back!</h1>
               <p className="paragraphsignin">To keep connected with us, please login with your personal info.</p>
               <button className="ghostButtonsignin buttonsignin" onClick={() => setSignIn(true)}>Sign In</button>
             </div>
             <div className="overlayPanelsignin rightOverlayPanelsignin">
+              {/* Add logo above Hello! */}
+              <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
               <h1 className="signinTitlesignin">Hello!</h1>
               <p className="paragraphsignin">Enter your personal details and start your journey with us.</p>
               <button className="ghostButtonsignin buttonsignin" onClick={() => setSignIn(false)}>Sign Up</button>

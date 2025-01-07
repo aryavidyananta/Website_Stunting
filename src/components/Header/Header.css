@@ -1,0 +1,88 @@
+.cs_nav_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 6; /* Tambahkan lebih banyak ruang ke navigasi */
+  }
+  
+  .cs_nav_list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+  }
+  
+  .cs_nav_list li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .cs_nav_list li a:hover {
+    color: #007bff;
+  }
+
+  /* Style umum untuk menu */
+.cs_nav_list li a {
+    text-decoration: none;
+    color: #333; /* Warna teks default */
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  .cs_nav_list li a:hover,
+  .cs_nav_list li a.active {
+    color: #007bff; /* Warna teks saat hover atau active */
+  }
+  
+  /* Underline animasi untuk menu yang dipilih */
+  .cs_nav_list li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: #007bff; /* Warna underline */
+    transition: width 0.3s ease;
+  }
+  
+  .cs_nav_list li a:hover::after,
+  .cs_nav_list li a.active::after {
+    width: 100%; /* Underline penuh saat hover atau active */
+  }
+  
+  /* Untuk memastikan active state bekerja */
+  .cs_nav_list li a.active {
+    font-weight: bold; /* Menonjolkan teks active */
+  }
+  
+  .cs_user_icon_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+  }
+  
+  .cs_user_icon_circle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cs_user_icon_circle:hover {
+    background-color: #e6f7ff;
+  }
+  

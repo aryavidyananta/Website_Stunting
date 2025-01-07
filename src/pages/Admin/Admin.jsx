@@ -16,7 +16,12 @@ import {
   FloatButton,
   Select,
 } from "antd";
-import { PlusCircleOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  PlusCircleOutlined,
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import { getData, sendData, deleteData } from "../../utils/api";
 import Section from "../../components/Section";
 
@@ -38,7 +43,7 @@ const AdminPlaylistPost = () => {
 
   const fetchPlaylistData = () => {
     setIsLoading(true);
-    getData("/api/playlist/12")
+    getData("/api/v1/playlist/read")
       .then((response) => {
         if (response?.datas) {
           setData(response.datas);
@@ -62,42 +67,45 @@ const AdminPlaylistPost = () => {
   };
 
   const handleSubmit = () => {
-    form.validateFields().then((values) => {
-      const formData = new FormData();
-      formData.append("play_name", values.play_name);
-      formData.append("play_url", values.play_url);
-      formData.append("play_thumbnail", values.play_thumbnail);
-      formData.append("play_genre", values.play_genre);
-      formData.append("play_description", values.play_description);
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        formData.append("play_name", values.play_name);
+        formData.append("play_url", values.play_url);
+        formData.append("play_thumbnail", values.play_thumbnail);
+        formData.append("play_genre", values.play_genre);
+        formData.append("play_description", values.play_description);
 
-      const apiUrl = isEditing
-        ? `/api/playlist/update/${selectedItem.id_play}`
-        : "/api/playlist/12";
+        const apiUrl = isEditing
+          ? `/api/v1/playlist/update/${selectedItem.id_play}`
+          : "/api/v1/playlist/create";
 
-      sendData(apiUrl, formData)
-        .then((response) => {
-          if (response?.datas) {
-            showNotification(
-              "success",
-              "Success",
-              isEditing ? "Playlist item updated successfully" : "Playlist item added successfully"
-            );
-            form.resetFields();
-            fetchPlaylistData();
-            setIsDrawerVisible(false);
-            setIsEditing(false);
-            setSelectedItem(null);
-          } else {
+        sendData(apiUrl, formData)
+          .then((response) => {
+            if (response?.message === "Inserted" || response?.message === "Updated") {
+              showNotification(
+                "success",
+                "Success",
+                isEditing ? "Playlist item updated successfully" : "Playlist item added successfully"
+              );
+              form.resetFields();
+              fetchPlaylistData();
+              setIsDrawerVisible(false);
+              setIsEditing(false);
+              setSelectedItem(null);
+            } else {
+              showNotification("error", "Error", response?.message || "Failed to save playlist item");
+            }
+          })
+          .catch((error) => {
+            console.error("Submit error:", error);
             showNotification("error", "Error", "Failed to save playlist item");
-          }
-        })
-        .catch((error) => {
-          console.error("Submit error:", error);
-          showNotification("error", "Error", "Failed to save playlist item");
-        });
-    }).catch(() => {
-      showNotification("error", "Validation Error", "Please fill in all required fields.");
-    });
+          });
+      })
+      .catch(() => {
+        showNotification("error", "Validation Error", "Please fill in all required fields.");
+      });
   };
 
   const handleSearch = (event) => {
@@ -118,13 +126,13 @@ const AdminPlaylistPost = () => {
   };
 
   const handleDelete = (id_play) => {
-    deleteData(`/api/playlist/${id_play}`)
+    deleteData(`/api/v1/playlist/delete/${id_play}`)
       .then((response) => {
-        if (response?.status === 200) {
+        if (response?.message === "Data deleted") {
           showNotification("success", "Deleted", "Playlist item deleted successfully");
           fetchPlaylistData();
         } else {
-          showNotification("error", "Error", "Failed to delete playlist item");
+          showNotification("error", "Error", response?.message || "Failed to delete playlist item");
         }
       })
       .catch((error) => {
@@ -178,11 +186,11 @@ const AdminPlaylistPost = () => {
                     rules={[{ required: true, message: "Please select a genre" }]}
                   >
                     <Select placeholder="Select genre">
-                      <Select.Option value="Music">Music</Select.Option>
-                      <Select.Option value="Song">Song</Select.Option>
-                      <Select.Option value="Movie">Movie</Select.Option>
-                      <Select.Option value="Education">Education</Select.Option>
-                      <Select.Option value="Others">Others</Select.Option>
+                      <Select.Option value="music">music</Select.Option>
+                      <Select.Option value="song">song</Select.Option>
+                      <Select.Option value="movie">movie</Select.Option>
+                      <Select.Option value="education">education</Select.Option>
+                      <Select.Option value="others">others</Select.Option>
                     </Select>
                   </Form.Item>
                   <Form.Item
