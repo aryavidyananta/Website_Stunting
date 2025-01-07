@@ -3,28 +3,57 @@ import {
   AppstoreOutlined,
   PlayCircleOutlined,
   EditOutlined,
-  CalculatorOutlined,
   UserOutlined,
-  TeamOutlined,
   ReadOutlined,
-  MenuOutlined
+  DatabaseOutlined,
+  FileOutlined,
+  AppstoreAddOutlined,
+  SettingOutlined,
+  QuestionOutlined,
+  EllipsisOutlined,
+  MenuOutlined,
 } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 
 const { Sider } = Layout;
 
-const menuItems = [
-  { key: '/dashboard', label: 'Dashboard', icon: <AppstoreOutlined />, path: '/dashboard' },
-  { key: '/dashboard/AdminPlaylistPost', label: 'Playlist', icon: <PlayCircleOutlined />, path: '/dashboard/AdminPlaylistPost' },
-  { key: '/dashboard/Blog', label: 'Blog', icon: <EditOutlined />, path: '/dashboard/Blog' },
-  // { key: '/dashboard/Testing', label: 'Kalkulator', icon: <CalculatorOutlined />, path: '/dashboard/Testing' },
-  { key: '/dashboard/Bidan', label: 'Data User', icon: <UserOutlined />, path: '/dashboard/Bidan' },
-  // { key: '/dashboard/Artikel', label: 'Artikel', icon: <ReadOutlined />, path: '/dashboard/Artikel' },
-  { key: '/dashboard/Medis', label: 'Medis', icon: <ReadOutlined />, path: '/dashboard/Medis' },
+const MENU_CONFIG = [
+  {
+    title: 'Main Menu',
+    items: [
+      { key: '/dashboard', label: 'Dashboard', icon: <AppstoreOutlined />, path: '/dashboard' },
+      { key: '/AdminPlaylistPost', label: 'Playlist', icon: <PlayCircleOutlined />, path: '/AdminPlaylistPost' },
+      { key: '/Blog', label: 'Blog', icon: <EditOutlined />, path: '/Blog' },
+      { key: '/Bidan', label: 'Data User', icon: <UserOutlined />, path: '/Bidan' },
+    ],
+  },
+  {
+    title: 'Team Management',
+    items: [
+      { key: '/Medis', label: 'Medis', icon: <ReadOutlined />, path: '/Medis' },
+      { key: '/DataIntegrity', label: 'Data Integrity', icon: <DatabaseOutlined />, path: '/DataIntegrity' },
+      { key: '/Report', label: 'Report', icon: <FileOutlined />, path: '/Report' },
+      { key: '/Interoperability', label: 'Interoperability', icon: <AppstoreAddOutlined />, path: '/Interoperability' },
+    ],
+  },
+  {
+    title: 'Help & Setting',
+    items: [
+      { key: '/Help', label: 'Help & Center', icon: <QuestionOutlined />, path: '/Help' },
+      { key: '/Settings', label: 'Settings', icon: <SettingOutlined />, path: '/Settings' },
+    ],
+  },
 ];
 
-const Sidebar = ({ collapsed, toggleSidebar }) => {
+const MainSidebar = ({ collapsed, toggleSidebar }) => {
   const location = useLocation();
+
+  const renderMenuItems = (items) =>
+    items.map((item) => ({
+      key: item.key,
+      icon: item.icon,
+      label: <Link to={item.path}>{item.label}</Link>,
+    }));
 
   return (
     <Sider
@@ -34,15 +63,17 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
       width={220}
       collapsedWidth={80}
       style={{
-        backgroundColor: '#048ab3', // Menggunakan warna solid #048ab3
+        backgroundColor: '#fff',
         height: '100vh',
         position: 'fixed',
-        top: 0,
         left: 0,
         zIndex: 100,
-        overflow: 'auto',
+        overflowY: 'auto',
+        boxShadow: '2px 0 8px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease',
       }}
     >
+      {/* Sidebar Header */}
       <div
         style={{
           height: '64px',
@@ -50,36 +81,43 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
           alignItems: 'center',
           justifyContent: collapsed ? 'center' : 'space-between',
           padding: '0 16px',
-          backgroundColor: '#048ab3', // Warna solid biru
-          color: '#fff',
+          backgroundColor: '#f0f2f5',
+          borderBottom: '1px solid #ddd',
         }}
       >
-        {!collapsed && <span>POS</span>}
+        {!collapsed && <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#048ab3' }}>Healthcare</span>}
         <Button
           type="text"
-          icon={collapsed ? <MenuOutlined /> : <MenuOutlined />}
+          icon={<MenuOutlined style={{ fontSize: '18px' }} />}
           onClick={toggleSidebar}
-          style={{ color: '#fff' }}
+          style={{ color: '#048ab3' }}
         />
       </div>
-      <Menu
-        mode="inline"
-        theme="dark"
-        selectedKeys={[location.pathname]}
-        style={{
-          backgroundColor: '#048ab3', // Gunakan warna solid #048ab3
-          color: '#E0E1DD',
-          borderRight: 0,
-        }}
-      >
-        {menuItems.map((item) => (
-          <Menu.Item key={item.key} icon={item.icon}>
-            <Link to={item.path}>{item.label}</Link>
-          </Menu.Item>
-        ))}
-      </Menu>
+
+      {/* Menu Items */}
+      {MENU_CONFIG.map((menuGroup, index) => (
+        <div key={index}>
+          <div style={{ padding: '16px 16px 8px' }}>
+            {collapsed ? (
+              <EllipsisOutlined style={{ fontSize: '16px', color: '#888' }} />
+            ) : (
+              <h3 style={{ fontSize: '12px', color: '#888', marginBottom: 8 }}>{menuGroup.title}</h3>
+            )}
+          </div>
+          <Menu
+            mode="inline"
+            selectedKeys={[location.pathname]}
+            style={{
+              backgroundColor: '#fff',
+              color: '#333',
+              borderRight: 0,
+            }}
+            items={renderMenuItems(menuGroup.items)}
+          />
+        </div>
+      ))}
     </Sider>
   );
 };
 
-export default Sidebar;
+export default MainSidebar;
