@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Pos.css';
 
 export default function Post({
   title,
@@ -14,25 +15,13 @@ export default function Post({
   return (
     <div className={`cs_post cs_style_1 ${variant}`}>
       <Link to={href} className="cs_post_thumb cs_view_mouse">
-        <img src={thumbUrl} alt={title} />
+        {/* Tambahkan class "blog-thumbnail" untuk konsistensi ukuran gambar */}
+        <img src={thumbUrl} alt={title} className="blog-thumbnail" />
       </Link>
       <div className="cs_post_info">
         <div>
           <div className="cs_post_meta">
             <div className="cs_posted_by">{date}</div>
-            {socialShare && (
-              <div className="cs_post_social">
-                <Link to="/" className="cs_center rounded-circle">
-                  <Icon icon="fa-brands:linkedin-in" />
-                </Link>
-                <Link to="/" className="cs_center rounded-circle">
-                  <Icon icon="fa-brands:facebook-f" />
-                </Link>
-                <Link to="/" className="cs_center rounded-circle">
-                  <Icon icon="fa-brands:twitter" />
-                </Link>
-              </div>
-            )}
           </div>
           <h2 className="cs_post_title cs_semibold cs_fs_32">
             <Link to={href}>{title}</Link>

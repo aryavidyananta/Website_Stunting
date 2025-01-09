@@ -103,14 +103,24 @@ export const sendDataPrivate = async (url, data) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteData = async (url, data) => {
+export const deleteData = async (url) => {
   return fetch(REACT_APP_API_URL + url, {
     method: "DELETE",
-    body: data,
   })
-    .then((response) => response)
-    .catch((err) => console.log(err));
+    .then((response) => {
+      // Periksa status respons
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json(); // Mengembalikan respons JSON jika ada
+      } else {
+        throw new Error("Failed to delete data");
+      }
+    })
+    .catch((err) => {
+      console.error("Delete error:", err);
+      throw err; // Lempar error agar bisa di-handle di frontend
+    });
 };
+
 
 export const editDataPrivatePut = async (url, data) => {
   //401 -> jwt expired, flow process to login
@@ -255,3 +265,21 @@ export const getImage = (url_image) => {
   let imgResult = url_image ? url_image : imgDefault;
   return REACT_APP_API_URL + imgResult;
 };
+
+export const putData = async (url, data) => {
+  return fetch(REACT_APP_API_URL + url, {
+    method: "PUT",
+    body: data, // FormData atau JSON, tergantung kebutuhan
+  })
+    .then((response) =>
+      response.status >= 200 && response.status <= 299 && response.status !== 204
+        ? response.json()
+        : response
+    )
+    .then((data) => data)
+    .catch((err) => {
+      console.error("PUT error:", err);
+      throw err;
+    });
+};
+

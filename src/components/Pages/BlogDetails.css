@@ -1,0 +1,21 @@
+.cs_blog_details_image {
+    display: flex;
+    justify-content: center; /* Memusatkan gambar di tengah */
+    margin: 20px 0; /* Menambahkan margin atas dan bawah */
+  }
+  
+  .custom-blog-image {
+    max-width: 80%; /* Sesuaikan ukuran gambar */
+    height: auto; /* Pertahankan rasio gambar */
+    border-radius: 15px; /* Menambahkan lengkungan pada gambar */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Tambahkan sedikit bayangan */
+  }
+
+  .custom-blog-description {
+    text-align: justify; /* Rata kanan-kiri */
+    font-size: 16px; /* Ukuran font deskripsi */
+    line-height: 1.8; /* Jarak antar baris untuk kenyamanan membaca */
+    margin: 20px 0; /* Jarak atas dan bawah deskripsi */
+    color: #333; /* Warna teks */
+  }
+  

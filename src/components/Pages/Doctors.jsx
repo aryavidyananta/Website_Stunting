@@ -1,163 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BannerSectionStyle5 from '../Section/BannerSection/BannerSectionStyle5';
-import BannerSectionStyle4 from '../Section/BannerSection/BannerSectionStyle4';
 import TeamSectionStyle2 from '../Section/TeamSection/TeamSectionStyle2';
 import Section from '../Section';
 import { pageTitle } from '../../helpers/PageTitle';
-const teamData = [
-  {
-    imgUrl: '/images/doctors/doctor_1.png',
-    department: 'Bidan',
-    name: 'Novelita Damanik',
-    designation: 'Pediatrician',
-    description:
-      'Bidan Novel, inovator metode persalinan tiup-tiup, beliau aktif mengedukasi pentingnya nutrisi ibu hamil untuk mendukung tumbuh kembang optimal bayi.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'bidan',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_2.png',
-    department: 'Bidan',
-    name: 'Yesie Aprillia',
-    designation: 'Pediatrician',
-    description:
-      'Ahli di bidang gentle birth dengan layanan seperti prenatal gentle yoga, hypnotherapy, dan hypnobirthing untuk mendukung persalinan yang nyaman dan alami.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'bidan',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_3.png',
-    department: 'Bidan',
-    name: 'Ony',
-    designation: 'Pediatrician',
-    description:
-      'menyampaikan edukasi kesehatan ibu dan anak dengan gaya santai dan humoris. Pendekatannya mempermudah pemahaman pentingnya nutrisi untuk mencegah stunting.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'bidan',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_4.png',
-    department: 'Bidan',
-    name: 'Jamilatus Sa’diyah',
-    designation: 'Pediatrician',
-    description:
-      'Bidan Jamilatus Sadiyah berkomitmen mencegah stunting dengan edukasi gizi dan perawatan bayi untuk tumbuh kembang optimal.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'bidan',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_5.png',
-    department: 'Bidan',
-    name: 'Tantri',
-    designation: 'Pediatrician',
-    description:
-      'Bidan Tantri, ahli kebidanan berpengalaman, fokus pada pencegahan stunting melalui edukasi gizi ibu dan perkembangan anak.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'bidan',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_6.png',
-    department: 'Dokter Spesialis Anak',
-    name: 'Dr. Erlin Sp.A.',
-    designation: 'Pediatrician',
-    description:
-      'Dengan bekal pengalaman sebagai dokter anak selama 19 tahun, dr. Erlin Sp.A. mampu memberikan layanan konsultasi di POS terkait stunting.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'pediatric',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_7.png',
-    department: 'Dokter Spesialis Anak',
-    name: 'Dr. Dandung Bawono Sp.A, M.Sc',
-    designation: 'Pediatrician',
-    description:
-      'Dokter Dandung Bawono Sp.A, M.Sc juga bisa memberikan konsultasi terkait DBD dan penyakit tropis, pencernaan anak, alergi dan imunitas anak serta perkembangan anak.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'pediatric',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_8.png',
-    department: 'Dokter Spesialis Anak',
-    name: 'Dr. Gracia Deswita Natalya Fau Sp.A.',
-    designation: 'Pediatrician',
-    description:
-      'Dengan pengalaman selama 13 tahun, dr. Gracia Deswita Natalya Fau Sp.A. bisa memberikan layanan konsultasi di POS terkait stunting. ',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'pediatric',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_9.png',
-    department: 'Dokter Spesialis Anak',
-    name: 'Dr. Bayu Kurniawan Sp.A, M.Biomed',
-    designation: 'Pediatrician',
-    description:
-      'Dengan pengalaman selama 17 tahun, dr. Bayu Kurniawan Sp.A, M.Biomed memberikan layanan konsultasi di POS terkait stunting.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'pediatric',
-    href: '/doctors/doctor-details',
-  },
-  {
-    imgUrl: '/images/doctors/doctor_10.png',
-    department: 'Dokter Spesialis Anak',
-    name: 'dr. Dwi Lestari Avianti Sp.A, M.Ked.Klin',
-    designation: 'Pediatrician',
-    description:
-      'Dengan pengalaman selama 16 tahun, dr. Dwi Lestari Avianti Sp.A, M.Ked.Klin memberikan layanan konsultasi di POS seputar stunting.',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-    category: 'pediatric',
-    href: '/doctors/doctor-details',
-  },
-];
 
 export default function Doctors() {
+  const [teamData, setTeamData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTeamData = async () => {
+      try {
+        const response = await fetch('http://172.20.10.3:5000/api/v1/medis/read');
+        const data = await response.json();
+
+        if (response.ok) {
+          const formattedData = data.datas.map((item) => ({
+            imgUrl: `http://172.20.10.3:5000/static/show_image/${item.Gambar}`,
+            department: item.Kategori,
+            name: item.Nama,
+            designation: item.Kategori,
+            description: item.Deskripsi,
+            social: [
+              { icon: 'mdi:email', href: `https://mail.google.com/mail/?view=cm&fs=1&to=${item.Email}`, style: { fontSize: '24px', color: '#007bff' } },
+              { icon: 'fa6-brands:whatsapp', href: `https://api.whatsapp.com/send/?phone=${item.Tlp}&text&type=phone_number&app_absent=0`, style: { fontSize: '24px', color: '#25D366' } },
+            ],
+            category: item.Kategori.toLowerCase(),
+            href: `/doctors/${item.Id_Medis}`, // Dynamic route
+          }));
+          setTeamData(formattedData);
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeamData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   pageTitle('Doctors');
   return (
     <>

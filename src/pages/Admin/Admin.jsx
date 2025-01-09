@@ -22,7 +22,7 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { getData, sendData, deleteData } from "../../utils/api";
+import { getData, sendData, putData, deleteData } from "../../utils/api";
 import Section from "../../components/Section";
 
 const { Title, Text } = Typography;
@@ -37,80 +37,61 @@ const AdminPlaylistPost = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  useEffect(() => {
-    fetchPlaylistData();
-  }, []);
+  useEffect(() => fetchPlaylistData(), []);
 
   const fetchPlaylistData = () => {
     setIsLoading(true);
     getData("/api/v1/playlist/read")
       .then((response) => {
-        if (response?.datas) {
-          setData(response.datas);
-        } else {
-          showNotification("error", "Error", "Failed to fetch data");
-        }
+        if (response?.datas) setData(response.datas);
+        else showNotification("error", "Error", "Failed to fetch data");
         setIsLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
-        console.error("Fetch error:", error);
         showNotification("error", "Error", "Failed to fetch data");
       });
   };
 
-  const showNotification = (type, title, description) => {
-    api[type]({
-      message: title,
-      description: description,
-    });
-  };
+  const showNotification = (type, title, description) =>
+    api[type]({ message: title, description });
 
   const handleSubmit = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        const formData = new FormData();
-        formData.append("play_name", values.play_name);
-        formData.append("play_url", values.play_url);
-        formData.append("play_thumbnail", values.play_thumbnail);
-        formData.append("play_genre", values.play_genre);
-        formData.append("play_description", values.play_description);
+    form.validateFields().then((values) => {
+      const formData = new FormData();
+      formData.append("play_name", values.play_name);
+      formData.append("play_url", values.play_url);
+      formData.append("play_thumbnail", values.play_thumbnail);
+      formData.append("play_genre", values.play_genre);
+      formData.append("play_description", values.play_description);
 
-        const apiUrl = isEditing
-          ? `/api/v1/playlist/update/${selectedItem.id_play}`
-          : "/api/v1/playlist/create";
+      const apiUrl = isEditing
+        ? `/api/v1/playlist/update/${selectedItem.id_play}`
+        : "/api/v1/playlist/create";
+      const apiMethod = isEditing ? putData : sendData;
 
-        sendData(apiUrl, formData)
-          .then((response) => {
-            if (response?.message === "Inserted" || response?.message === "Updated") {
-              showNotification(
-                "success",
-                "Success",
-                isEditing ? "Playlist item updated successfully" : "Playlist item added successfully"
-              );
-              form.resetFields();
-              fetchPlaylistData();
-              setIsDrawerVisible(false);
-              setIsEditing(false);
-              setSelectedItem(null);
-            } else {
-              showNotification("error", "Error", response?.message || "Failed to save playlist item");
-            }
-          })
-          .catch((error) => {
-            console.error("Submit error:", error);
-            showNotification("error", "Error", "Failed to save playlist item");
-          });
-      })
-      .catch(() => {
-        showNotification("error", "Validation Error", "Please fill in all required fields.");
-      });
+      apiMethod(apiUrl, formData)
+        .then((response) => {
+          if (response?.message === "Inserted" || response?.message === "Updated") {
+            showNotification(
+              "success",
+              "Success",
+              isEditing ? "Playlist item updated" : "Playlist item added"
+            );
+            form.resetFields();
+            fetchPlaylistData();
+            setIsDrawerVisible(false);
+            setIsEditing(false);
+            setSelectedItem(null);
+          } else {
+            showNotification("error", "Error", response?.message || "Failed to save");
+          }
+        })
+        .catch(() => showNotification("error", "Error", "Failed to save"));
+    }).catch(() => showNotification("error", "Validation Error", "Please fill in all required fields."));
   };
 
-  const handleSearch = (event) => {
-    setSearchText(event.target.value);
-  };
+  const handleSearch = (e) => setSearchText(e.target.value);
 
   const handleEdit = (item) => {
     setSelectedItem(item);
@@ -129,16 +110,13 @@ const AdminPlaylistPost = () => {
     deleteData(`/api/v1/playlist/delete/${id_play}`)
       .then((response) => {
         if (response?.message === "Data deleted") {
-          showNotification("success", "Deleted", "Playlist item deleted successfully");
+          showNotification("success", "Deleted", "Playlist item deleted");
           fetchPlaylistData();
         } else {
-          showNotification("error", "Error", response?.message || "Failed to delete playlist item");
+          showNotification("error", "Error", "Failed to delete");
         }
       })
-      .catch((error) => {
-        console.error("Delete error:", error);
-        showNotification("error", "Error", "Failed to delete playlist item");
-      });
+      .catch(() => showNotification("error", "Error", "Failed to delete"));
   };
 
   const filteredData = data.filter((item) =>
@@ -155,7 +133,7 @@ const AdminPlaylistPost = () => {
               <Drawer
                 title={isEditing ? "Edit Playlist Item" : "Add Playlist Item"}
                 onClose={() => setIsDrawerVisible(false)}
-                visible={isDrawerVisible}
+                open={isDrawerVisible}
                 width={400}
               >
                 <Form layout="vertical" form={form} onFinish={handleSubmit}>
@@ -210,7 +188,6 @@ const AdminPlaylistPost = () => {
 
               <Title level={3}>Playlist</Title>
               <Divider />
-
               <Input
                 placeholder="Search here..."
                 prefix={<SearchOutlined />}
@@ -219,7 +196,6 @@ const AdminPlaylistPost = () => {
                 size="large"
                 onChange={handleSearch}
               />
-
               <Divider />
 
               {isLoading ? (
@@ -232,13 +208,11 @@ const AdminPlaylistPost = () => {
                     <List.Item>
                       <Card
                         hoverable
-                        style={{ cursor: "pointer" }}
                         cover={
                           <img
                             alt={item.play_name}
                             src={item.play_thumbnail}
                             onClick={() => window.open(item.play_url, "_blank")}
-                            style={{ cursor: "pointer" }}
                           />
                         }
                         actions={[
@@ -283,12 +257,7 @@ const AdminPlaylistPost = () => {
             setIsEditing(false);
             form.resetFields();
           }}
-          style={{
-            position: "fixed",
-            bottom: 30,
-            right: 30,
-            zIndex: 1000,
-          }}
+          style={{ position: "fixed", bottom: 30, right: 30, zIndex: 1000 }}
         />
       </div>
     </Section>

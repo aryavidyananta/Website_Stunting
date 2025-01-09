@@ -1,0 +1,7 @@
+.blog-thumbnail {
+    width: 100%; /* Gambar akan memenuhi container */
+    height: 300px; /* Atur tinggi yang lebih besar */
+    object-fit: cover; /* Memastikan gambar tetap proporsional tanpa distorsi */
+    border-radius: 8px; /* Opsional: membuat sudut membulat */
+  }
+  

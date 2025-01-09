@@ -38,7 +38,7 @@ const LoginPage = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const url = type === "login" ? "http://127.0.0.1:5000/api/v1/auth/login" : "http://127.0.0.1:5000/api/v1/auth/register";
+    const url = type === "login" ? "http://172.20.10.3:5000/api/v1/auth/login" : "http://172.20.10.3:5000/api/v1/auth/register";
     const body = new URLSearchParams(
       type === "login"
         ? { username: formData.username, password: formData.password }

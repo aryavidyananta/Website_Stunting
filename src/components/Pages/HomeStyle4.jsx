@@ -287,10 +287,10 @@ export default function HomeStyle4() {
       <Section>
         <Cta
           title="Siap Prioritaskan Kesehatan Anak Anda?"
-          subTitle="Hubungi kami sekarang untuk jadwalkan konsultasi dan ambil langkah pertama menuju masa depan yang lebih sehat dan bebas stunting!"
+          subTitle="Hubungi ahli medis kami sekarang untuk jadwalkan konsultasi dan ambil langkah pertama menuju masa depan yang lebih sehat dan bebas stunting!"
           bgUrl="/images/home_4/cta_bg.jpg"
-          btnUrl="/appointments"
-          btnText="Booking Now"
+          btnUrl="/doctors"
+          btnText="Konsultasi"
         />
       </Section>
 
@@ -315,19 +315,6 @@ export default function HomeStyle4() {
         bottomLg={110}
         bottomXl={80}
       >
-        <TeamSectionStyle4
-          sectionTitle="Kenali Tim Bidan Kami"
-          sectionTitleUp="Bidan Favorit Ibu"
-          data={teamData}
-        />
-        {/*
-        <BlogSectionStyle5
-          sectionTitle="Our Latest Blog"
-          sectionTitleUp=""
-          sectionTitleDown=""
-          sectionSubTitle=""
-          data={blogData}
-        /> */}
       </Section>
     </>
   );

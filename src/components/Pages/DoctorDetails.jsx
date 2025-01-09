@@ -1,102 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import BreadcrumbStyle2 from '../Breadcrumb/BreadcrumbStyle2';
 import Section from '../Section';
-import BannerSectionStyle9 from '../Section/BannerSection/BannerSectionStyle9';
 import DoctorDetailsSection from '../Section/DoctorDetailsSection';
-import AppointmentSectionStyle2 from '../Section/AppointmentSection/AppointmentSectionStyle2';
 import { pageTitle } from '../../helpers/PageTitle';
 
 export default function DoctorDetails() {
   pageTitle('Doctor Details');
+
+  const { id } = useParams(); // Get Id_Medis from URL
+  const [doctor, setDoctor] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDoctorDetails = async () => {
+      try {
+        const response = await fetch(`http://172.20.10.3:5000/api/v1/medis/read/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch doctor details');
+        }
+        const result = await response.json();
+        setDoctor(result.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctorDetails();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
       <BreadcrumbStyle2 />
       <Section bottomMd={190} bottomLg={150} bottomXl={110}>
-        <DoctorDetailsSection
-          bgUrl="/images/doctors/doctor_details_bg.svg"
-          imgUrl="/images/doctors/doctor_details.jpeg"
-          name="Dr. Sarah Lee, MD, MPH, FAPA"
-          department="Psychiatry Department"
-          designation="Board-certified Psychiatrist"
-          description="With more than 15 years of experience learning human psychology and behavior, Dr. Jones is an expert in managing mood disorders and anxiety disorders"
-          social={[
-            { icon: 'fa6-brands:facebook-f', href: '/about' },
-            { icon: 'fa6-brands:linkedin-in', href: '/about' },
-            { icon: 'fa6-brands:twitter', href: '/about' },
-          ]}
-          contactInfo={[
-            { iconUrl: '/images/icons/call.svg', title: '+123+456-7890' },
-            {
-              iconUrl: '/images/icons/envlope.svg',
-              title: 'sarahlee@prohealth.com',
-            },
-          ]}
-          contactInfoHeading="Contact Info"
-          schedules={[
-            { day: 'Monday', time: '09.00-12.00' },
-            { day: 'Wednesday', time: '15.00-18.00' },
-            { day: 'Friday', time: '09.00-12.00' },
-          ]}
-          scheduleHeading="Appointment Schedules"
-          degrees={[
-            {
-              title: 'University of California, San Francisco.',
-              subTitle: 'Medical degree',
-            },
-            {
-              title:
-                'University of California, Los Angeles (UCLA) Medical Center.',
-              subTitle: 'Completed residency training in psychiatry',
-            },
-            {
-              title: 'University of California, Berkeley.',
-              subTitle: 'Master of Public Health degree',
-            },
-          ]}
-          degreesHeading="Degrees"
-          experiences={[
-            {
-              title:
-                'Worked in community mental health clinics, private practice, and academic medical centers.',
-            },
-            {
-              title:
-                'Expertise in the treatment of mood disorders, anxiety disorders, and psychotic disorders.',
-            },
-            {
-              title: `Special interest in women's mental health and perinatal psychiatry.`,
-            },
-            {
-              title:
-                'Experience managing complex cases that involve both mental health and medical issues.',
-            },
-          ]}
-          experiencesHeading="Experiences"
-          awards={[
-            { title: 'Fellow of the American Psychiatric Association (FAPA).' },
-            {
-              title:
-                'Recognized for research contributions with grants from the National Institute of Mental Health (NIMH) and the American Foundation for Suicide Prevention.',
-            },
-          ]}
-          awardHeading="Awards/Achievements"
-        />
-      </Section>
-      <Section bottomMd={200} bottomLg={150} bottomXl={110}>
-        <AppointmentSectionStyle2
-          bgUrl="/images/home_2/appointment_bg.svg"
-          imgUrl="/images/home_2/appointment_img.png"
-          sectionTitle="Appointment"
-          sectionTitleUp="BOOK AN"
-        />
-      </Section>
-
-      <Section className="cs_footer_margin_0">
-        <BannerSectionStyle9
-          title="Don’t Let Your Health <br />Take a Backseat!"
-          subTitle="Schedule an appointment with one of our experienced <br />medical professionals today!"
-          imgUrl="/images/doctors/banner_img_3.png"
-        />
+        {doctor && (
+          <DoctorDetailsSection
+            bgUrl="/images/doctors/doctor_details_bg.svg"
+            imgUrl={`http://172.20.10.3:5000/static/show_image/${doctor.Gambar}`}
+            name={doctor.Nama}
+            department={doctor.Kategori}
+            designation={doctor.Kategori}
+            description={doctor.Deskripsi}
+            social={[
+              { icon: 'mdi:email', href: `https://mail.google.com/mail/?view=cm&fs=1&to=${doctor.Email}`, style: { fontSize: '24px', color: '#007bff' } },
+              { icon: 'fa6-brands:whatsapp', href: `https://api.whatsapp.com/send/?phone=${doctor.Tlp}&text&type=phone_number&app_absent=0`, style: { fontSize: '24px', color: '#25D366' } },
+            ]}
+          />
+        )}
       </Section>
     </>
   );

@@ -14,8 +14,8 @@ export default function TeamSectionStyle2({ data }) {
     let updatedData = data;
     if (category === 'bidan') {
       updatedData = data.filter((doctor) => doctor.category === 'bidan');
-    } else if (category === 'dokter_spesialis_anak') {
-      updatedData = data.filter((doctor) => doctor.category === 'pediatric');
+    } else if (category === 'dokter spa') {
+      updatedData = data.filter((doctor) => doctor.category === 'dokter spa');
     }
     setFilteredData(
       updatedData.filter((item) =>
@@ -52,8 +52,8 @@ export default function TeamSectionStyle2({ data }) {
             <li className={active === 'bidan' ? 'active' : ''}>
               <span onClick={() => handleFilter('bidan')}>Bidan</span>
             </li>
-            <li className={active === 'dokter_spesialis_anak' ? 'active' : ''}>
-              <span onClick={() => handleFilter('dokter_spesialis_anak')}>
+            <li className={active === 'dokter spa' ? 'active' : ''}>
+              <span onClick={() => handleFilter('dokter spa')}>
                 Dokter Spesialis Anak
               </span>
             </li>
