@@ -17,7 +17,7 @@ import {
   Select,
 } from "antd";
 import { PlusCircleOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { getData, sendData, deleteData } from "../../utils/api";
+import { getData, sendData, deleteData, editDataPrivatePut, editData } from "../../utils/api";
 import Section from "../../components/Section";
 
 const { Title, Text } = Typography;
@@ -38,7 +38,7 @@ const AdminPlaylistPost = () => {
 
   const fetchPlaylistData = () => {
     setIsLoading(true);
-    getData("/api/playlist/12")
+    getData("/api/v1/playlist/read")
       .then((response) => {
         if (response?.datas) {
           setData(response.datas);
@@ -62,48 +62,66 @@ const AdminPlaylistPost = () => {
   };
 
   const handleSubmit = () => {
-    form.validateFields().then((values) => {
-      const formData = new FormData();
-      formData.append("play_name", values.play_name);
-      formData.append("play_url", values.play_url);
-      formData.append("play_thumbnail", values.play_thumbnail);
-      formData.append("play_genre", values.play_genre);
-      formData.append("play_description", values.play_description);
+  // Validasi form fields
+  form.validateFields().then((values) => {
+    const formData = new FormData();
+    
+    // Menambahkan setiap field ke FormData
+    formData.append("play_name", values.play_name);
+    formData.append("play_url", values.play_url);
+    formData.append("play_thumbnail", values.play_thumbnail);
+    formData.append("play_genre", values.play_genre);
+    formData.append("play_description", values.play_description);
 
-      const apiUrl = isEditing
-        ? `/api/playlist/update/${selectedItem.id_play}`
-        : "/api/playlist/12";
+    // Tentukan API endpoint untuk create atau update
+    const apiUrl = isEditing
+      ? `/api/v1/playlist/update/${selectedItem.id_play}`  // Untuk update
+      : "/api/v1/playlist/create";  // Untuk create item baru
 
-      sendData(apiUrl, formData)
-        .then((response) => {
-          if (response?.datas) {
-            showNotification(
-              "success",
-              "Success",
-              isEditing ? "Playlist item updated successfully" : "Playlist item added successfully"
-            );
-            form.resetFields();
-            fetchPlaylistData();
-            setIsDrawerVisible(false);
-            setIsEditing(false);
-            setSelectedItem(null);
-          } else {
-            showNotification("error", "Error", "Failed to save playlist item");
-          }
-        })
-        .catch((error) => {
-          console.error("Submit error:", error);
+    // Pilih fungsi yang akan dipanggil berdasarkan apakah ini edit atau create
+    const apiFunction = isEditing ? editData : sendData;
+
+    // Panggil API untuk mengirim data
+    apiFunction(apiUrl, formData)
+      .then((response) => {
+        // Cek response dari backend
+        if (response?.message === "Updated" || response?.message === "Created") {  // Cek response message
+          // Tampilkan notifikasi sukses
+          showNotification(
+            "success",
+            "Success",
+            isEditing ? "Playlist item updated successfully" : "Playlist item added successfully"
+          );
+
+          // Reset form fields dan update data
+          form.resetFields();
+          fetchPlaylistData();
+
+          // Tutup drawer dan reset state
+          setIsDrawerVisible(false);
+          setIsEditing(false);
+          setSelectedItem(null);
+        } else {
+          // Handle gagal menyimpan item playlist
           showNotification("error", "Error", "Failed to save playlist item");
-        });
-    }).catch(() => {
-      showNotification("error", "Validation Error", "Please fill in all required fields.");
-    });
-  };
+        }
+      })
+      .catch((error) => {
+        // Tangani error dan tampilkan notifikasi error
+        console.error("Submit error:", error);
+        showNotification("error", "Error", "Failed to save playlist item");
+      });
+  }).catch(() => {
+    // Jika ada error validasi (field wajib belum terisi)
+    showNotification("error", "Validation Error", "Please fill in all required fields.");
+  });
+};
 
+  
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
+  
   const handleEdit = (item) => {
     setSelectedItem(item);
     setIsEditing(true);
@@ -116,9 +134,10 @@ const AdminPlaylistPost = () => {
       play_description: item.play_description,
     });
   };
+  
 
   const handleDelete = (id_play) => {
-    deleteData(`/api/playlist/${id_play}`)
+    deleteData(`/api/v1/playlist/de${id_play}`)
       .then((response) => {
         if (response?.status === 200) {
           showNotification("success", "Deleted", "Playlist item deleted successfully");
@@ -138,9 +157,10 @@ const AdminPlaylistPost = () => {
   );
 
   return (
-    <Section topMd={100} topLg={80} topXl={60}>
+    <Section>
       {contextHolder}
       <div className="layout-content">
+        
         <Row gutter={[24, 0]}>
           <Col xs={24} lg={24} className="mb-24">
             <Card bordered={false} className="criclebox h-full w-full">

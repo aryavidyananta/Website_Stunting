@@ -33,7 +33,6 @@ export const getData = async (url) => {
 
 export const getDataPrivate = async (url) => {
   let token = await jwtStorage.retrieveToken();
-  console.log("ini token", token)
   return fetch(REACT_APP_API_URL + url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -69,6 +68,23 @@ export const sendData = async (url, data) => {
     .then((data) => data)
     .catch((err) => console.log(err));
 };
+
+export const editData = async (url, data) => {
+  return fetch(REACT_APP_API_URL + url, {
+    method: "PUT",
+    body: data,
+  })
+    .then((response) =>
+      response.status >= 200 &&
+      response.status <= 299 &&
+      response.status !== 204
+        ? response.json()
+        : response,
+    )
+    .then((data) => data)
+    .catch((err) => console.log(err));
+};
+
 
 export const sendDataPrivate = async (url, data) => {
   //401 -> jwt expired, flow process to login

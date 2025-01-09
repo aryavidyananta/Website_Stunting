@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 import ErrorPage from './components/Pages/ErrorPage';
 import LoginPage from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/dashboard';
-import Profile from './pages/Profile/Profile';
+import MainBlog from './pages/Profile/Profile';
 import AdminPlaylistPost from './pages/Admin/Admin';
 import Testing from './pages/Testing/testing';
 import Bidan from './pages/User/User';
@@ -25,6 +25,8 @@ import ArticleManagement from './pages/Artikel/Artikel'
 import Medis from './pages/Medis/Medis'
 import AuthProvider from './providers/AuthProviders';
 import PrivateRoute from './pages/Dashboard/PrivateRoute';
+import MainProfile from './pages/MainProfile/MainProfile';
+import MainCenter from './pages/MainCenter/MainCenter';
 
 
 function App() {
@@ -36,19 +38,19 @@ function App() {
   return (
     <AuthProvider>
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={ <Layout />}>
         <Route index element={<HomeStyle4 />} />
         <Route path="about" element={<About />} />
         <Route path="doctors" element={<Doctors />} />
-        <Route path="doctors/:doctorId" element={<DoctorDetails />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="blog/:blogId" element={<BlogDetails />} />
+        <Route path="doctors/:doctorId" element={<PrivateRoute component={<DoctorDetails />}/>} />
+        <Route path="blog" element={<Blog/>} />
+        <Route path="blog/:blogId" element={<PrivateRoute component={<BlogDetails />}/>} />
         <Route path="appointments" element={<Appointments />} />
         <Route
           path="departments/:departmentId"
           element={<DepartmentDetails />}
         />
-        <Route path="Kalkulator" element={<Kalkulator />} />
+        <Route path="Kalkulator" element={<PrivateRoute component={<Kalkulator/>}/>} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="PlaylistPage" element={<PlaylistPage />} />
         <Route path="contact" element={<Contact />} />
@@ -57,12 +59,14 @@ function App() {
       <Route path='/LoginPage' element={<LoginPage/>}></Route>
       {/* <Route index element={<div>Dashboard Overview</div>} /> Tampilan default Dashboard */}
           <Route path="AdminPlaylistPost" element={<PrivateRoute component={<AdminPlaylistPost/>}/>}/>
-          <Route path="Blog" element={< PrivateRoute component={<Blog/>}/>} />
+          <Route path="MainBlog" element={< PrivateRoute component={<MainBlog/>}/>} />
           <Route path="Testing" element={<PrivateRoute component={<Testing/>}/>} />
           <Route path="Bidan" element={<PrivateRoute component={<Bidan/>}/>} />
           <Route path="DataAnak" element={<PrivateRoute component={<DataAnak/>}/>}/>
           <Route path="Artikel" element={<PrivateRoute component={<ArticleManagement/>}/>}/>
           <Route path="Medis" element={<PrivateRoute component={<Medis/>}/>}/>
+          <Route path="MainProfile" element={<PrivateRoute component={<MainProfile/>}/>}/>
+          <Route path="MainCenter" element={<PrivateRoute component={<MainCenter/>}/>}/>
           <Route path="dashboard" element={<PrivateRoute component={<Dashboard />}/>}>
       </Route>
       

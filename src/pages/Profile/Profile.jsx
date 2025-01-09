@@ -1,128 +1,175 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Space, Button, Modal, Form, Input, Select, DatePicker, message, Tag, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import { useState, useEffect } from "react";
+import { Table, Button, Modal, Form, Input, Select, Space, message, DatePicker } from "antd";
+import moment from "moment";
+import { getDataPrivate, sendDataPrivate, editDataPrivatePut, deleteDataPrivateJSON, editDataPrivateURLEncoded } from "../../utils/api"; // Ganti dengan path file API Anda
 
 const { Option } = Select;
 
-const Blog = () => {
-  const [articles, setArticles] = useState([]);
+const MainBlog = () => {
+  const [blogs, setBlogs] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingArticle, setEditingArticle] = useState(null);
+  const [editingBlog, setEditingBlog] = useState(null);
+  const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  // Load data from Local Storage when component mounts
-  useEffect(() => {
-    const storedArticles = JSON.parse(localStorage.getItem('articles')) || [];
-    setArticles(storedArticles);
-  }, []);
 
-  // Save data to Local Storage whenever articles change
-  useEffect(() => {
-    if (articles.length > 0) {
-      localStorage.setItem('articles', JSON.stringify(articles));
-    }
-  }, [articles]);
-
-  // Handle opening the modal for adding/editing
-  const handleAdd = () => {
-    setEditingArticle(null);
-    setIsModalVisible(true);
-  };
-
-  const handleEdit = (article) => {
-    setEditingArticle(article);
-    setIsModalVisible(true);
-  };
-
-  // Handle deleting an article
-  const handleDelete = (id) => {
-    const updatedArticles = articles.filter((article) => article.id !== id);
-    setArticles(updatedArticles);
-    message.success('Artikel berhasil dihapus!');
-  };
-
-  // Handle changing the status of an article
-  const toggleStatus = (id) => {
-    const updatedArticles = articles.map((article) =>
-      article.id === id
-        ? { ...article, status: article.status === 'Draft' ? 'Uploaded' : 'Draft' }
-        : article
-    );
-    setArticles(updatedArticles);
-    message.success('Status artikel berhasil diperbarui!');
-  };
-
-  // Handle saving the form data
-  const handleSave = (values) => {
-    const formattedDate = values.publishDate
-      ? moment(values.publishDate).format('YYYY-MM-DD')
-      : null; // Format date to YYYY-MM-DD
-
-    const photoUrl = values.photo && values.photo[0]?.url ? values.photo[0].url : ''; // Save photo URL
-    const status = values.status || 'Draft'; // Default to Draft if not provided
-    const articleData = { ...values, publishDate: formattedDate, status, photo: photoUrl };
-
-    if (editingArticle) {
-      // Update existing article
-      const updatedArticles = articles.map((article) =>
-        article.id === editingArticle.id ? { ...articleData, id: editingArticle.id } : article
-      );
-      setArticles(updatedArticles);
-      message.success('Artikel berhasil diperbarui!');
+  const fetchBlogs = async () => {
+  setIsLoading(true);
+   getDataPrivate("/api/v1/blog/read")
+   .then((response) => {
+    if (response?.datas) {
+      setBlogs(response.datas);
     } else {
-      // Add new article
-      const newArticle = { ...articleData, id: Date.now() };
-      setArticles([...articles, newArticle]);
-      message.success('Artikel berhasil ditambahkan!');
+      console.log("error", "Error", "Failed to fetch data");
     }
-    setIsModalVisible(false);
+    setIsLoading(false);
+  })
+  .catch((error) => {
+    setIsLoading(false);
+    console.error("Fetch error:", error);
+    console.log("error", "Error", "Failed to fetch data");
+  });
   };
+  
+  const handleAddBlog = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        formData.append("judul", values.title);
+        formData.append("deskripsi", values.content);
+
+        sendDataPrivate("/api/v1/blog/create", formData)
+          .then((response) => {
+            if (response?.id_blog) {
+              message.success("Blog berhasil ditambahkan!");
+              setBlogs((prevBlogs) => [...prevBlogs, response]);
+              form.resetFields();
+              setIsModalVisible(false);
+            } else {
+              message.error("Gagal menambahkan blog!");
+            }
+          })
+          .catch((error) => {
+            console.error("Error adding blog:", error);
+            message.error("Terjadi kesalahan saat menambahkan blog!");
+          });
+      })
+      .catch(() => {
+        message.error("Mohon lengkapi semua kolom!");
+      });
+  };
+
+  const handleEditBlog = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        formData.append("judul", values.title);
+        formData.append("deskripsi", values.content);
+
+  
+        editDataPrivatePut(`/api/v1/blog/update/${editingBlog.id_blog}`, formData)
+          .then((response) => {
+            console.log('ini',response);
+            if (response?.id_blog) {
+              message.success("Blog berhasil diperbarui!");
+              setBlogs((prevBlogs) =>
+                prevBlogs.map((blog) =>
+                  blog.id_blog === editingBlog.id_blog ? { ...blog, ...response } : blog
+                )
+              );
+              form.resetFields();
+              setIsModalVisible(false);
+            } else {
+              message.error("Gagal memperbarui blog!");
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating blog:", error);
+            message.error("Terjadi kesalahan saat memperbarui blog!");
+          });
+      })
+      .catch(() => {
+        message.error("Mohon lengkapi semua kolom!");
+      });
+  };
+  
+  const handleDelete = (id_blog) => {
+      deleteDataPrivateJSON(`/api/v1/blog/delete/${id_blog}`)
+        .then((response) => {
+          if (response?.status === 200 || response?.message === "Deleted") {
+            console.log(
+              "success",
+              "Deleted",
+              "Playlist item deleted successfully"
+            );
+            fetchBlogs();
+          } else {
+            console.log("error", "Error", "Failed to delete playlist item");
+          }
+        })
+        .catch((error) => {
+          console.error("Delete error:", error);
+          console.log("error", "Error", "Failed to delete playlist item");
+        });
+    };
+  const handleModalOpen = (blog = null) => {
+    setEditingBlog(blog);
+    setIsModalVisible(true);
+    if (blog) {
+      form.setFieldsValue({
+        title: blog.judul,
+        content: blog.deskripsi,
+
+      });
+    } else {
+      form.resetFields();
+    }
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setEditingBlog(null);
+    form.resetFields();
+  };
+
+  const handleFormSubmit = (values) => {
+    if (editingBlog) {
+      handleEditBlog(values);
+    } else {
+      handleAddBlog(values);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs(); // Ambil data blog ketika komponen dimuat
+  }, []);
 
   const columns = [
     {
-      title: 'Judul',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Judul",
+      dataIndex: "judul",
+      key: "judul",
     },
     {
-      title: 'Kategori',
-      dataIndex: 'category',
-      key: 'category',
+      title: "Tanggal Publikasi",
+      dataIndex: "creted_blog",
+      key: "creted_blog",
+      render: (date) => moment(date).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
-      title: 'Tanggal Publikasi',
-      dataIndex: 'publishDate',
-      key: 'publishDate',
-    },
-    {
-      title: 'Foto',
-      dataIndex: 'photo',
-      key: 'photo',
-      render: (photo) =>
-        photo ? <img src={photo} alt="Foto Artikel" style={{ width: 50, height: 50 }} /> : 'Tidak ada foto',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status) => (
-        <Tag color={status === 'Uploaded' ? 'green' : 'orange'}>{status}</Tag>
-      ),
-    },
-    {
-      title: 'Aksi',
-      key: 'action',
+      title: "Aksi",
+      key: "aksi",
       render: (_, record) => (
         <Space size="middle">
-          {/* <Button
-            type="link"
-            onClick={() => toggleStatus(record.id)}
-            style={{ color: record.status === 'Draft' ? 'green' : 'orange' }}
-          >
-            {record.status === 'Draft' ? 'Upload' : 'Jadikan Draft'}
-          </Button> */}
-          <Button type="link" onClick={() => handleEdit(record)}>Edit</Button>
-          <Button type="link" danger onClick={() => handleDelete(record.id)}>Hapus</Button>
+          <Button type="link" onClick={() => handleModalOpen(record)}>
+            Edit
+          </Button>
+          <Button type="link" danger onClick={() => handleDelete(record.id_blog)}>
+            Hapus
+          </Button>
         </Space>
       ),
     },
@@ -130,82 +177,37 @@ const Blog = () => {
 
   return (
     <div>
-    
-      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
+      <Button type="primary" onClick={() => handleModalOpen()} style={{ marginBottom: 16 }}>
         Tambah Blog
       </Button>
-      <Table dataSource={articles} columns={columns} rowKey="id" />
+      <Table dataSource={blogs} columns={columns} rowKey="id_blog" />
       <Modal
-        title={editingArticle ? 'Edit Artikel' : 'Tambah Artikel'}
+        title={editingBlog ? "Edit Blog" : "Tambah Blog"}
         visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={handleModalCancel}
         footer={null}
       >
-        <Form
-          layout="vertical"
-          initialValues={
-            editingArticle
-              ? {
-                  ...editingArticle,
-                  publishDate: editingArticle.publishDate
-                    ? moment(editingArticle.publishDate, 'YYYY-MM-DD')
-                    : null,
-                  photo: editingArticle.photo ? [{ uid: '-1', url: editingArticle.photo }] : [],
-                }
-              : { title: '', category: '', publishDate: null, content: '', status: 'Draft', photo: [] }
-          }
-          onFinish={handleSave}
-        >
+        <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
           <Form.Item
             name="title"
-            label="Judul Artikel"
-            rules={[{ required: true, message: 'Judul harus diisi!' }]}>
-            <Input placeholder="Masukkan judul artikel" />
+            label="Judul"
+            rules={[{ required: true, message: "Judul harus diisi!" }]}
+          >
+            <Input placeholder="Masukkan judul blog" />
           </Form.Item>
           <Form.Item
-            name="category"
-            label="Kategori"
-            rules={[{ required: true, message: 'Kategori harus diisi!' }]}>
-            <Select placeholder="Pilih kategori">
-              <Option value="Kesehatan">Kesehatan</Option>
-              <Option value="Pendidikan">Pendidikan</Option>
-              <Option value="Pencegahan">Pencegahan</Option>
-            </Select>
+            name="content"
+            label="Konten"
+            rules={[{ required: true, message: "Konten harus diisi!" }]}
+          >
+            <Input.TextArea rows={4} placeholder="Masukkan konten blog" />
           </Form.Item>
-          <Form.Item
-            name="publishDate"
-            label="Tanggal Publikasi"
-            rules={[{ required: true, message: 'Tanggal harus diisi!' }]}>
-            <DatePicker style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item
-            name="photo"
-            label="Foto Artikel"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}>
-            <Upload
-              listType="picture"
-              beforeUpload={() => false} // Disable auto upload
-            >
-              <Button icon={<UploadOutlined />}>Upload Foto</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item
-            name="status"
-            label="Status"
-            rules={[{ required: true, message: 'Status harus diisi!' }]}>
-            <Select placeholder="Pilih status">
-              <Option value="Uploaded">Uploaded</Option>
-              <Option value="Draft">Draft</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name="content" label="Konten Artikel">
-            <Input.TextArea rows={4} placeholder="Masukkan konten artikel" />
-          </Form.Item>
+
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
               Simpan
             </Button>
+            <Button onClick={handleModalCancel}>Batal</Button>
           </Form.Item>
         </Form>
       </Modal>
@@ -213,4 +215,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default MainBlog;

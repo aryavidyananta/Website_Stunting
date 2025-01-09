@@ -5,15 +5,15 @@ import {
   EditOutlined,
   UserOutlined,
   ReadOutlined,
-  DatabaseOutlined,
-  FileOutlined,
-  AppstoreAddOutlined,
   SettingOutlined,
   QuestionOutlined,
   EllipsisOutlined,
   MenuOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProviders';
+import { useContext } from 'react';
 
 const { Sider } = Layout;
 
@@ -23,36 +23,55 @@ const MENU_CONFIG = [
     items: [
       { key: '/dashboard', label: 'Dashboard', icon: <AppstoreOutlined />, path: '/dashboard' },
       { key: '/AdminPlaylistPost', label: 'Playlist', icon: <PlayCircleOutlined />, path: '/AdminPlaylistPost' },
-      { key: '/Blog', label: 'Blog', icon: <EditOutlined />, path: '/Blog' },
-      { key: '/Bidan', label: 'Data User', icon: <UserOutlined />, path: '/Bidan' },
+      { key: '/MainBlog', label: 'Blog', icon: <EditOutlined />, path: '/MainBlog' },
     ],
   },
   {
     title: 'Team Management',
     items: [
       { key: '/Medis', label: 'Medis', icon: <ReadOutlined />, path: '/Medis' },
-      { key: '/DataIntegrity', label: 'Data Integrity', icon: <DatabaseOutlined />, path: '/DataIntegrity' },
-      { key: '/Report', label: 'Report', icon: <FileOutlined />, path: '/Report' },
-      { key: '/Interoperability', label: 'Interoperability', icon: <AppstoreAddOutlined />, path: '/Interoperability' },
+      { key: '/Bidan', label: 'Data User', icon: <UserOutlined />, path: '/Bidan' },
     ],
   },
   {
     title: 'Help & Setting',
     items: [
-      { key: '/Help', label: 'Help & Center', icon: <QuestionOutlined />, path: '/Help' },
-      { key: '/Settings', label: 'Settings', icon: <SettingOutlined />, path: '/Settings' },
+      { key: '/MainCenter', label: 'Help & Center', icon: <QuestionOutlined />, path: '/MainCenter' },
+      { key: '/MainProfile', label: 'Settings', icon: <SettingOutlined />, path: '/MainProfile' },
+      {
+        key: 'logout',
+        label: 'Logout',
+        icon: <CloseOutlined />,
+        onClick: 'logout', // Placeholder for logout function
+      },
     ],
   },
 ];
 
 const MainSidebar = ({ collapsed, toggleSidebar }) => {
   const location = useLocation();
+  const { logout } = useContext(AuthContext); // Ambil fungsi logout dari AuthContext
 
+  // Update MENU_CONFIG dengan fungsi logout
+  const updatedMenuConfig = MENU_CONFIG.map((menuGroup) => ({
+    ...menuGroup,
+    items: menuGroup.items.map((item) =>
+      item.key === 'logout' ? { ...item, onClick: logout } : item
+    ),
+  }));
+
+  // Render menu items dengan mempertimbangkan path atau onClick
   const renderMenuItems = (items) =>
     items.map((item) => ({
       key: item.key,
       icon: item.icon,
-      label: <Link to={item.path}>{item.label}</Link>,
+      label: item.onClick ? (
+        <span onClick={item.onClick} style={{ cursor: 'pointer' }}>
+          {item.label}
+        </span>
+      ) : (
+        <Link to={item.path}>{item.label}</Link>
+      ),
     }));
 
   return (
@@ -95,7 +114,7 @@ const MainSidebar = ({ collapsed, toggleSidebar }) => {
       </div>
 
       {/* Menu Items */}
-      {MENU_CONFIG.map((menuGroup, index) => (
+      {updatedMenuConfig.map((menuGroup, index) => (
         <div key={index}>
           <div style={{ padding: '16px 16px 8px' }}>
             {collapsed ? (

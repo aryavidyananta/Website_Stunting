@@ -25,20 +25,29 @@ const Main = ({ children }) => {
         style={{
           marginLeft: collapsed ? '80px' : '220px',
           transition: 'margin-left 0.3s',
+          
         }}
       >
         {/* Header */}
-        <AppHeader collapsed={collapsed} toggleSidebar={toggleSidebar} />
+        <AppHeader collapsed={collapsed} toggleSidebar={toggleSidebar} style={{
+            position: 'fixed', // Header tetap di atas
+            top: 0,
+            left: collapsed ? '80px' : '220px', // Sinkron dengan sidebar
+            width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 220px)', // Sesuaikan dengan lebar sidebar
+            zIndex: 1000,
+            transition: 'left 0.3s, width 0.3s', // Animasi untuk transisi
+          }} />
 
         {/* Content */}
         <Content
-          style={{
-            margin: '24px 16px',
+           style={{
+            marginTop: 64, // Memberi jarak untuk header (64px tinggi header)
             padding: 24,
             backgroundColor: '#FFD700',
           }}
         >
           {children}
+          
         </Content>
       </Layout>
     </Layout>
