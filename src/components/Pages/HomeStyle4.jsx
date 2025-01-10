@@ -1,4 +1,4 @@
-
+import CountUp from 'react-countup';
 import HeroStyle2 from '../Hero/HeroStyle2';
 import Section from '../Section';
 import DepartmentSectionStyle6 from '../Section/DepartmentSection/DepartmentSectionStyle6';
@@ -219,10 +219,22 @@ export default function HomeStyle4() {
         btnText="POS"
         btnUrl="/"
         funfactList={[
-          { number: '21,6%', title: 'Prevalensi Stunting' },
-          { number: '2,8%', title: 'Penurunan Prevalensi' },
-          { number: '5.3 jt', title: 'Jumlah Balita Terdampak' },
-          { number: '60%', title: 'Ibu dengan Pendidikan Rendah' },
+          { 
+            number: <CountUp start={0} end={21.6} duration={5} decimals={1} suffix="%" />, 
+            title: 'Prevalensi Stunting' 
+          },
+          { 
+            number: <CountUp start={0} end={2.8} duration={5} decimals={1} suffix="%" />, 
+            title: 'Penurunan Prevalensi' 
+          },
+          { 
+            number: <CountUp start={0} end={5.3} duration={5} decimals={1} suffix=" jt" />, 
+            title: 'Jumlah Balita Terdampak' 
+          },
+          { 
+            number: <CountUp start={0} end={60} duration={5} suffix="%" />, 
+            title: 'Ibu dengan Pendidikan Rendah' 
+          },
         ]}
       />
 

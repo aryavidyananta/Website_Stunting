@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Col, Row, Typography, Card, List, Skeleton, Input, Menu, Dropdown, Button, Modal, notification } from "antd";
 import { SearchOutlined, DownOutlined, CloseOutlined } from "@ant-design/icons";
-import { getData } from "../../utils/api";
+import { getDataPrivate } from "../../utils/api";
 import Section from "../Section";
 import BannerSectionStyle3 from "../Section/BannerSection/BannerSectionStyle3";
 import ReactPlayer from "react-player/youtube";
@@ -27,7 +27,7 @@ const PlaylistPage = () => {
   const getPlaylistData = () => {
     setLoading(true);
     let url = "/api/v1/playlist/read";
-    getData(url)
+    getDataPrivate(url)
       .then((resp) => {
         if (resp?.datas) {
           setData(resp.datas);

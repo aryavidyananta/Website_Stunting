@@ -42,9 +42,9 @@ function App() {
         <Route index element={<HomeStyle4 />} />
         <Route path="about" element={<About />} />
         <Route path="doctors" element={<Doctors />} />
-        <Route path="doctors/:doctorId" element={<DoctorDetails />} />
+        <Route path="doctors/:id" element={<PrivateRoute component={<DoctorDetails/>}/>} />
         <Route path="blog" element={<Blog />} />
-        <Route path="blog/:blogId" element={<BlogDetails />} />
+        <Route path="blog/:id" element={<PrivateRoute component={<BlogDetails/>}/>} />
         <Route path="appointments" element={<Appointments />} />
         <Route
           path="departments/:departmentId"

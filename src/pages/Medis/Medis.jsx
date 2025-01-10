@@ -134,7 +134,6 @@ const Medis = () => {
   };
 
   const columns = [
-    { title: 'Id_Medis', dataIndex: 'Id_Medis', key: 'Id_Medis', align: 'center', width: 60 },
     { title: 'Nama', dataIndex: 'Nama', key: 'Nama' },
     { title: 'Kategori', dataIndex: 'Kategori', key: 'Kategori' },
     { title: 'Deskripsi', dataIndex: 'Deskripsi', key: 'Deskripsi' },
@@ -196,7 +195,6 @@ const Medis = () => {
         </Button>
         <div>
           <Upload beforeUpload={handleImport} showUploadList={false} accept=".csv">
-            <Button icon={<UploadOutlined />} style={{ marginRight: '8px' }}>Import Data</Button>
           </Upload>
           <Button icon={<DownloadOutlined />} onClick={handleExport}>Export Data</Button>
         </div>

@@ -73,8 +73,11 @@ export default function BlogDetails() {
 
         <Spacing md="55" />
 
-        {/* Tampilkan deskripsi dengan rata kanan-kiri */}
-        <p className="custom-blog-description">{blog?.Deskripsi}</p>
+        {/* Tampilkan deskripsi dengan HTML */}
+        <div
+          className="custom-blog-description"
+          dangerouslySetInnerHTML={{ __html: blog?.Deskripsi }}
+        ></div>
         <Spacing md="90" lg="50" />
       </div>
     </>

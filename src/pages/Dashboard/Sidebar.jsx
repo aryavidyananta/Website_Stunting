@@ -36,8 +36,8 @@ const MENU_CONFIG = [
   {
     title: 'Help & Setting',
     items: [
-      { key: '/MainCenter', label: 'Help & Center', icon: <QuestionOutlined />, path: '/MainCenter' },
-      { key: '/MainProfile', label: 'Settings', icon: <SettingOutlined />, path: '/MainProfile' },
+      { key: '/MainProfile', label: 'Help & Center', icon: <QuestionOutlined />, path: '/MainProfile' },
+      { key: '/MainCenter', label: 'Settings', icon: <SettingOutlined />, path: '/MainCenter' },
       {
         key: 'logout',
         label: 'Logout',
@@ -104,7 +104,7 @@ const MainSidebar = ({ collapsed, toggleSidebar }) => {
           borderBottom: '1px solid #ddd',
         }}
       >
-        {!collapsed && <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#048ab3' }}>Healthcare</span>}
+        {!collapsed && <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#048ab3' }}>Admin POS</span>}
         <Button
           type="text"
           icon={<MenuOutlined style={{ fontSize: '18px' }} />}

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons'; // Import icon dari Ant Design
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons'; // Import icon dari Ant Design
+import { AuthContext } from '../../providers/AuthProviders';
 import './Header.css';
 
 export default function Header({ logoSrc, variant }) {
   const location = useLocation(); // Dapatkan path aktif
   const [isSticky, setIsSticky] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
+  const { isLoggedIn, logout } = useContext(AuthContext); // Ambil data login dan fungsi logout dari context
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,7 +50,9 @@ export default function Header({ logoSrc, variant }) {
                   <li>
                     <Link
                       to="/doctors"
-                      className={location.pathname === '/doctors' ? 'active' : ''}
+                      className={
+                        location.pathname === '/doctors' ? 'active' : ''
+                      }
                     >
                       Medis
                     </Link>
@@ -95,16 +99,35 @@ export default function Header({ logoSrc, variant }) {
               </nav>
             </div>
             <div className="cs_user_icon_container">
-              <Link
-                to="/LoginPage"
-                className={
-                  location.pathname === '/LoginPage' ? 'active' : ''
-                }
-              >
-                <div className="cs_user_icon_circle">
-                  <UserOutlined style={{ fontSize: '20px', color: '#007bff' }} />
-                </div>
-              </Link>
+              {isLoggedIn ? (
+                <button
+                  onClick={logout}
+                  className="cs_logout_button"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <LogoutOutlined
+                    style={{ fontSize: '20px', color: '#ff4d4f', marginRight: '5px' }}
+                  />
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/LoginPage"
+                  className={
+                    location.pathname === '/LoginPage' ? 'active' : ''
+                  }
+                >
+                  <div className="cs_user_icon_circle">
+                    <UserOutlined style={{ fontSize: '20px', color: '#007bff' }} />
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </div>

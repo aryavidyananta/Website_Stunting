@@ -19,7 +19,8 @@ export default function TeamSectionStyle2({ data }) {
     }
     setFilteredData(
       updatedData.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()))
       )
     );
     setActive(category);
@@ -31,6 +32,7 @@ export default function TeamSectionStyle2({ data }) {
     const filteredBySearch = data.filter(
       (item) =>
         item.name.toLowerCase().includes(term.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(term.toLowerCase())) ||
         item.category.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredData(

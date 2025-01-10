@@ -43,7 +43,7 @@ const Main = ({ children }) => {
            style={{
             marginTop: 64, // Memberi jarak untuk header (64px tinggi header)
             padding: 24,
-            backgroundColor: '#FFD700',
+            backgroundColor: '#fff',
           }}
         >
           {children}

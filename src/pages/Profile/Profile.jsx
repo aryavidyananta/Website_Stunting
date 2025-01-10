@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, Select, Space, message, DatePicker } from "antd";
+import { Table, Button, Modal, Form, Input, Space, message, Upload } from "antd";
 import moment from "moment";
-import { getDataPrivate, sendDataPrivate, editDataPrivatePut, deleteDataPrivateJSON, editDataPrivateURLEncoded } from "../../utils/api"; // Ganti dengan path file API Anda
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-const { Option } = Select;
+const { Dragger } = Upload;
 
 const MainBlog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -11,118 +13,127 @@ const MainBlog = () => {
   const [editingBlog, setEditingBlog] = useState(null);
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [fileList, setFileList] = useState([]);
+  const [expandedRows, setExpandedRows] = useState([]);
 
+  const API_BASE_URL = "http://172.20.10.3:5000/api/v1/blog";
 
   const fetchBlogs = async () => {
-  setIsLoading(true);
-   getDataPrivate("/api/v1/blog/read")
-   .then((response) => {
-    if (response?.datas) {
-      setBlogs(response.datas);
-    } else {
-      console.log("error", "Error", "Failed to fetch data");
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/read`);
+      const data = await response.json();
+      if (data?.datas) {
+        setBlogs(data.datas);
+      } else {
+        message.error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      message.error("Terjadi kesalahan saat mengambil data");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  })
-  .catch((error) => {
-    setIsLoading(false);
-    console.error("Fetch error:", error);
-    console.log("error", "Error", "Failed to fetch data");
-  });
   };
-  
-  const handleAddBlog = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        const formData = new FormData();
-        formData.append("judul", values.title);
-        formData.append("deskripsi", values.content);
 
-        sendDataPrivate("/api/v1/blog/create", formData)
-          .then((response) => {
-            if (response?.id_blog) {
-              message.success("Blog berhasil ditambahkan!");
-              setBlogs((prevBlogs) => [...prevBlogs, response]);
-              form.resetFields();
-              setIsModalVisible(false);
-            } else {
-              message.error("Gagal menambahkan blog!");
-            }
-          })
-          .catch((error) => {
-            console.error("Error adding blog:", error);
-            message.error("Terjadi kesalahan saat menambahkan blog!");
-          });
-      })
-      .catch(() => {
-        message.error("Mohon lengkapi semua kolom!");
+  const handleAddBlog = async () => {
+    try {
+      const values = await form.validateFields();
+      const formData = new FormData();
+      formData.append("Judul", values.title);
+      formData.append("Deskripsi", values.content);
+      if (fileList.length > 0) {
+        formData.append("Gambar", fileList[0].originFileObj);
+      }
+
+      const response = await fetch(`${API_BASE_URL}/create`, {
+        method: "POST",
+        body: formData,
       });
+      const data = await response.json();
+
+      if (response.status === 201) {
+        message.success("Blog berhasil ditambahkan!");
+        setBlogs((prevBlogs) => [...prevBlogs, { ...data, Id_Blog: data.Id_Blog }]);
+        form.resetFields();
+        setFileList([]);
+        setIsModalVisible(false);
+      } else {
+        message.error("Gagal menambahkan blog: " + data.message);
+      }
+    } catch (error) {
+      message.error("Mohon lengkapi semua kolom!");
+    }
   };
 
-  const handleEditBlog = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        const formData = new FormData();
-        formData.append("judul", values.title);
-        formData.append("deskripsi", values.content);
+  const handleEditBlog = async () => {
+    try {
+      const values = await form.validateFields();
+      const formData = new FormData();
+      formData.append("Judul", values.title);
+      formData.append("Deskripsi", values.content);
+      if (fileList.length > 0) {
+        formData.append("Gambar", fileList[0].originFileObj);
+      }
 
-  
-        editDataPrivatePut(`/api/v1/blog/update/${editingBlog.id_blog}`, formData)
-          .then((response) => {
-            console.log('ini',response);
-            if (response?.id_blog) {
-              message.success("Blog berhasil diperbarui!");
-              setBlogs((prevBlogs) =>
-                prevBlogs.map((blog) =>
-                  blog.id_blog === editingBlog.id_blog ? { ...blog, ...response } : blog
-                )
-              );
-              form.resetFields();
-              setIsModalVisible(false);
-            } else {
-              message.error("Gagal memperbarui blog!");
-            }
-          })
-          .catch((error) => {
-            console.error("Error updating blog:", error);
-            message.error("Terjadi kesalahan saat memperbarui blog!");
-          });
-      })
-      .catch(() => {
-        message.error("Mohon lengkapi semua kolom!");
+      const response = await fetch(`${API_BASE_URL}/update/${editingBlog.Id_Blog}`, {
+        method: "PUT",
+        body: formData,
       });
+      const data = await response.json();
+
+      if (response.status === 200) {
+        message.success("Blog berhasil diperbarui!");
+        setBlogs((prevBlogs) =>
+          prevBlogs.map((blog) =>
+            blog.Id_Blog === editingBlog.Id_Blog ? { ...blog, ...data } : blog
+          )
+        );
+        form.resetFields();
+        setFileList([]);
+        setIsModalVisible(false);
+      } else {
+        message.error("Gagal memperbarui blog: " + data.err_message);
+      }
+    } catch (error) {
+      message.error("Mohon lengkapi semua kolom!");
+    }
   };
-  
-  const handleDelete = (id_blog) => {
-      deleteDataPrivateJSON(`/api/v1/blog/delete/${id_blog}`)
-        .then((response) => {
-          if (response?.status === 200 || response?.message === "Deleted") {
-            console.log(
-              "success",
-              "Deleted",
-              "Playlist item deleted successfully"
-            );
-            fetchBlogs();
+
+  const handleDelete = async (Id_Blog) => {
+    Modal.confirm({
+      title: "Anda yakin ingin menghapus blog ini?",
+      okText: "Ya",
+      okType: "danger",
+      cancelText: "Tidak",
+      onOk: async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/delete/${Id_Blog}`, {
+            method: "DELETE",
+          });
+
+          if (response.status === 200) {
+            message.success("Blog berhasil dihapus!");
+            setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.Id_Blog !== Id_Blog));
           } else {
-            console.log("error", "Error", "Failed to delete playlist item");
+            message.error("Gagal menghapus blog");
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Delete error:", error);
-          console.log("error", "Error", "Failed to delete playlist item");
-        });
-    };
+          message.error("Terjadi kesalahan saat menghapus blog");
+        }
+      },
+    });
+  };
+
   const handleModalOpen = (blog = null) => {
     setEditingBlog(blog);
     setIsModalVisible(true);
+    setFileList([]);
     if (blog) {
       form.setFieldsValue({
-        title: blog.judul,
-        content: blog.deskripsi,
-
+        title: blog.Judul,
+        content: blog.Deskripsi,
       });
     } else {
       form.resetFields();
@@ -133,44 +144,87 @@ const MainBlog = () => {
     setIsModalVisible(false);
     setEditingBlog(null);
     form.resetFields();
-  };
-
-  const handleFormSubmit = (values) => {
-    if (editingBlog) {
-      handleEditBlog(values);
-    } else {
-      handleAddBlog(values);
-    }
+    setFileList([]);
   };
 
   useEffect(() => {
-    fetchBlogs(); // Ambil data blog ketika komponen dimuat
+    fetchBlogs();
   }, []);
+
+  const toggleExpandRow = (id) => {
+    setExpandedRows((prev) =>
+      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+    );
+  };
 
   const columns = [
     {
       title: "Judul",
-      dataIndex: "judul",
-      key: "judul",
+      dataIndex: "Judul",
+      key: "Judul",
     },
     {
-      title: "Tanggal Publikasi",
-      dataIndex: "creted_blog",
-      key: "creted_blog",
+      title: "Deskripsi",
+      dataIndex: "Deskripsi",
+      key: "Deskripsi",
+      render: (text, record) => (
+        <div>
+          {expandedRows.includes(record.Id_Blog) ? (
+            <span>
+              {text} <Button type="link" onClick={() => toggleExpandRow(record.Id_Blog)}>Sembunyikan</Button>
+            </span>
+          ) : (
+            <span>
+              {text.substring(0, 100)}...
+              {text.length > 100 && (
+                <Button type="link" onClick={() => toggleExpandRow(record.Id_Blog)}>Selengkapnya</Button>
+              )}
+            </span>
+          )}
+        </div>
+      ),
+    },
+    {
+      title: "Tanggal",
+      dataIndex: "tanggal",
+      key: "tanggal",
       render: (date) => moment(date).format("YYYY-MM-DD HH:mm:ss"),
+    },
+    {
+      title: "Gambar",
+      dataIndex: "Gambar",
+      key: "Gambar",
+      render: (url) =>
+        url && (
+          <img
+            src={`http://172.20.10.3:5000/static/show_image/${url}`}
+            alt="Gambar"
+            style={{ width: 100 }}
+          />
+        ),
     },
     {
       title: "Aksi",
       key: "aksi",
+      align: "center",
       render: (_, record) => (
-        <Space size="middle">
-          <Button type="link" onClick={() => handleModalOpen(record)}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px", justifyContent: "center" }}>
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => handleModalOpen(record)}
+          >
             Edit
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record.id_blog)}>
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record.Id_Blog)}
+          >
             Hapus
           </Button>
-        </Space>
+        </div>
       ),
     },
   ];
@@ -180,37 +234,61 @@ const MainBlog = () => {
       <Button type="primary" onClick={() => handleModalOpen()} style={{ marginBottom: 16 }}>
         Tambah Blog
       </Button>
-      <Table dataSource={blogs} columns={columns} rowKey="id_blog" />
+      <Table dataSource={blogs} columns={columns} rowKey="Id_Blog" loading={isLoading} />
       <Modal
-        title={editingBlog ? "Edit Blog" : "Tambah Blog"}
-        visible={isModalVisible}
-        onCancel={handleModalCancel}
-        footer={null}
+  title={editingBlog ? "Edit Blog" : "Tambah Blog"}
+  visible={isModalVisible}
+  onCancel={handleModalCancel}
+  footer={null}
+  width={1200} // Memperlebar ukuran modal menjadi 1200px
+>
+  <Form
+    form={form}
+    layout="vertical"
+    onFinish={editingBlog ? handleEditBlog : handleAddBlog}
+    style={{ maxWidth: '1150px', margin: '0 auto' }} // Lebar form diperbesar menjadi 1150px dan dipusatkan
+  >
+    <Form.Item
+      name="title"
+      label="Judul"
+      rules={[{ required: true, message: "Judul harus diisi!" }]}
+    >
+      <Input placeholder="Masukkan judul blog" />
+    </Form.Item>
+    <Form.Item
+      name="content"
+      label="Deskripsi"
+      rules={[{ required: true, message: "Deskripsi harus diisi!" }]}
+    >
+      <ReactQuill
+        theme="snow"
+        value={form.getFieldValue("content")}
+        onChange={(value) => form.setFieldsValue({ content: value })}
+        placeholder="Masukkan deskripsi blog"
+        style={{ height: '300px' }} // Kustomisasi tinggi editor
+      />
+    </Form.Item>
+    <Form.Item name="gambar" label="Gambar">
+      <Dragger
+        beforeUpload={() => false}
+        fileList={fileList}
+        onChange={(info) => setFileList(info.fileList)}
+        multiple={false}
       >
-        <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
-          <Form.Item
-            name="title"
-            label="Judul"
-            rules={[{ required: true, message: "Judul harus diisi!" }]}
-          >
-            <Input placeholder="Masukkan judul blog" />
-          </Form.Item>
-          <Form.Item
-            name="content"
-            label="Konten"
-            rules={[{ required: true, message: "Konten harus diisi!" }]}
-          >
-            <Input.TextArea rows={4} placeholder="Masukkan konten blog" />
-          </Form.Item>
+        <p className="ant-upload-text">Klik atau seret file untuk mengunggah</p>
+      </Dragger>
+    </Form.Item>
+    <Form.Item>
+      <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
+        Simpan
+      </Button>
+      <Button onClick={handleModalCancel}>Batal</Button>
+    </Form.Item>
+  </Form>
+</Modal>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
-              Simpan
-            </Button>
-            <Button onClick={handleModalCancel}>Batal</Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+
+
     </div>
   );
 };

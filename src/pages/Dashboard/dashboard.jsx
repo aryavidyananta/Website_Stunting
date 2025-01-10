@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import CountUp from 'react-countup';
 import { Layout, Breadcrumb, Card, Row, Col, Typography } from 'antd';
 import { TeamOutlined, AlertOutlined } from '@ant-design/icons';
 import {
@@ -56,7 +57,7 @@ const Dashboard = () => {
     <Layout style={{ minHeight: '100vh' }}>
       <Content
         style={{   
-          backgroundColor: '#808080',
+          backgroundColor: '#fff',
           padding: '24px',
           margin: '0',
           borderRadius: '15px',
@@ -69,95 +70,96 @@ const Dashboard = () => {
 
         {/* Statistic Cards */}
         <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-          <Col xs={24} sm={12} md={6}>
-            <Card
-              style={{
-                backgroundColor: '#ff4d4f',
-                color: 'white',
-                borderRadius: '8px',
-                height: '100%',
-              }}
-            >
-              <Row align="middle">
-                <Col span={16}>
-                  <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
-                    21,6%
-                  </Title>
-                  <Text style={{ color: 'white' }}>Prevelensi Stunting</Text>
-                </Col>
-                <Col span={8}>
-                  <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <Card
-              style={{
-                backgroundColor: '#9254de',
-                color: 'white',
-                borderRadius: '8px',
-                height: '100%',
-              }}
-            >
-              <Row align="middle">
-                <Col span={16}>
-                  <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
-                    2,8%
-                  </Title>
-                  <Text style={{ color: 'white' }}>Penurunan Prevalensi</Text>
-                </Col>
-                <Col span={8}>
-                  <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <Card
-              style={{
-                backgroundColor: '#40a9ff',
-                color: 'white',
-                borderRadius: '8px',
-                height: '100%',
-              }}
-            >
-              <Row align="middle">
-                <Col span={16}>
-                  <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
-                    5,3 Juta
-                  </Title>
-                  <Text style={{ color: 'white' }}>Jumlah Terdampak</Text>
-                </Col>
-                <Col span={8}>
-                  <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <Card
-              style={{
-                backgroundColor: '#36cfc9',
-                color: 'white',
-                borderRadius: '8px',
-                height: '100%',
-              }}
-            >
-              <Row align="middle">
-                <Col span={16}>
-                  <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
-                    60%
-                  </Title>
-                  <Text style={{ color: 'white' }}>Pendidikan Rendah</Text>
-                </Col>
-                <Col span={8}>
-                  <AlertOutlined style={{ fontSize: '40px', color: 'white' }} />
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                style={{
+                  backgroundColor: '#ff4d4f',
+                  color: 'white',
+                  borderRadius: '8px',
+                  height: '100%',
+                }}
+              >
+                <Row align="middle">
+                  <Col span={16}>
+                    <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
+                      <CountUp start={0} end={21.6} duration={5} decimals={1} suffix="%" />
+                    </Title>
+                    <Text style={{ color: 'white' }}>Prevalensi Stunting</Text>
+                  </Col>
+                  <Col span={8}>
+                    <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                style={{
+                  backgroundColor: '#9254de',
+                  color: 'white',
+                  borderRadius: '8px',
+                  height: '100%',
+                }}
+              >
+                <Row align="middle">
+                  <Col span={16}>
+                    <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
+                      <CountUp start={0} end={2.8} duration={5} decimals={1} suffix="%" />
+                    </Title>
+                    <Text style={{ color: 'white' }}>Penurunan Prevalensi</Text>
+                  </Col>
+                  <Col span={8}>
+                    <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                style={{
+                  backgroundColor: '#40a9ff',
+                  color: 'white',
+                  borderRadius: '8px',
+                  height: '100%',
+                }}
+              >
+                <Row align="middle">
+                  <Col span={16}>
+                    <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
+                      <CountUp start={0} end={5.3} duration={5} decimals={1} suffix=" Juta" />
+                    </Title>
+                    <Text style={{ color: 'white' }}>Jumlah Terdampak</Text>
+                  </Col>
+                  <Col span={8}>
+                    <TeamOutlined style={{ fontSize: '40px', color: 'white' }} />
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                style={{
+                  backgroundColor: '#36cfc9',
+                  color: 'white',
+                  borderRadius: '8px',
+                  height: '100%',
+                }}
+              >
+                <Row align="middle">
+                  <Col span={16}>
+                    <Title level={3} style={{ color: 'white', fontWeight: 'bold' }}>
+                      <CountUp start={0} end={60} duration={5} suffix="%" />
+                    </Title>
+                    <Text style={{ color: 'white' }}>Pendidikan Rendah</Text>
+                  </Col>
+                  <Col span={8}>
+                    <AlertOutlined style={{ fontSize: '40px', color: 'white' }} />
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+
 
         {/* Charts */}
         <Row gutter={[16, 16]}>

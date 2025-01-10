@@ -18,4 +18,20 @@
     margin: 20px 0; /* Jarak atas dan bawah deskripsi */
     color: #333; /* Warna teks */
   }
+
+  .custom-blog-description p {
+    margin-bottom: 1em;
+    text-align: justify;
+  }
+  
+  .custom-blog-description ol,
+  .custom-blog-description ul {
+    margin: 1em 0;
+    padding-left: 20px;
+  }
+  
+  .custom-blog-description li {
+    margin-bottom: 0.5em;
+  }
+  
   

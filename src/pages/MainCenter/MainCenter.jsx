@@ -1,98 +1,129 @@
-import { Breadcrumb, Card, Col, Layout, Row } from "antd";
+import { Breadcrumb, Card, Layout } from "antd";
+import CountUp from 'react-countup';
 import { Content } from "antd/es/layout/layout";
-
 import {
-  BookOpen,
-  Briefcase,
+  User as UserIcon,
+  Music as PlaylistIcon,
+  FileText as BlogIcon,
+  HeartPulse as MedisIcon,
+  Cog,
   Github,
-  LinkedinIcon,
+  Linkedin,
   MapPin,
-  Star,
   Twitter,
-  User,
 } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const MainCenter = () => {
+const AdminProfile = () => {
+  const [stats, setStats] = useState({
+    users: 0,
+    playlists: 0,
+    mediss: 0,
+    blogs: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const userResponse = await fetch("http://172.20.10.3:5000/api/v1/user/count_by_role/User");
+        const userData = await userResponse.json();
+
+        const playlistResponse = await fetch("http://172.20.10.3:5000/api/v1/playlist/count");
+        const playlistData = await playlistResponse.json();
+
+        const medisResponse = await fetch("http://172.20.10.3:5000/api/v1/medis/count");
+        const medisData = await medisResponse.json();
+
+        const blogResponse = await fetch("http://172.20.10.3:5000/api/v1/blog/count");
+        const blogData = await blogResponse.json();
+
+        setStats({
+          users: userData.total_users,
+          playlists: playlistData.total_playlists,
+          mediss: medisData.total_mediss,
+          blogs: blogData.total_blogs,
+        });
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   const containerStyle = {
-    backgroundColor: "#fff",
-    padding: "24px",
-    borderRadius: "15px",
+    backgroundColor: "#f0f8ff",
+    padding: "32px",
+    borderRadius: "20px",
   };
 
   const headerStyle = {
-    backgroundColor: "#333",
-    padding: "20px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-    marginBottom: "20px",
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: "20px",
+    marginBottom: "20px",
+    paddingBottom: "20px",
+    borderBottom: "2px solid #cce7ff",
+  };
+
+  const avatarStyle = {
+    width: "150px",
+    height: "150px",
+    borderRadius: "50%",
+    border: "5px solid #89c2d9",
+    margin: "0 auto 20px",
   };
 
   const cardStyle = {
-    backgroundColor: '#389fbe',
-    borderRadius: "10px",
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#e3f2fd",
+    borderRadius: "15px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
     padding: "20px",
     textAlign: "center",
   };
 
   const statsContainerStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "20px",
-    marginTop: "20px",
-    
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: "24px",
+    marginTop: "30px",
   };
 
-  const profileHeaderStyle = {
-    position: "relative",
-    textAlign: "center",
-    marginBottom: "20px",
-    paddingBottom: "20px",
-    borderBottom: "1px solid #333333",
-  };
-
-  const avatarStyle = {
-    width: "120px",
-    height: "120px",
-    borderRadius: "50%",
-    border: "4px solid #333",
-    margin: "-60px auto 10px",
+  const sectionStyle = {
+    marginTop: "30px",
+    padding: "24px",
+    backgroundColor: "#e3f2fd",
+    borderRadius: "15px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
   };
 
   const socialIconStyle = {
     display: "flex",
     justifyContent: "center",
-    gap: "15px",
-    marginTop: "15px",
+    gap: "20px",
+    marginTop: "20px",
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: "100vh", backgroundColor: "#e6f7ff" }}>
       <Content style={containerStyle}>
         {/* Breadcrumb */}
-        <Breadcrumb style={{ marginBottom: "16px" }}>
+        <Breadcrumb style={{ marginBottom: "20px" }}>
+          <Breadcrumb.Item>Admin Dashboard</Breadcrumb.Item>
           <Breadcrumb.Item>Profile</Breadcrumb.Item>
         </Breadcrumb>
 
         {/* Profile Header */}
-        <div style={profileHeaderStyle}>
-          <div style={{ height: "120px", background: "linear-gradient(to right, #2196f3, #673ab7)" }}></div>
+        <div style={headerStyle}>
           <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt="Profile"
+            src="/images/logo_icon.svg"
+            alt="Admin"
             style={avatarStyle}
           />
-          <h1>John Doe</h1>
-          <p>
-            <Briefcase style={{ marginRight: "5px" }} />
-            Senior Software Engineer
+          <h1 style={{ color: "#007acc", marginBottom: "5px" }}>Admin POS</h1>
+          <p style={{ color: "#555" }}>
+            <Cog style={{ marginRight: "8px" }} /> System Administrator
           </p>
-          <p>
-            <MapPin style={{ marginRight: "5px" }} />
-            San Francisco, CA
+          <p style={{ color: "#555" }}>
+            <MapPin style={{ marginRight: "8px" }} /> INDONESIA
           </p>
         </div>
 
@@ -100,46 +131,60 @@ const MainCenter = () => {
         <div style={statsContainerStyle}>
           <div style={cardStyle}>
             <div>
-              <BookOpen style={{ color: "#333", fontSize: "24px", marginBottom: "10px" }} />
-              <p>Projects</p>
-              <h3>28</h3>
+              <UserIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <p>Users</p>
+              <h3 style={{ color: "#007acc" }}>
+                <CountUp start={0} end={stats.users} duration={3.5} />
+              </h3>
             </div>
           </div>
           <div style={cardStyle}>
             <div>
-              <User style={{ color: "#333", fontSize: "24px", marginBottom: "10px" }} />
-              <p>Followers</p>
-              <h3>2.1k</h3>
+              <PlaylistIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <p>Playlists</p>
+              <h3 style={{ color: "#007acc" }}>
+                <CountUp start={0} end={stats.playlists} duration={3.5} />
+              </h3>
             </div>
           </div>
           <div style={cardStyle}>
             <div>
-              <Star style={{ color: "#333", fontSize: "24px", marginBottom: "10px" }} />
-              <p>Rating</p>
-              <h3>4.9</h3>
+              <MedisIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <p>Medis</p>
+              <h3 style={{ color: "#007acc" }}>
+                <CountUp start={0} end={stats.mediss} duration={3.5} />
+              </h3>
+            </div>
+          </div>
+          <div style={cardStyle}>
+            <div>
+              <BlogIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <p>Blogs</p>
+              <h3 style={{ color: "#007acc" }}>
+                <CountUp start={0} end={stats.blogs} duration={3.5} />
+              </h3>
             </div>
           </div>
         </div>
 
+
         {/* About Section */}
-        <div style={{ ...cardStyle, marginTop: "20px" }}>
-          <h2 style={{color: '#333'}}>About</h2>
-          <p>
-            Passionate software engineer with over 8 years of experience in
-            full-stack development. Specialized in React, Node.js, and cloud
-            architecture. Leading technical initiatives and mentoring junior
-            developers.
+        <div style={sectionStyle}>
+          <h2 style={{ color: "#007acc" }}>About</h2>
+          <p style={{ color: "#555" }}>
+          Kami adalah tim profesional kesehatan yang berdedikasi untuk melawan stunting dan mendukung pertumbuhan sehat anak-anak di seluruh Indonesia. Dengan komitmen penuh untuk menyediakan layanan berkualitas dan informasi yang dapat diakses, kami percaya bahwa setiap anak memiliki hak untuk tumbuh sehat dan berkembang sesuai potensinya.
           </p>
-          {/* Social Links */}
+        </div>
+
+        {/* Social Links */}
+        <div style={sectionStyle}>
+          <h2 style={{ color: "#007acc" }}>Connect with Me</h2>
           <div style={socialIconStyle}>
             <a href="#">
-              <Github style={{ fontSize: "24px", color: "#333" }} />
+              <Twitter style={{ fontSize: "28px", color: "#007acc" }} />
             </a>
             <a href="#">
-              <Twitter style={{ fontSize: "24px", color: "#333" }} />
-            </a>
-            <a href="#">
-              <LinkedinIcon style={{ fontSize: "24px", color: "#333" }} />
+              <Linkedin style={{ fontSize: "28px", color: "#007acc" }} />
             </a>
           </div>
         </div>
@@ -148,4 +193,4 @@ const MainCenter = () => {
   );
 };
 
-export default MainCenter;
+export default AdminProfile;

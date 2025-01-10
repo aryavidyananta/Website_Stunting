@@ -53,8 +53,11 @@ const LoginPage = () => {
   const handleAuth = async (e, type) => {
     e.preventDefault();
     if (!validateForm()) return;
-
-    const url = type === "login" ? "http://127.0.0.1:5000/api/v1/auth/login" : "http://127.0.0.1:5000/api/v1/auth/register";
+  
+    const url =
+      type === "login"
+        ? "http://172.20.10.3:5000/api/v1/auth/login"
+        : "http://172.20.10.3:5000/api/v1/auth/register";
     const body = new URLSearchParams(
       type === "login"
         ? { username: formData.username, password: formData.password }
@@ -65,7 +68,7 @@ const LoginPage = () => {
             Roles: "User",
           }
     );
-
+  
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -73,26 +76,26 @@ const LoginPage = () => {
         body,
       });
       const data = await response.json();
-      if (response.status === 200) {
-        console.log("ini respon:", response);
+  
+      if (response.ok) { // Gunakan 'response.ok' untuk memeriksa status HTTP
         if (type === "login") {
-          console.log("ini type login:", type);
-          login(data.access_token); // Call login function from context to store the token
+          login(data.access_token); // Simpan token ke context
           notification.success({
             message: "Login Successful",
             description: "Welcome to the dashboard.",
           });
+          navigate("/dashboard");
         } else {
           notification.success({
             message: "Registration Successful",
             description: "You can now sign in.",
           });
-          setSignIn(true); // Switch to sign in form
+          setSignIn(true); // Beralih ke form login
         }
       } else {
         notification.error({
           message: type === "login" ? "Login Failed" : "Registration Failed",
-          description: data.msg || "Please try again.",
+          description: data.msg || "An error occurred, please try again.",
         });
       }
     } catch (error) {
@@ -103,6 +106,7 @@ const LoginPage = () => {
       });
     }
   };
+  
 
   return (
     <div className="bodysignin">
@@ -237,6 +241,7 @@ const LoginPage = () => {
         <div className="overlayContainersignin">
           <div className="overlaysignin">
             <div className="overlayPanelsignin leftOverlayPanelsignin">
+            <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
               <h1 className="signinTitlesignin">Welcome Back!</h1>
               <p className="paragraphsignin">
                 To keep connected with us, please login with your personal info.
@@ -249,6 +254,7 @@ const LoginPage = () => {
               </button>
             </div>
             <div className="overlayPanelsignin rightOverlayPanelsignin">
+            <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
               <h1 className="signinTitlesignin">Hello!</h1>
               <p className="paragraphsignin">
                 Enter your personal details and start your journey with us.
