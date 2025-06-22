@@ -21,20 +21,21 @@ const AdminProfile = () => {
     mediss: 0,
     blogs: 0,
   });
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const userResponse = await fetch("http://172.20.10.3:5000/api/v1/user/count_by_role/User");
+        const userResponse = await fetch(`${API_BASE_URL}/api/v1/user/count_by_role/User`);
         const userData = await userResponse.json();
 
-        const playlistResponse = await fetch("http://172.20.10.3:5000/api/v1/playlist/count");
+        const playlistResponse = await fetch(`${API_BASE_URL}/api/v1/playlist/count`);
         const playlistData = await playlistResponse.json();
 
-        const medisResponse = await fetch("http://172.20.10.3:5000/api/v1/medis/count");
+        const medisResponse = await fetch(`${API_BASE_URL}/api/v1/medis/count`);
         const medisData = await medisResponse.json();
 
-        const blogResponse = await fetch("http://172.20.10.3:5000/api/v1/blog/count");
+        const blogResponse = await fetch(`${API_BASE_URL}/api/v1/blog/count`);
         const blogData = await blogResponse.json();
 
         setStats({

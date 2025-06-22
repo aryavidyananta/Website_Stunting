@@ -6,6 +6,8 @@ import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../providers/AuthProviders"; // Import AuthContext
 import "./login.css";
 
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+
 const LoginPage = () => {
   const [signIn, setSignIn] = useState(true);
   const [formData, setFormData] = useState({
@@ -53,11 +55,11 @@ const LoginPage = () => {
   const handleAuth = async (e, type) => {
     e.preventDefault();
     if (!validateForm()) return;
-  
+
     const url =
       type === "login"
-        ? "http://172.20.10.3:5000/api/v1/auth/login"
-        : "http://172.20.10.3:5000/api/v1/auth/register";
+        ? `${API_BASE_URL}/api/v1/auth/login`
+        : `${API_BASE_URL}/api/v1/auth/register`;
     const body = new URLSearchParams(
       type === "login"
         ? { username: formData.username, password: formData.password }
@@ -68,7 +70,7 @@ const LoginPage = () => {
             Roles: "User",
           }
     );
-  
+
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -76,8 +78,9 @@ const LoginPage = () => {
         body,
       });
       const data = await response.json();
-  
-      if (response.ok) { // Gunakan 'response.ok' untuk memeriksa status HTTP
+
+      if (response.ok) {
+        // Gunakan 'response.ok' untuk memeriksa status HTTP
         if (type === "login") {
           login(data.access_token); // Simpan token ke context
           notification.success({
@@ -106,12 +109,10 @@ const LoginPage = () => {
       });
     }
   };
-  
 
   return (
     <div className="bodysignin">
       <div className={`containersignin ${signIn ? "" : "right-panel-active"}`}>
-        
         {/* Sign Up Form */}
         <div className="form-containersignin signUpContainersignin">
           <form
@@ -241,7 +242,11 @@ const LoginPage = () => {
         <div className="overlayContainersignin">
           <div className="overlaysignin">
             <div className="overlayPanelsignin leftOverlayPanelsignin">
-            <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
+              <img
+                src="/images/logo_icon.svg"
+                alt="Logo Icon"
+                className="logoIcon"
+              />
               <h1 className="signinTitlesignin">Welcome Back!</h1>
               <p className="paragraphsignin">
                 To keep connected with us, please login with your personal info.
@@ -254,7 +259,11 @@ const LoginPage = () => {
               </button>
             </div>
             <div className="overlayPanelsignin rightOverlayPanelsignin">
-            <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
+              <img
+                src="/images/logo_icon.svg"
+                alt="Logo Icon"
+                className="logoIcon"
+              />
               <h1 className="signinTitlesignin">Hello!</h1>
               <p className="paragraphsignin">
                 Enter your personal details and start your journey with us.

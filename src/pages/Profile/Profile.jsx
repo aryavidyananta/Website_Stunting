@@ -16,12 +16,12 @@ const MainBlog = () => {
   const [fileList, setFileList] = useState([]);
   const [expandedRows, setExpandedRows] = useState([]);
 
-  const API_BASE_URL = "http://172.20.10.3:5000/api/v1/blog";
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   const fetchBlogs = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/read`);
+      const response = await fetch(`${API_BASE_URL}//api/v1/blog/read`);
       const data = await response.json();
       if (data?.datas) {
         setBlogs(data.datas);
@@ -46,7 +46,7 @@ const MainBlog = () => {
         formData.append("Gambar", fileList[0].originFileObj);
       }
 
-      const response = await fetch(`${API_BASE_URL}/create`, {
+      const response = await fetch(`${API_BASE_URL}//api/v1/blog/create`, {
         method: "POST",
         body: formData,
       });
@@ -76,7 +76,7 @@ const MainBlog = () => {
         formData.append("Gambar", fileList[0].originFileObj);
       }
 
-      const response = await fetch(`${API_BASE_URL}/update/${editingBlog.Id_Blog}`, {
+      const response = await fetch(`${API_BASE_URL}/api/v1/blog/update/${editingBlog.Id_Blog}`, {
         method: "PUT",
         body: formData,
       });
@@ -108,7 +108,7 @@ const MainBlog = () => {
       cancelText: "Tidak",
       onOk: async () => {
         try {
-          const response = await fetch(`${API_BASE_URL}/delete/${Id_Blog}`, {
+          const response = await fetch(`${API_BASE_URL}/api/v1/blog/delete/${Id_Blog}`, {
             method: "DELETE",
           });
 
@@ -197,7 +197,7 @@ const MainBlog = () => {
       render: (url) =>
         url && (
           <img
-            src={`http://172.20.10.3:5000/static/show_image/${url}`}
+            src={`${API_BASE_URL}/static/show_image/${url}`}
             alt="Gambar"
             style={{ width: 100 }}
           />

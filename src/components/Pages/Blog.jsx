@@ -6,6 +6,8 @@ import BlogSectionStyle2 from '../Section/BlogSection/BlogSectionStyle2';
 import Breadcrumb from '../Breadcrumb';
 import { pageTitle } from '../../helpers/PageTitle';
 
+
+
 export default function Blog() {
   pageTitle('Blog');
 
@@ -14,11 +16,12 @@ export default function Blog() {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
-        const response = await fetch('http://172.20.10.3:5000/api/v1/blog/read');
+        const response = await fetch(`${API_BASE_URL}/api/v1/blog/read`);
         const result = await response.json();
 
         if (response.ok && result.datas) {
@@ -32,7 +35,7 @@ export default function Blog() {
 
             return {
               title: blog.Judul || 'Untitled Blog',
-              thumbUrl: `http://172.20.10.3:5000/static/show_image/${blog.Gambar}`,
+              thumbUrl: `${API_BASE_URL}/static/show_image/${blog.Gambar}`,
               date: blog.tanggal
                 ? utcDate.toLocaleDateString('en-GB', {
                     day: 'numeric',

@@ -5,10 +5,11 @@ const { Title } = Typography;
 
 const Bidan = () => {
   const [data, setData] = useState([]);
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   // Fetch data from API when the component mounts
   useEffect(() => {
-    fetch('http://172.20.10.3:5000/api/v1/user/read_by_role/User')
+    fetch(`${API_BASE_URL}/api/v1/user/read_by_role/User`)
       .then((response) => response.json())
       .then((data) => {
         if (data.datas) {

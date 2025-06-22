@@ -12,11 +12,12 @@ export default function DoctorDetails() {
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchDoctorDetails = async () => {
       try {
-        const response = await fetch(`http://172.20.10.3:5000/api/v1/medis/read/${id}`);
+        const response = await fetch(`${API_BASE_URL}/api/v1/medis/read/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch doctor details');
         }
@@ -47,7 +48,7 @@ export default function DoctorDetails() {
         {doctor && (
           <DoctorDetailsSection
             bgUrl="/images/doctors/doctor_details_bg.svg"
-            imgUrl={`http://172.20.10.3:5000/static/show_image/${doctor.Gambar}`}
+            imgUrl={`${API_BASE_URL}//static/show_image/${doctor.Gambar}`}
             name={doctor.Nama}
             department={doctor.Kategori}
             designation={doctor.Kategori}

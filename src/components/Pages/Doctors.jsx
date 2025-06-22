@@ -8,16 +8,17 @@ export default function Doctors() {
   const [teamData, setTeamData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
-        const response = await fetch('http://172.20.10.3:5000/api/v1/medis/read');
+        const response = await fetch(`${API_BASE_URL}/api/v1/medis/read`);
         const data = await response.json();
 
         if (response.ok) {
           const formattedData = data.datas.map((item) => ({
-            imgUrl: `http://172.20.10.3:5000/static/show_image/${item.Gambar}`,
+            imgUrl: `${API_BASE_URL}/static/show_image/${item.Gambar}`,
             department: item.Kategori,
             name: item.Nama,
             designation: item.Kategori,

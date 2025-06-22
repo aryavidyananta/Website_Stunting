@@ -9,12 +9,13 @@ function Kalkulator() {
     const [advice, setAdvice] = useState('');
     const [image, setImage] = useState('');
     const [gender, setGender] = useState(null);
+    const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
     const handlePredict = async (values) => {
         const { height, age } = values;
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/predict', {
+            const response = await fetch(`${API_BASE_URL}/predict`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

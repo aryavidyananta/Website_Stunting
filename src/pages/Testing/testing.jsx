@@ -9,12 +9,13 @@ function Testing() {
     const [advice, setAdvice] = useState(''); // State untuk menyimpan saran
     const [image, setImage] = useState('');   // State untuk menyimpan URL gambar
     const [gender, setGender] = useState(null); // State untuk menyimpan pilihan jenis kelamin
+    const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
     const handlePredict = async (values) => {
         const { height, age } = values;
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/predict', {
+            const response = await fetch(`${API_BASE_URL}/predict`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
