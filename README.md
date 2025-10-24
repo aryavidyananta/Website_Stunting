@@ -68,7 +68,7 @@ http://192.168.xx.xx:5000 (untuk akses dari perangkat lain di jaringan yang sama
   Kadek Gandi Taruna Wijaya  
   Putu Devandra Radiastu Putra  
 
-Terima kasih telah menggunakan dan mendukung proyek ini.  
+erima kasih telah menggunakan dan mendukung proyek ini.  
 Semua hak cipta dan kontribusi dimiliki oleh **Tim Blackhex**.  
 
 ---
