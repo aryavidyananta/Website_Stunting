@@ -1,7 +1,6 @@
 # 🌐 Website Pelayanan Optimal Stunting
 
 **Website Pusat Optimalisasi Stunting (POS)** adalah platform berbasis web yang dikembangkan untuk mendukung upaya pencegahan dan penanganan stunting di Indonesia. Website ini menyediakan pusat informasi, edukasi, serta sarana kolaborasi antara dokter spesialis anak dan bidan.
-
 ---
 
 ## Fitur Utama
