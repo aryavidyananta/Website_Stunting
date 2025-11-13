@@ -32,14 +32,6 @@
    cd api_stunting
 6. Buat File .env di dalam Folder api_stunting, lalu isi file .env dengan code berikut:
    ```bash
-   DB_HOST=localhost
-   DB_NAME=pos
-   DB_USER=root
-   DB_PASSWORD=
-   DB_POOLNAME=db_library_pool
-   POOL_SIZE=10
-   SECRET_KEY=supersecretkey
-   JWT_SECRET_KEY=superjwtsecretkey
 7. Setup Database
    - Aktifkan XAMPP/Laragon
    - Buat database baru dengan nama: pos
