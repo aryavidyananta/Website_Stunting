@@ -12,12 +12,12 @@ export default function Doctors() {
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
-        const response = await fetch('http://172.20.10.3:5000/api/v1/medis/read');
+        const response = await fetch('http://127.0.0.1:5000/api/v1/medis/read');
         const data = await response.json();
 
         if (response.ok) {
           const formattedData = data.datas.map((item) => ({
-            imgUrl: `http://172.20.10.3:5000/static/show_image/${item.Gambar}`,
+            imgUrl: `http://127.0.0.1:5000/static/show_image/${item.Gambar}`,
             department: item.Kategori,
             name: item.Nama,
             designation: item.Kategori,

@@ -18,7 +18,7 @@ export default function BlogDetails() {
     const fetchBlogDetail = async () => {
       try {
         const response = await fetch(
-          `http://172.20.10.3:5000/api/v1/blog/read/${id}`
+          `http://127.0.0.1:5000/api/v1/blog/read/${id}`
         );
         if (!response.ok) {
           throw new Error(`Error fetching blog data: ${response.statusText}`);
@@ -64,7 +64,7 @@ export default function BlogDetails() {
         {blog?.Gambar && (
           <div className="cs_blog_details_image">
             <img
-              src={`http://172.20.10.3:5000/static/show_image/${blog.Gambar}`}
+              src={`http://127.0.0.1:5000/static/show_image/${blog.Gambar}`}
               alt={blog?.Judul || "Blog Image"}
               className="img-fluid custom-blog-image"
             />

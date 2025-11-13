@@ -1,9 +1,8 @@
 import { useState, useContext } from "react";
-import { notification } from "antd";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Input } from "antd";
+import { notification, Input } from "antd";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../providers/AuthProviders"; // Import AuthContext
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProviders";
 import "./login.css";
 
 const LoginPage = () => {
@@ -17,9 +16,8 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const { login } = useContext(AuthContext); // Use login from context
+  const { login, isLoggedIn, userProfile } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { isLoggedIn, userProfile } = useContext(AuthContext);
 
   if (isLoggedIn) {
     return (
@@ -37,7 +35,7 @@ const LoginPage = () => {
   const validateForm = () => {
     const newErrors = {};
     if (signIn) {
-      if (!formData.username) newErrors.email = "Email is required";
+      if (!formData.username) newErrors.username = "Username is required";
       if (!formData.password) newErrors.password = "Password is required";
     } else {
       if (!formData.username) newErrors.username = "Name is required";
@@ -53,33 +51,40 @@ const LoginPage = () => {
   const handleAuth = async (e, type) => {
     e.preventDefault();
     if (!validateForm()) return;
-  
+
     const url =
       type === "login"
-        ? "http://172.20.10.3:5000/api/v1/auth/login"
-        : "http://172.20.10.3:5000/api/v1/auth/register";
+        ? "http://127.0.0.1:5000/api/v1/auth/login"
+        : "http://127.0.0.1:5000/api/v1/auth/register";
+
     const body = new URLSearchParams(
       type === "login"
-        ? { username: formData.username, password: formData.password }
+        ? {
+            username: formData.username,
+            password: formData.password,
+          }
         : {
             username: formData.username,
             email: formData.email,
             password: formData.password,
-            Roles: "User",
+            roles: "User",
           }
     );
-  
+
+    console.log("Body being sent:", Object.fromEntries(body));
+
     try {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
       });
+
       const data = await response.json();
-  
-      if (response.ok) { // Gunakan 'response.ok' untuk memeriksa status HTTP
+
+      if (response.ok) {
         if (type === "login") {
-          login(data.access_token); // Simpan token ke context
+          login(data.access_token);
           notification.success({
             message: "Login Successful",
             description: "Welcome to the dashboard.",
@@ -90,7 +95,7 @@ const LoginPage = () => {
             message: "Registration Successful",
             description: "You can now sign in.",
           });
-          setSignIn(true); // Beralih ke form login
+          setSignIn(true);
         }
       } else {
         notification.error({
@@ -106,12 +111,10 @@ const LoginPage = () => {
       });
     }
   };
-  
 
   return (
     <div className="bodysignin">
       <div className={`containersignin ${signIn ? "" : "right-panel-active"}`}>
-        
         {/* Sign Up Form */}
         <div className="form-containersignin signUpContainersignin">
           <form
@@ -119,6 +122,7 @@ const LoginPage = () => {
             onSubmit={(e) => handleAuth(e, "register")}
           >
             <h1 className="signinTitlesignin">Create Account</h1>
+
             <input
               type="text"
               name="username"
@@ -130,6 +134,7 @@ const LoginPage = () => {
             {errors.username && (
               <span className="error-message">{errors.username}</span>
             )}
+
             <input
               type="email"
               name="email"
@@ -141,6 +146,7 @@ const LoginPage = () => {
             {errors.email && (
               <span className="error-message">{errors.email}</span>
             )}
+
             <Input
               type={passwordVisible ? "text" : "password"}
               name="password"
@@ -163,6 +169,7 @@ const LoginPage = () => {
             {errors.password && (
               <span className="error-message">{errors.password}</span>
             )}
+
             <Input
               type={confirmPasswordVisible ? "text" : "password"}
               name="confirmPassword"
@@ -189,6 +196,7 @@ const LoginPage = () => {
             {errors.confirmPassword && (
               <span className="error-message">{errors.confirmPassword}</span>
             )}
+
             <button className="buttonsignin">Sign Up</button>
           </form>
         </div>
@@ -197,6 +205,7 @@ const LoginPage = () => {
         <div className="form-containersignin signInContainersignin">
           <form className="formsignin" onSubmit={(e) => handleAuth(e, "login")}>
             <h1 className="signinTitlesignin">Sign in</h1>
+
             <input
               type="text"
               name="username"
@@ -208,6 +217,7 @@ const LoginPage = () => {
             {errors.username && (
               <span className="error-message">{errors.username}</span>
             )}
+
             <Input
               type={passwordVisible ? "text" : "password"}
               name="password"
@@ -230,6 +240,7 @@ const LoginPage = () => {
             {errors.password && (
               <span className="error-message">{errors.password}</span>
             )}
+
             <a href="#" className="anchorsignin">
               Forgot your password?
             </a>
@@ -241,7 +252,7 @@ const LoginPage = () => {
         <div className="overlayContainersignin">
           <div className="overlaysignin">
             <div className="overlayPanelsignin leftOverlayPanelsignin">
-            <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
+              <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
               <h1 className="signinTitlesignin">Welcome Back!</h1>
               <p className="paragraphsignin">
                 To keep connected with us, please login with your personal info.
@@ -253,8 +264,9 @@ const LoginPage = () => {
                 Sign In
               </button>
             </div>
+
             <div className="overlayPanelsignin rightOverlayPanelsignin">
-            <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
+              <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
               <h1 className="signinTitlesignin">Hello!</h1>
               <p className="paragraphsignin">
                 Enter your personal details and start your journey with us.

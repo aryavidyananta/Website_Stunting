@@ -16,7 +16,7 @@ export default function DoctorDetails() {
   useEffect(() => {
     const fetchDoctorDetails = async () => {
       try {
-        const response = await fetch(`http://172.20.10.3:5000/api/v1/medis/read/${id}`);
+        const response = await fetch(`http://127.0.0.1:5000/api/v1/medis/read/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch doctor details');
         }
@@ -47,7 +47,7 @@ export default function DoctorDetails() {
         {doctor && (
           <DoctorDetailsSection
             bgUrl="/images/doctors/doctor_details_bg.svg"
-            imgUrl={`http://172.20.10.3:5000/static/show_image/${doctor.Gambar}`}
+            imgUrl={`http://127.0.0.1:5000/static/show_image/${doctor.Gambar}`}
             name={doctor.Nama}
             department={doctor.Kategori}
             designation={doctor.Kategori}

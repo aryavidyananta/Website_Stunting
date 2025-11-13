@@ -13,7 +13,7 @@ const Medis = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://172.20.10.3:5000/api/v1/medis/read");
+      const response = await fetch("http://127.0.0.1:5000/api/v1/medis/read");
       const result = await response.json();
       setData(result.datas.map((item) => ({
         key: item.Id_Medis,
@@ -37,7 +37,7 @@ const Medis = () => {
       cancelText: "No",
       onOk: async () => {
         try {
-          await fetch(`http://172.20.10.3:5000/api/v1/medis/delete/${id}`, { method: "DELETE" });
+          await fetch(`http://127.0.0.1:5000/api/v1/medis/delete/${id}`, { method: "DELETE" });
           message.success("Data deleted successfully");
           fetchData();
         } catch (error) {
@@ -64,7 +64,7 @@ const Medis = () => {
         }
       });
 
-      await fetch(`http://172.20.10.3:5000/api/v1/medis/update/${currentRecord.Id_Medis}`, {
+      await fetch(`http://127.0.0.1:5000/api/v1/medis/update/${currentRecord.Id_Medis}`, {
         method: "PUT",
         body: formData,
       });
@@ -87,7 +87,7 @@ const Medis = () => {
         }
       });
 
-      await fetch("http://172.20.10.3:5000/api/v1/medis/create", {
+      await fetch("http://127.0.0.1:5000/api/v1/medis/create", {
         method: "POST",
         body: formData,
       });
@@ -110,7 +110,7 @@ const Medis = () => {
       // Assuming backend supports bulk create/update
       importedData.forEach(async (record) => {
         try {
-          await fetch("http://172.20.10.3:5000/api/v1/medis/create", {
+          await fetch("http://127.0.0.1:5000/api/v1/medis/create", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(record),
@@ -146,7 +146,7 @@ const Medis = () => {
       render: (Gambar) => (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <img
-            src={`http://172.20.10.3:5000/static/show_image/${Gambar}`}
+            src={`http://127.0.0.1:5000/static/show_image/${Gambar}`}
             alt="Medis"
             style={{ width: 100, height: 100, objectFit: 'contain', borderRadius: '8px', border: '1px solid #ddd' }}
           />

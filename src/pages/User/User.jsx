@@ -8,7 +8,7 @@ const Bidan = () => {
 
   // Fetch data from API when the component mounts
   useEffect(() => {
-    fetch('http://172.20.10.3:5000/api/v1/user/read_by_role/User')
+    fetch('http://127.0.0.1:5000/api/v1/user/read_by_role/User')
       .then((response) => response.json())
       .then((data) => {
         if (data.datas) {

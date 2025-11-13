@@ -16,7 +16,7 @@ const MainBlog = () => {
   const [fileList, setFileList] = useState([]);
   const [expandedRows, setExpandedRows] = useState([]);
 
-  const API_BASE_URL = "http://172.20.10.3:5000/api/v1/blog";
+  const API_BASE_URL = "http://127.0.0.1:5000/api/v1/blog";
 
   const fetchBlogs = async () => {
     setIsLoading(true);
@@ -197,7 +197,7 @@ const MainBlog = () => {
       render: (url) =>
         url && (
           <img
-            src={`http://172.20.10.3:5000/static/show_image/${url}`}
+            src={`http://127.0.0.1:5000/static/show_image/${url}`}
             alt="Gambar"
             style={{ width: 100 }}
           />

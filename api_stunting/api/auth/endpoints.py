@@ -11,32 +11,40 @@ auth_endpoints = Blueprint('auth', __name__)
 
 @auth_endpoints.route('/login', methods=['POST'])
 def login():
-    """Routes for authentication"""
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     if not username or not password:
         return jsonify({"msg": "Username and password are required"}), 400
 
     connection = get_connection()
     cursor = connection.cursor(dictionary=True)
-    query = "SELECT username, password, roles FROM user WHERE username = %s"
-    request_query = (username,)
-    cursor.execute(query, request_query)
+    cursor.execute("SELECT username, password, roles FROM user WHERE username = %s", (username,))
     user = cursor.fetchone()
     cursor.close()
     connection.close()
+
+    print("DEBUG user:", user)
+    print("DEBUG user_password_from_db:", user.get('password') if user else None)
+
     if not user or not bcrypt.check_password_hash(user.get('password'), password):
         return jsonify({"msg": "Bad username or password"}), 401
 
-    roles = user.get('roles')  # Ambil roles dari database
+    roles = user.get('roles')
     access_token = create_access_token(
-        identity={'username': username},
+        identity=username,                     # ✅ harus string
         additional_claims={'roles': roles}
     )
     decoded_token = decode_token(access_token)
     expires = decoded_token['exp']
-    return jsonify({"access_token": access_token, "expires_in": expires, "type": "Bearer", "roles": roles})
+
+    return jsonify({
+        "access_token": access_token,
+        "expires_in": expires,
+        "type": "Bearer",
+        "roles": roles
+    }), 200
+
 
 
 @auth_endpoints.route('/register', methods=['POST'])
@@ -63,6 +71,33 @@ def register():
                         "description": "User created",
                         "username": username}), 201
     return jsonify({"message": "Failed, cant register user"}), 501
+
+
+@auth_endpoints.route('/register-admin', methods=['POST'])
+def register_admin():
+    """Endpoint khusus untuk membuat akun Admin"""
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if not username or not password:
+        return jsonify({"msg": "Username and password are required"}), 400
+
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    connection = get_connection()
+    cursor = connection.cursor()
+    query = "INSERT INTO user (username, email, password, roles) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (username, email, hashed_password, "Admin"))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return jsonify({
+        "message": "Admin account created successfully",
+        "username": username,
+        "roles": "Admin"
+    }), 201
 
 
 # """Routes for module books"""

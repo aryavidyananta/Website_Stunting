@@ -20,21 +20,27 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
 
+# ✅ Aktifkan CORS hanya untuk API dan React origin
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:5173", "http://127.0.0.1:5173"],
+        "supports_credentials": True,
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 jwt.init_app(app)
 
-# register the blueprint
+# Register blueprints
 app.register_blueprint(auth_endpoints, url_prefix='/api/v1/auth')
-app.register_blueprint(protected_endpoints,
-                       url_prefix='/api/v1/protected')
+app.register_blueprint(protected_endpoints, url_prefix='/api/v1/protected')
 app.register_blueprint(blog_endpoints, url_prefix='/api/v1/blog')
 app.register_blueprint(medis_endpoints, url_prefix='/api/v1/medis')
 app.register_blueprint(playlist_endpoints, url_prefix='/api/v1/playlist')
 app.register_blueprint(user_endpoints, url_prefix='/api/v1/user')
 app.register_blueprint(static_file_server, url_prefix='/static/')
-
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', debug=True, port=5000)
