@@ -4,7 +4,7 @@ import { pageTitle } from "../../helpers/PageTitle";
 import Section from "../Section";
 import Breadcrumb from "../Breadcrumb";
 import Spacing from "../Spacing";
-import './BlogDetails.css';
+import "./BlogDetails.css";
 
 export default function BlogDetails() {
   pageTitle("Blog Details");
@@ -13,6 +13,7 @@ export default function BlogDetails() {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchBlogDetail = async () => {

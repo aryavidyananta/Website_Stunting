@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, Space, message, Upload } from "antd";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Space,
+  message,
+  Upload,
+} from "antd";
 import moment from "moment";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill";
@@ -21,7 +30,7 @@ const MainBlog = () => {
   const fetchBlogs = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/read`);
+      const response = await fetch(`${API_BASE_URL}//api/v1/blog/read`);
       const data = await response.json();
       if (data?.datas) {
         setBlogs(data.datas);
@@ -46,7 +55,7 @@ const MainBlog = () => {
         formData.append("Gambar", fileList[0].originFileObj);
       }
 
-      const response = await fetch(`${API_BASE_URL}/create`, {
+      const response = await fetch(`${API_BASE_URL}//api/v1/blog/create`, {
         method: "POST",
         body: formData,
       });
@@ -54,7 +63,10 @@ const MainBlog = () => {
 
       if (response.status === 201) {
         message.success("Blog berhasil ditambahkan!");
-        setBlogs((prevBlogs) => [...prevBlogs, { ...data, Id_Blog: data.Id_Blog }]);
+        setBlogs((prevBlogs) => [
+          ...prevBlogs,
+          { ...data, Id_Blog: data.Id_Blog },
+        ]);
         form.resetFields();
         setFileList([]);
         setIsModalVisible(false);
@@ -76,10 +88,13 @@ const MainBlog = () => {
         formData.append("Gambar", fileList[0].originFileObj);
       }
 
-      const response = await fetch(`${API_BASE_URL}/update/${editingBlog.Id_Blog}`, {
-        method: "PUT",
-        body: formData,
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/blog/update/${editingBlog.Id_Blog}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
       const data = await response.json();
 
       if (response.status === 200) {
@@ -108,13 +123,18 @@ const MainBlog = () => {
       cancelText: "Tidak",
       onOk: async () => {
         try {
-          const response = await fetch(`${API_BASE_URL}/delete/${Id_Blog}`, {
-            method: "DELETE",
-          });
+          const response = await fetch(
+            `${API_BASE_URL}/api/v1/blog/delete/${Id_Blog}`,
+            {
+              method: "DELETE",
+            }
+          );
 
           if (response.status === 200) {
             message.success("Blog berhasil dihapus!");
-            setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.Id_Blog !== Id_Blog));
+            setBlogs((prevBlogs) =>
+              prevBlogs.filter((blog) => blog.Id_Blog !== Id_Blog)
+            );
           } else {
             message.error("Gagal menghapus blog");
           }
@@ -171,13 +191,24 @@ const MainBlog = () => {
         <div>
           {expandedRows.includes(record.Id_Blog) ? (
             <span>
-              {text} <Button type="link" onClick={() => toggleExpandRow(record.Id_Blog)}>Sembunyikan</Button>
+              {text}{" "}
+              <Button
+                type="link"
+                onClick={() => toggleExpandRow(record.Id_Blog)}
+              >
+                Sembunyikan
+              </Button>
             </span>
           ) : (
             <span>
               {text.substring(0, 100)}...
               {text.length > 100 && (
-                <Button type="link" onClick={() => toggleExpandRow(record.Id_Blog)}>Selengkapnya</Button>
+                <Button
+                  type="link"
+                  onClick={() => toggleExpandRow(record.Id_Blog)}
+                >
+                  Selengkapnya
+                </Button>
               )}
             </span>
           )}
@@ -208,7 +239,14 @@ const MainBlog = () => {
       key: "aksi",
       align: "center",
       render: (_, record) => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            justifyContent: "center",
+          }}
+        >
           <Button
             type="primary"
             icon={<EditOutlined />}
@@ -231,64 +269,72 @@ const MainBlog = () => {
 
   return (
     <div>
-      <Button type="primary" onClick={() => handleModalOpen()} style={{ marginBottom: 16 }}>
+      <Button
+        type="primary"
+        onClick={() => handleModalOpen()}
+        style={{ marginBottom: 16 }}
+      >
         Tambah Blog
       </Button>
-      <Table dataSource={blogs} columns={columns} rowKey="Id_Blog" loading={isLoading} />
-      <Modal
-  title={editingBlog ? "Edit Blog" : "Tambah Blog"}
-  visible={isModalVisible}
-  onCancel={handleModalCancel}
-  footer={null}
-  width={1200} // Memperlebar ukuran modal menjadi 1200px
->
-  <Form
-    form={form}
-    layout="vertical"
-    onFinish={editingBlog ? handleEditBlog : handleAddBlog}
-    style={{ maxWidth: '1150px', margin: '0 auto' }} // Lebar form diperbesar menjadi 1150px dan dipusatkan
-  >
-    <Form.Item
-      name="title"
-      label="Judul"
-      rules={[{ required: true, message: "Judul harus diisi!" }]}
-    >
-      <Input placeholder="Masukkan judul blog" />
-    </Form.Item>
-    <Form.Item
-      name="content"
-      label="Deskripsi"
-      rules={[{ required: true, message: "Deskripsi harus diisi!" }]}
-    >
-      <ReactQuill
-        theme="snow"
-        value={form.getFieldValue("content")}
-        onChange={(value) => form.setFieldsValue({ content: value })}
-        placeholder="Masukkan deskripsi blog"
-        style={{ height: '300px' }} // Kustomisasi tinggi editor
+      <Table
+        dataSource={blogs}
+        columns={columns}
+        rowKey="Id_Blog"
+        loading={isLoading}
       />
-    </Form.Item>
-    <Form.Item name="gambar" label="Gambar">
-      <Dragger
-        beforeUpload={() => false}
-        fileList={fileList}
-        onChange={(info) => setFileList(info.fileList)}
-        multiple={false}
+      <Modal
+        title={editingBlog ? "Edit Blog" : "Tambah Blog"}
+        visible={isModalVisible}
+        onCancel={handleModalCancel}
+        footer={null}
+        width={1200} // Memperlebar ukuran modal menjadi 1200px
       >
-        <p className="ant-upload-text">Klik atau seret file untuk mengunggah</p>
-      </Dragger>
-    </Form.Item>
-    <Form.Item>
-      <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
-        Simpan
-      </Button>
-      <Button onClick={handleModalCancel}>Batal</Button>
-    </Form.Item>
-  </Form>
-</Modal>
-
-
-
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={editingBlog ? handleEditBlog : handleAddBlog}
+          style={{ maxWidth: "1150px", margin: "0 auto" }} // Lebar form diperbesar menjadi 1150px dan dipusatkan
+        >
+          <Form.Item
+            name="title"
+            label="Judul"
+            rules={[{ required: true, message: "Judul harus diisi!" }]}
+          >
+            <Input placeholder="Masukkan judul blog" />
+          </Form.Item>
+          <Form.Item
+            name="content"
+            label="Deskripsi"
+            rules={[{ required: true, message: "Deskripsi harus diisi!" }]}
+          >
+            <ReactQuill
+              theme="snow"
+              value={form.getFieldValue("content")}
+              onChange={(value) => form.setFieldsValue({ content: value })}
+              placeholder="Masukkan deskripsi blog"
+              style={{ height: "300px" }} // Kustomisasi tinggi editor
+            />
+          </Form.Item>
+          <Form.Item name="gambar" label="Gambar">
+            <Dragger
+              beforeUpload={() => false}
+              fileList={fileList}
+              onChange={(info) => setFileList(info.fileList)}
+              multiple={false}
+            >
+              <p className="ant-upload-text">
+                Klik atau seret file untuk mengunggah
+              </p>
+            </Dragger>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
+              Simpan
+            </Button>
+            <Button onClick={handleModalCancel}>Batal</Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

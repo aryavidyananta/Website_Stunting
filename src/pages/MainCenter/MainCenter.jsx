@@ -1,5 +1,5 @@
 import { Breadcrumb, Card, Layout } from "antd";
-import CountUp from 'react-countup';
+import CountUp from "react-countup";
 import { Content } from "antd/es/layout/layout";
 import {
   User as UserIcon,
@@ -21,20 +21,29 @@ const AdminProfile = () => {
     mediss: 0,
     blogs: 0,
   });
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const userResponse = await fetch("http://127.0.0.1:5000/api/v1/user/count_by_role/User");
+        const userResponse = await fetch(
+          "http://127.0.0.1:5000/api/v1/user/count_by_role/User"
+        );
         const userData = await userResponse.json();
 
-        const playlistResponse = await fetch("http://127.0.0.1:5000/api/v1/playlist/count");
+        const playlistResponse = await fetch(
+          "http://127.0.0.1:5000/api/v1/playlist/count"
+        );
         const playlistData = await playlistResponse.json();
 
-        const medisResponse = await fetch("http://127.0.0.1:5000/api/v1/medis/count");
+        const medisResponse = await fetch(
+          "http://127.0.0.1:5000/api/v1/medis/count"
+        );
         const medisData = await medisResponse.json();
 
-        const blogResponse = await fetch("http://127.0.0.1:5000/api/v1/blog/count");
+        const blogResponse = await fetch(
+          "http://127.0.0.1:5000/api/v1/blog/count"
+        );
         const blogData = await blogResponse.json();
 
         setStats({
@@ -113,11 +122,7 @@ const AdminProfile = () => {
 
         {/* Profile Header */}
         <div style={headerStyle}>
-          <img
-            src="/images/logo_icon.svg"
-            alt="Admin"
-            style={avatarStyle}
-          />
+          <img src="/images/logo_icon.svg" alt="Admin" style={avatarStyle} />
           <h1 style={{ color: "#007acc", marginBottom: "5px" }}>Admin POS</h1>
           <p style={{ color: "#555" }}>
             <Cog style={{ marginRight: "8px" }} /> System Administrator
@@ -131,7 +136,13 @@ const AdminProfile = () => {
         <div style={statsContainerStyle}>
           <div style={cardStyle}>
             <div>
-              <UserIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <UserIcon
+                style={{
+                  color: "#007acc",
+                  fontSize: "30px",
+                  marginBottom: "10px",
+                }}
+              />
               <p>Users</p>
               <h3 style={{ color: "#007acc" }}>
                 <CountUp start={0} end={stats.users} duration={3.5} />
@@ -140,7 +151,13 @@ const AdminProfile = () => {
           </div>
           <div style={cardStyle}>
             <div>
-              <PlaylistIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <PlaylistIcon
+                style={{
+                  color: "#007acc",
+                  fontSize: "30px",
+                  marginBottom: "10px",
+                }}
+              />
               <p>Playlists</p>
               <h3 style={{ color: "#007acc" }}>
                 <CountUp start={0} end={stats.playlists} duration={3.5} />
@@ -149,7 +166,13 @@ const AdminProfile = () => {
           </div>
           <div style={cardStyle}>
             <div>
-              <MedisIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <MedisIcon
+                style={{
+                  color: "#007acc",
+                  fontSize: "30px",
+                  marginBottom: "10px",
+                }}
+              />
               <p>Medis</p>
               <h3 style={{ color: "#007acc" }}>
                 <CountUp start={0} end={stats.mediss} duration={3.5} />
@@ -158,7 +181,13 @@ const AdminProfile = () => {
           </div>
           <div style={cardStyle}>
             <div>
-              <BlogIcon style={{ color: "#007acc", fontSize: "30px", marginBottom: "10px" }} />
+              <BlogIcon
+                style={{
+                  color: "#007acc",
+                  fontSize: "30px",
+                  marginBottom: "10px",
+                }}
+              />
               <p>Blogs</p>
               <h3 style={{ color: "#007acc" }}>
                 <CountUp start={0} end={stats.blogs} duration={3.5} />
@@ -167,12 +196,16 @@ const AdminProfile = () => {
           </div>
         </div>
 
-
         {/* About Section */}
         <div style={sectionStyle}>
           <h2 style={{ color: "#007acc" }}>About</h2>
           <p style={{ color: "#555" }}>
-          Kami adalah tim profesional kesehatan yang berdedikasi untuk melawan stunting dan mendukung pertumbuhan sehat anak-anak di seluruh Indonesia. Dengan komitmen penuh untuk menyediakan layanan berkualitas dan informasi yang dapat diakses, kami percaya bahwa setiap anak memiliki hak untuk tumbuh sehat dan berkembang sesuai potensinya.
+            Kami adalah tim profesional kesehatan yang berdedikasi untuk melawan
+            stunting dan mendukung pertumbuhan sehat anak-anak di seluruh
+            Indonesia. Dengan komitmen penuh untuk menyediakan layanan
+            berkualitas dan informasi yang dapat diakses, kami percaya bahwa
+            setiap anak memiliki hak untuk tumbuh sehat dan berkembang sesuai
+            potensinya.
           </p>
         </div>
 

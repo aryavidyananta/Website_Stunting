@@ -5,6 +5,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import "./login.css";
 
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+
 const LoginPage = () => {
   const [signIn, setSignIn] = useState(true);
   const [formData, setFormData] = useState({
@@ -252,7 +254,11 @@ const LoginPage = () => {
         <div className="overlayContainersignin">
           <div className="overlaysignin">
             <div className="overlayPanelsignin leftOverlayPanelsignin">
-              <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
+              <img
+                src="/images/logo_icon.svg"
+                alt="Logo Icon"
+                className="logoIcon"
+              />
               <h1 className="signinTitlesignin">Welcome Back!</h1>
               <p className="paragraphsignin">
                 To keep connected with us, please login with your personal info.
@@ -266,7 +272,11 @@ const LoginPage = () => {
             </div>
 
             <div className="overlayPanelsignin rightOverlayPanelsignin">
-              <img src="/images/logo_icon.svg" alt="Logo Icon" className="logoIcon" />
+              <img
+                src="/images/logo_icon.svg"
+                alt="Logo Icon"
+                className="logoIcon"
+              />
               <h1 className="signinTitlesignin">Hello!</h1>
               <p className="paragraphsignin">
                 Enter your personal details and start your journey with us.

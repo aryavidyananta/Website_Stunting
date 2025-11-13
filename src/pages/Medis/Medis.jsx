@@ -1,7 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Button, Tag, message, Modal, Form, Input, Upload, Select } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined, DownloadOutlined } from '@ant-design/icons';
-import * as XLSX from 'xlsx';
+import React, { useState, useEffect } from "react";
+import {
+  Table,
+  Button,
+  Tag,
+  message,
+  Modal,
+  Form,
+  Input,
+  Upload,
+  Select,
+} from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  UploadOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
+import * as XLSX from "xlsx";
 
 const Medis = () => {
   const [data, setData] = useState([]);
@@ -9,16 +25,19 @@ const Medis = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
   const [form] = Form.useForm();
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const response = await fetch("http://127.0.0.1:5000/api/v1/medis/read");
       const result = await response.json();
-      setData(result.datas.map((item) => ({
-        key: item.Id_Medis,
-        ...item,
-      })));
+      setData(
+        result.datas.map((item) => ({
+          key: item.Id_Medis,
+          ...item,
+        }))
+      );
     } catch (error) {
       message.error("Failed to fetch data");
     }
@@ -37,7 +56,9 @@ const Medis = () => {
       cancelText: "No",
       onOk: async () => {
         try {
-          await fetch(`http://127.0.0.1:5000/api/v1/medis/delete/${id}`, { method: "DELETE" });
+          await fetch(`http://127.0.0.1:5000/api/v1/medis/delete/${id}`, {
+            method: "DELETE",
+          });
           message.success("Data deleted successfully");
           fetchData();
         } catch (error) {
@@ -64,10 +85,13 @@ const Medis = () => {
         }
       });
 
-      await fetch(`http://127.0.0.1:5000/api/v1/medis/update/${currentRecord.Id_Medis}`, {
-        method: "PUT",
-        body: formData,
-      });
+      await fetch(
+        `http://127.0.0.1:5000/api/v1/medis/update/${currentRecord.Id_Medis}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
       message.success("Data updated successfully");
       setIsModalVisible(false);
       fetchData();
@@ -102,7 +126,7 @@ const Medis = () => {
   const handleImport = (file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const workbook = XLSX.read(e.target.result, { type: "binary" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       const importedData = XLSX.utils.sheet_to_json(sheet);
@@ -112,7 +136,7 @@ const Medis = () => {
         try {
           await fetch("http://127.0.0.1:5000/api/v1/medis/create", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(record),
           });
         } catch (error) {
@@ -134,31 +158,43 @@ const Medis = () => {
   };
 
   const columns = [
-    { title: 'Nama', dataIndex: 'Nama', key: 'Nama' },
-    { title: 'Kategori', dataIndex: 'Kategori', key: 'Kategori' },
-    { title: 'Deskripsi', dataIndex: 'Deskripsi', key: 'Deskripsi' },
-    { title: 'Tlp', dataIndex: 'Tlp', key: 'Tlp' },
-    { title: 'Email', dataIndex: 'Email', key: 'Email' },
+    { title: "Nama", dataIndex: "Nama", key: "Nama" },
+    { title: "Kategori", dataIndex: "Kategori", key: "Kategori" },
+    { title: "Deskripsi", dataIndex: "Deskripsi", key: "Deskripsi" },
+    { title: "Tlp", dataIndex: "Tlp", key: "Tlp" },
+    { title: "Email", dataIndex: "Email", key: "Email" },
     {
-      title: 'Gambar',
-      dataIndex: 'Gambar',
-      key: 'Gambar',
+      title: "Gambar",
+      dataIndex: "Gambar",
+      key: "Gambar",
       render: (Gambar) => (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <img
             src={`http://127.0.0.1:5000/static/show_image/${Gambar}`}
             alt="Medis"
-            style={{ width: 100, height: 100, objectFit: 'contain', borderRadius: '8px', border: '1px solid #ddd' }}
+            style={{
+              width: 100,
+              height: 100,
+              objectFit: "contain",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+            }}
           />
         </div>
       ),
     },
     {
-      title: 'Action',
-      key: 'action',
-      align: 'center',
+      title: "Action",
+      key: "action",
+      align: "center",
       render: (_, record) => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <Button
             type="primary"
             icon={<EditOutlined />}
@@ -180,8 +216,15 @@ const Medis = () => {
   ];
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ padding: "20px" }}>
+      <div
+        style={{
+          marginBottom: "16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Button
           type="primary"
           icon={<PlusOutlined />}
@@ -194,9 +237,14 @@ const Medis = () => {
           Create Medis
         </Button>
         <div>
-          <Upload beforeUpload={handleImport} showUploadList={false} accept=".csv">
-          </Upload>
-          <Button icon={<DownloadOutlined />} onClick={handleExport}>Export Data</Button>
+          <Upload
+            beforeUpload={handleImport}
+            showUploadList={false}
+            accept=".csv"
+          ></Upload>
+          <Button icon={<DownloadOutlined />} onClick={handleExport}>
+            Export Data
+          </Button>
         </div>
       </div>
       <Table
@@ -227,10 +275,18 @@ const Medis = () => {
         }}
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="Nama" label="Nama" rules={[{ required: true, message: "Please input Nama!" }]}>
+          <Form.Item
+            name="Nama"
+            label="Nama"
+            rules={[{ required: true, message: "Please input Nama!" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="Kategori" label="Kategori" rules={[{ required: true, message: "Please select Kategori!" }]}>
+          <Form.Item
+            name="Kategori"
+            label="Kategori"
+            rules={[{ required: true, message: "Please select Kategori!" }]}
+          >
             <Select>
               <Select.Option value="Dokter SPA">Dokter SPA</Select.Option>
               <Select.Option value="Bidan">Bidan</Select.Option>

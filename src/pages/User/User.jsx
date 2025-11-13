@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Table, message, Typography } from 'antd';
+import { useState, useEffect } from "react";
+import { Table, message, Typography } from "antd";
 
 const { Title } = Typography;
 
 const Bidan = () => {
   const [data, setData] = useState([]);
+  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   // Fetch data from API when the component mounts
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/v1/user/read_by_role/User')
+    fetch("http://127.0.0.1:5000/api/v1/user/read_by_role/User")
       .then((response) => response.json())
       .then((data) => {
         if (data.datas) {
@@ -21,30 +22,36 @@ const Bidan = () => {
           }));
           setData(formattedData);
         } else {
-          message.error('Failed to fetch data');
+          message.error("Failed to fetch data");
         }
       })
       .catch(() => {
-        message.error('Error fetching data from API');
+        message.error("Error fetching data from API");
       });
   }, []);
 
   // Define table columns
   const columns = [
-    { title: 'No', dataIndex: 'no', key: 'no', align: 'center' },
-    { title: 'Username', dataIndex: 'username', key: 'username' },
-    { title: 'Email', dataIndex: 'email', key: 'email' },
+    { title: "No", dataIndex: "no", key: "no", align: "center" },
+    { title: "Username", dataIndex: "username", key: "username" },
+    { title: "Email", dataIndex: "email", key: "email" },
   ];
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: "20px" }}>
       {/* Page Title */}
-      <Title level={2} style={{ marginBottom: '20px', textAlign: 'center' }}>
+      <Title level={2} style={{ marginBottom: "20px", textAlign: "center" }}>
         Data User
       </Title>
-      
+
       {/* User Data Table */}
-      <Table columns={columns} dataSource={data} pagination={{ pageSize: 10 }} rowKey="key" bordered />
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={{ pageSize: 10 }}
+        rowKey="key"
+        bordered
+      />
     </div>
   );
 };
