@@ -1,0 +1,7 @@
+flask
+flask-cors
+flask-sqlalchemy
+pymysql
+python-dotenv
+joblib
+numpy
